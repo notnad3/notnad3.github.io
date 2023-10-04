@@ -45,8 +45,15 @@
 <meta property="og:image" content="http://example.com/img/tw1.png">
 <meta property="og:image" content="http://example.com/img/tw2.png">
 <meta property="og:image" content="http://example.com/img/tw3.png">
+<meta property="og:image" content="http://example.com/img/tw4.png">
+<meta property="og:image" content="http://example.com/img/tw5.png">
+<meta property="og:image" content="http://example.com/img/tw6.png">
+<meta property="og:image" content="http://example.com/img/tw7.png">
+<meta property="og:image" content="http://example.com/img/tw8.png">
+<meta property="og:image" content="http://example.com/img/tw9.png">
+<meta property="og:image" content="http://example.com/img/tw10.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-04T11:22:42.381Z">
+<meta property="article:modified_time" content="2023-10-04T12:33:26.389Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="the quieter you become,the more you can hear">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +237,7 @@
         
         
         
-          97 分钟
+          104 分钟
         
       </span>
     
@@ -387,6 +394,39 @@
 
 <p>经过这种正则匹配后能过滤的基本都过滤了，去网上查了wp原来这是一种叫<code>无参数RCE</code>的题型(第一次见)。</p>
 <p><code>https://blog.csdn.net/Manuffer/article/details/120738755</code></p>
+<p><code>https://blog.csdn.net/weixin_46330722</code></p>
+<p>无参数RCE一般有三种解法：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-number">1</span>.利用<span class="hljs-built_in">getallheaders</span>()函数。<br><span class="hljs-number">2</span>.利用<span class="hljs-built_in">get_defined_vars</span>()函数。<br><span class="hljs-number">3</span>.利用session_id帮助命令执行。<br></code></pre></td></tr></table></figure>
+
+<p>拿<code>getallheaders()</code>来说，这东西会以数组形式返回所有HTTP头信息，举个栗子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs PHP"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">getallheaders</span>());<span class="hljs-comment">//数组形式所以我用了var_dump</span><br><br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/img/tw4.png" srcset="/img/loading.gif" lazyload alt="tw4"></p>
+<p>可以看到以数组的形式返回了HTTP数据包的头和对应信息，有意思的一点是这东西是倒着出来的。</p>
+<p>数组形式肯定没法用，想给<code>eval</code>啥的传参肯定要是个字符串。可以利用<code>implode</code>函数把数组变成字符串，看下GPT对这个函数的解释：</p>
+<p><img src="/img/tw5.png" srcset="/img/loading.gif" lazyload alt="tw5"></p>
+<p>不过这个$glue并不是必须的，默认没东西直接串起来，比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span> = <span class="hljs-title function_ invoke__">implode</span>(<span class="hljs-title function_ invoke__">getallheaders</span>());<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$a</span>;<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw6.png" srcset="/img/loading.gif" lazyload alt="tw6"></p>
+<p>现在字符串也得到了，我么可以在传http包的时候给数据包底下加个头比如：<code>renyi:system(&#39;whoami&#39;);//</code>达到执行任意命令的目的(后面跟着注释符号，把其他的注释掉了)。</p>
+<p>不过着这种方法我没成功。。。</p>
+<p><code>get_defined_vars()</code>：返回所有已定义所组成的数组，不过这个和<code>getallheaders()</code>不一样，它返回的是多维数组，举个栗子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">get_defined_vars</span>());<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw7.png" srcset="/img/loading.gif" lazyload alt="tw7"></p>
+<p>可以看到这东西会把GET传入的参数显示在第一位</p>
+<p><img src="/img/tw8.png" srcset="/img/loading.gif" lazyload alt="tw8"></p>
+<p>GET传入的参数可控，那我们肯定希望在这个多维数组中取出我们想要的东西：利用<code>current</code>函数：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">current</span><span class="hljs-params">()</span></span>函数可以返回数组中的单元且初始指针指向数组的第一个单元。因为GET方式传入的参数存在该二维数组中的第一个一维数组，所以我们可以通果这个函数将其取出来<br></code></pre></td></tr></table></figure>
+
+<p>举个栗子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">current</span>(<span class="hljs-title function_ invoke__">get_defined_vars</span>()));<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw9.png" srcset="/img/loading.gif" lazyload alt="tw9"></p>
+<p><img src="/img/tw10.png" srcset="/img/loading.gif" lazyload alt="tw10"></p>
+<p>传两个参数也可以↑</p>
 <p>以上内容参考了这些师傅们的文章，感谢！：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>sculptor-liu.github.io<span class="hljs-regexp">/2021/</span><span class="hljs-number">03</span><span class="hljs-regexp">/20/</span>GXYCTF-<span class="hljs-number">2019</span>-%E7%A6%<span class="hljs-number">81</span>%E6%AD%A2%E5%A5%<span class="hljs-number">97</span>%E5%A8%<span class="hljs-number">83</span>/<br>https:<span class="hljs-regexp">//</span>www.cnblogs.com<span class="hljs-regexp">/LLeaves/</span>p/<span class="hljs-number">12868440</span>.html<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/m0_62879498/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">124538469</span><br></code></pre></td></tr></table></figure>
 
@@ -461,12 +501,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2023/09/17/%5BWeek%201%5D%20ping/" title="20230xGame_Write_up_Week1_web">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">20230xGame_Write_up_Week1_web</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
