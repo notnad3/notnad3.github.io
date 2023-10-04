@@ -23,15 +23,17 @@
 <meta property="og:site_name" content="notbad3">
 <meta property="og:description" content="相关知识网络上有太多人总结了，但还是想自己动动手写点东西加深加深印象，哈哈">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/default.png">
+<meta property="og:image" content="http://example.com/img/b1.png">
 <meta property="og:image" content="http://example.com/img/b2.png">
 <meta property="og:image" content="http://example.com/img/b3.png">
 <meta property="og:image" content="http://example.com/img/b4.png">
 <meta property="article:published_time" content="2023-09-11T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-09-30T12:04:22.042Z">
+<meta property="article:modified_time" content="2023-10-04T07:47:33.660Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="the quieter you become,the more you can hear">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/b2.png">
+<meta name="twitter:image" content="http://example.com/img/default.png">
   
   
   
@@ -265,7 +267,8 @@
 <p>最后那个&#x2F;e模式好像已经被弃用好久了。。举个栗子：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs PHP"><span class="hljs-variable">$pattern</span> = <span class="hljs-string">&#x27;/(\d+)/e&#x27;</span>;<br><span class="hljs-variable">$replacement</span> = <span class="hljs-string">&#x27;&quot;$1&quot; + 1&#x27;</span>;<br><span class="hljs-variable">$string</span> = <span class="hljs-string">&#x27;123&#x27;</span>;<br><br><span class="hljs-variable">$result</span> = <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-variable">$pattern</span>, <span class="hljs-variable">$replacement</span>, <span class="hljs-variable">$string</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$result</span>; <span class="hljs-comment">// 输出124</span><br></code></pre></td></tr></table></figure>
 
-<p><code>/(\d+)/e</code>模式匹配一个或多个数字，并使用<code>&quot;$1&quot; + 1</code>作为替换字符串。在替换过程中，<code>&quot;$1&quot;</code>被解析为匹配的数字，然后加1。因此，最终的替换结果是123 + 1，即124。</p>
+<p><code>/(\d+)/e</code>模式匹配一个或多个数字，并使用<code>&quot;$1&quot; + 1</code>作为替换字符串。在替换过程中，<code>&quot;$1&quot;</code>被解析为匹配的数字，然后加1。因此，最终的替换结果是123 + 1，即124。<img src="/img/default.png" srcset="/img/loading.gif" lazyload alt="default"></p>
+<p><img src="/img/b1.png" srcset="/img/loading.gif" lazyload alt="b1"></p>
 <p><strong>管道符(Windows)：</strong></p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 1c"><span class="hljs-string">|		直接执行后面的语句</span><br><span class="hljs-string">||		如果前面命令是错的那么就执行后面的语句，否则只执行前面的语句</span><br><span class="hljs-meta">&amp;		前面和后面命令都要执行，无论前面真假</span><br><span class="hljs-meta">&amp;&amp;		如果前面为假，后面的命令也不执行，如果前面为真则执行两条命令</span><br></code></pre></td></tr></table></figure>
 
@@ -428,8 +431,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/11/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%953/" title="Writeup_2022 NewstarCTF_Week1(Web部分)">
-                        <span class="hidden-mobile">Writeup_2022 NewstarCTF_Week1(Web部分)</span>
+                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5Dphp%E4%B8%AD%E7%9A%84%E5%BC%B1%E7%9B%B8%E7%AD%89%E5%92%8C%E5%BC%BA%E7%9B%B8%E7%AD%89/" title="PHP中的弱相等和强相等">
+                        <span class="hidden-mobile">PHP中的弱相等和强相等</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
