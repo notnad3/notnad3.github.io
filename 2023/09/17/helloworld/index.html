@@ -62,8 +62,9 @@
 <meta property="og:image" content="http://example.com/img/tw18.png">
 <meta property="og:image" content="http://example.com/img/tw19.png">
 <meta property="og:image" content="http://example.com/img/tw20.png">
+<meta property="og:image" content="http://example.com/img/tw21.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-04T14:07:32.125Z">
+<meta property="article:modified_time" content="2023-10-05T07:33:34.677Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="the quieter you become,the more you can hear">
 <meta name="twitter:card" content="summary_large_image">
@@ -247,7 +248,7 @@
         
         
         
-          123 分钟
+          126 分钟
         
       </span>
     
@@ -481,17 +482,19 @@
 <p><img src="/img/tw19.png" srcset="/img/loading.gif" lazyload alt="tw19"></p>
 <p>可以看到倒数第二个文件就是flag.php了，构造payload:</p>
 <p><code>?exp=show_source(next(array_reverse(scandir(current(localeconv())))));</code></p>
-<p>因为<code>flag.php</code>在倒数第二个，所以先<code>array_reverse</code>把它转成正数第二个，然后<code>next</code>直接提取第二个。</p>
+<p>因为<code>flag.php</code>在倒数第二个，所以先<code>array_reverse</code>把它转成正数第二个，然后<code>next</code>将指针向下移动直接提取第二个(前面的<code>current</code>将指针放在首位)。</p>
 <p><img src="/img/tw20.png" srcset="/img/loading.gif" lazyload alt="tw20"></p>
 <p>也可以用<code>highlight_file()</code>函数替换，他俩差不多。</p>
 <p>还有一种情况，比如这个flag.php的位置不特殊：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">如果flag.php的位置不特殊，可以使用<span class="hljs-title function_ invoke__">array_rand</span>()和<span class="hljs-title function_ invoke__">array_flip</span>()(<span class="hljs-title function_ invoke__">array_rand</span>()返回的是键名所以必须搭配<span class="hljs-title function_ invoke__">array_flip</span>()来交换键名、键值来获得键值，函数作用上面有写到)来随机刷新显示的内容，刷几次就出来了，所以这种情况payload：<br> ?exp=<span class="hljs-title function_ invoke__">show_source</span>(<span class="hljs-title function_ invoke__">array_rand</span>(<span class="hljs-title function_ invoke__">array_flip</span>(<span class="hljs-title function_ invoke__">scandir</span>(<span class="hljs-title function_ invoke__">current</span>(<span class="hljs-title function_ invoke__">localeconv</span>())))));<br><br></code></pre></td></tr></table></figure>
-
-
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php">如果flag.php的位置不特殊，可以使用<span class="hljs-title function_ invoke__">array_rand</span>()和<span class="hljs-title function_ invoke__">array_flip</span>()(<span class="hljs-title function_ invoke__">array_rand</span>()返回的是键名所以必须搭配<span class="hljs-title function_ invoke__">array_flip</span>()来交换键名、键值来获得键值，函数作用上面有写到)来随机刷新显示的内容，刷几次就出来了，所以这种情况payload：<br> ?exp=<span class="hljs-title function_ invoke__">show_source</span>(<span class="hljs-title function_ invoke__">array_rand</span>(<span class="hljs-title function_ invoke__">array_flip</span>(<span class="hljs-title function_ invoke__">scandir</span>(<span class="hljs-title function_ invoke__">current</span>(<span class="hljs-title function_ invoke__">localeconv</span>())))));<br><span class="hljs-title function_ invoke__">array_rand</span>()这东西会返回随机一个键名，<span class="hljs-title function_ invoke__">array_flip</span>()用于交换数组中的键和值，这两个组合一下就会获得随机的一个键值。因为这东西完全随机的，所以多刷新几次才可能会出现flag！    <br></code></pre></td></tr></table></figure>
 
 <p>第二种方法使用session_id：</p>
+<p>不过正则匹配过滤了<code>hex</code>，前面的<code>eval(hex2bin(session_id(session_start())));</code>肯定没法用了，不过师傅的博客里说<code>PHPSESSIID</code>这东西可以直接给他赋值<code>flag.php</code>：</p>
+<p>payload:<code>?exp=show_source(session_id(session_start()));</code></p>
+<p>并加个<code>cookie</code>头：<code>cookie:PHPSESSID=flag.php</code></p>
+<p><img src="/img/tw21.png" srcset="/img/loading.gif" lazyload alt="tw21"></p>
 <p>以上内容参考了这些师傅们的文章，感谢！：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>sculptor-liu.github.io<span class="hljs-regexp">/2021/</span><span class="hljs-number">03</span><span class="hljs-regexp">/20/</span>GXYCTF-<span class="hljs-number">2019</span>-%E7%A6%<span class="hljs-number">81</span>%E6%AD%A2%E5%A5%<span class="hljs-number">97</span>%E5%A8%<span class="hljs-number">83</span>/<br>https:<span class="hljs-regexp">//</span>www.cnblogs.com<span class="hljs-regexp">/LLeaves/</span>p/<span class="hljs-number">12868440</span>.html<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/m0_62879498/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">124538469</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>sculptor-liu.github.io<span class="hljs-regexp">/2021/</span><span class="hljs-number">03</span><span class="hljs-regexp">/20/</span>GXYCTF-<span class="hljs-number">2019</span>-%E7%A6%<span class="hljs-number">81</span>%E6%AD%A2%E5%A5%<span class="hljs-number">97</span>%E5%A8%<span class="hljs-number">83</span>/<br>https:<span class="hljs-regexp">//</span>www.cnblogs.com<span class="hljs-regexp">/LLeaves/</span>p/<span class="hljs-number">12868440</span>.html<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/m0_62879498/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">124538469</span><br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/Manuffer/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">120738755</span>?spm=<span class="hljs-number">1001.2014</span>.<span class="hljs-number">3001.5506</span><br></code></pre></td></tr></table></figure>
 
 
 
