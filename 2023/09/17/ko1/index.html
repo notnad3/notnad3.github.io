@@ -33,11 +33,11 @@
 <meta property="og:image" content="http://example.com/img/shark2.png">
 <meta property="og:image" content="http://example.com/img/shark3.png">
 <meta property="og:image" content="http://example.com/img/hiideandseek.png">
-<meta property="og:image" content="http://example.com/img/secret-16965791663701.png">
-<meta property="og:image" content="http://example.com/img/pwn1-16965791755773.png">
+<meta property="og:image" content="http://example.com/img/secret.png">
+<meta property="og:image" content="http://example.com/img/pwn1.png">
 <meta property="og:image" content="http://example.com/img/vig.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-08T10:48:08.615Z">
+<meta property="article:modified_time" content="2023-10-08T13:10:56.506Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="the quieter you become,the more you can hear">
 <meta name="twitter:card" content="summary_large_image">
@@ -346,9 +346,9 @@
 <h3 id="Week-1-重生之我在教学楼打cs"><a href="#Week-1-重生之我在教学楼打cs" class="headerlink" title="[Week 1] 重生之我在教学楼打cs"></a>[Week 1] 重生之我在教学楼打cs</h3><p>下载发现是个bsp文件，根据师傅的提示发现这东西是个cs1.6的地图文件，重命名一下放到<code>cstrike</code>下的<code>maps</code>文件夹里，然后cs1.6直接进地图。在鼎右下角找到了一串小字：</p>
 <p><code>0xGame&#123;CS_very_good&#125;</code></p>
 <h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h3 id="Week-1-找不到且不对劲的flag"><a href="#Week-1-找不到且不对劲的flag" class="headerlink" title="[Week 1] 找不到且不对劲的flag"></a>[Week 1] 找不到且不对劲的flag</h3><p><code> nc 8.130.35.16 51000</code>后<code>ls</code>,发现有个<code>flag</code>但<code>cat</code>读了发现是假的:</p>
-<p><img src="/img/secret-16965791663701.png" srcset="/img/loading.gif" lazyload alt="secret"></p>
+<p><img src="/img/secret.png" srcset="/img/loading.gif" lazyload alt="secret"></p>
 <p><code>ls -al</code>发现有个<code>.secret</code>文件，<code>cat</code>读了下得到了<code>flag</code></p>
-<p><img src="/img/pwn1-16965791755773.png" srcset="/img/loading.gif" lazyload alt="pwn1"></p>
+<p><img src="/img/pwn1.png" srcset="/img/loading.gif" lazyload alt="pwn1"></p>
 <h1 id="Crypto部分"><a href="#Crypto部分" class="headerlink" title="Crypto部分"></a>Crypto部分</h1><h3 id="Week-1-Vigenere"><a href="#Week-1-Vigenere" class="headerlink" title="[Week 1] Vigenere"></a>[Week 1] Vigenere</h3><p>题目描述：密文：0dGmqk{79ap4i0522g0a67m6i196he52357q60f} 古老而神秘的加密方式？</p>
 <p><code>flag</code>格式<code>0xGame&#123;xxxx&#125;</code>，现在开头是<code>0dGmqk</code>，猜测密钥前四位是<code>game</code>?，先在线解密看下结果：</p>
 <p><img src="/img/vig.png" srcset="/img/loading.gif" lazyload alt="vig"></p>
@@ -425,8 +425,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5Dphp%E4%B8%AD%E7%9A%84%E5%BC%B1%E7%9B%B8%E7%AD%89%E5%92%8C%E5%BC%BA%E7%9B%B8%E7%AD%89/" title="PHP中的弱相等和强相等">
-                        <span class="hidden-mobile">PHP中的弱相等和强相等</span>
+                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5DRCE%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95/" title="RCE中一些常见的绕过方法">
+                        <span class="hidden-mobile">RCE中一些常见的绕过方法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
