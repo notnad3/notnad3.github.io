@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://example.com/img/pol1.png">
 <meta property="og:image" content="http://example.com/img/nodejs1.png">
 <meta property="article:published_time" content="2023-10-22T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-29T03:25:59.927Z">
+<meta property="article:modified_time" content="2023-10-29T03:42:19.859Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="Javascript">
 <meta name="twitter:card" content="summary_large_image">
@@ -199,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.5k 字
+          7.7k 字
         
       </span>
     
@@ -210,7 +210,7 @@
         
         
         
-          63 分钟
+          65 分钟
         
       </span>
     
@@ -262,7 +262,8 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Person</span>(<span class="hljs-params"></span>)&#123; <span class="hljs-comment">//名为person的构造函数，构造函数用于创建拥有特定属性/方法的对象</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>=<span class="hljs-string">&quot;rendongjun&quot;</span>;<span class="hljs-comment">//name属性</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">test</span>=<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123; <span class="hljs-comment">//test方法，返回 333</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-number">333</span>;<br><br>&#125;<br>&#125;<br><span class="hljs-title class_">Person</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">a</span>=<span class="hljs-number">3</span>;<span class="hljs-comment">//通过原型继承的方式，给Person构造函数的原型对象添加了一个名为a的属性，其值为3</span><br>web=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Person</span>();<span class="hljs-comment">//创建名为web的对象，该对象是通过person构造函数创建的一个实例，构造函数使用new调用</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(web.<span class="hljs-title function_">test</span>());<span class="hljs-comment">//使用console函数进行打印</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(web.<span class="hljs-property">a</span>)<br></code></pre></td></tr></table></figure>
 
 <h6 id="什么是原型继承？"><a href="#什么是原型继承？" class="headerlink" title="什么是原型继承？"></a>什么是原型继承？</h6><p>原型继承是JavaScript中一种对象之间的属性和方法共享机制。每个JavaScript对象都有一个原型对象，它是一个普通的对象，包含了一些共享的属性和方法。当我们创建一个新对象时，它会自动继承原型对象的属性和方法。</p>
-<p>在JavaScript中，我们可以通过修改原型对象来实现属性和方法的继承。例如，<code>person.prototype.a = 3</code>这段代码就是在<code>person</code>构造函数的原型对象上添加了一个名为<code>a</code>的属性，其值为3。这意味着通过<code>person</code>构造函数创建的所有对象实例都会继承这个<code>a</code>属性，并且可以通过对象实例访问和使用它。</p>
+<p>在JavaScript中，我们可以通过修改原型对象来实现属性和方法的继承。</p>
+<p>例如，<code>Person.prototype.a = 3</code>这段代码就是在<code>Person</code>构造函数的原型对象上添加了一个名为<code>a</code>的属性，其值为3。这意味着通过<code>Person</code>构造函数创建的所有对象实例都会继承这个<code>a</code>属性，并且可以通过对象实例访问和使用它。</p>
 <p>换句话说，当我们创建一个<code>person</code>对象实例，比如<code>web = new person()</code>，这个实例会继承<code>person</code>构造函数的原型对象上的属性和方法。因此，<code>web</code>对象可以访问和使用<code>a</code>属性，即<code>web.a</code>会返回3。</p>
 <p>通过原型继承，我们可以在JavaScript中实现对象之间的属性和方法的共享，避免了重复定义和占用额外的内存空间。这是JavaScript中面向对象编程的重要概念之一。</p>
 <p>注意，<code>prototype</code>是用于定义构造函数的原型对象，它是一个普通的对象。</p>
@@ -273,12 +274,17 @@
 <p>当我们访问一个对象的属性或方法时，JavaScript首先在该对象本身查找，如果找不到，就会去它的原型对象上查找，如果还找不到，就会去原型对象的原型对象上查找，依此类推，直到找到或者到达原型链的顶端。</p>
 <p>通过原型链，我们可以实现对象之间的属性和方法的共享，避免了重复定义和占用额外的内存空间。当我们创建一个对象实例时，它会自动继承构造函数的原型对象上的属性和方法，这样我们就可以实现对象的继承。</p>
 <p><img src="/img/pol1.png" srcset="/img/loading.gif" lazyload alt="pol1"></p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><p>每个实例对象都有一个 <code>constructor</code> 属性指向对应的<strong>构造函数</strong>，即类。所以以下几种写法其实是相等的，都返回 <code>Foo</code> 类的原型对象。</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-type">Foo</span>.proto<span class="hljs-keyword">type</span><br><span class="hljs-title">foo</span>[<span class="hljs-string">&quot;__proto__&quot;</span>]<br><span class="hljs-title">foo</span>.__proto__<br><span class="hljs-title">foo</span>.constructor.proto<span class="hljs-keyword">type</span><br></code></pre></td></tr></table></figure>
+
+
+
 <p>大段大段的文字总是让人头疼，写个简单代码体会一下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Foo</span>(<span class="hljs-params"></span>)&#123;&#125;;<br><span class="hljs-literal">undefined</span><br><span class="hljs-keyword">let</span> foo = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Foo</span>();<br><span class="hljs-literal">undefined</span><br><span class="hljs-title class_">Foo</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> == foo.<span class="hljs-property">__proto__</span> <span class="hljs-comment">//foo对象的__proto__属性等于Foo.prototype</span><br><span class="hljs-literal">true</span><br><br><span class="hljs-comment">//参考文章：https://xz.aliyun.com/t/7182</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Foo</span>(<span class="hljs-params"></span>)&#123;&#125;;<br><span class="hljs-literal">undefined</span><br><span class="hljs-keyword">let</span> foo = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Foo</span>();<br><span class="hljs-literal">undefined</span><br><span class="hljs-title class_">Foo</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> == foo.<span class="hljs-property">__proto__</span> <span class="hljs-comment">//foo对象的__proto__属性等于Foo.prototype</span><br><span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="/img/nodejs1.png" srcset="/img/loading.gif" lazyload alt="nodejs1"></p>
 <p>以及</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Foo</span>(<span class="hljs-params"></span>) &#123;<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">first_name</span> = <span class="hljs-string">&#x27;Donald&#x27;</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">last_name</span> = <span class="hljs-string">&#x27;Trump&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Son</span>(<span class="hljs-params"></span>) &#123;<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">first_name</span> = <span class="hljs-string">&#x27;Melania&#x27;</span><br>&#125;<br><br><span class="hljs-title class_">Son</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Foo</span>()<br><br><span class="hljs-keyword">let</span> son = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Son</span>()<br>son.<span class="hljs-property">__proto__</span>[<span class="hljs-string">&#x27;add_name&#x27;</span>] = <span class="hljs-string">&#x27;abc&#x27;</span><br><span class="hljs-keyword">let</span> son1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Son</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`son Name: <span class="hljs-subst">$&#123;son.add_name&#125;</span>`</span>)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`son1 Name: <span class="hljs-subst">$&#123;son.add_name&#125;</span>`</span>)<br><br><span class="hljs-comment">//结果： son Name: abc</span><br><span class="hljs-comment">//		son1 Name: abc</span><br><br><span class="hljs-comment">//参考文章：https://xz.aliyun.com/t/7182</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Foo</span>(<span class="hljs-params"></span>) &#123;<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">first_name</span> = <span class="hljs-string">&#x27;Donald&#x27;</span><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">last_name</span> = <span class="hljs-string">&#x27;Trump&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Son</span>(<span class="hljs-params"></span>) &#123;<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">first_name</span> = <span class="hljs-string">&#x27;Melania&#x27;</span><br>&#125;<br><br><span class="hljs-title class_">Son</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Foo</span>()<br><br><span class="hljs-keyword">let</span> son = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Son</span>()<br>son.<span class="hljs-property">__proto__</span>[<span class="hljs-string">&#x27;add_name&#x27;</span>] = <span class="hljs-string">&#x27;abc&#x27;</span><br><span class="hljs-keyword">let</span> son1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Son</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`son Name: <span class="hljs-subst">$&#123;son.add_name&#125;</span>`</span>)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`son1 Name: <span class="hljs-subst">$&#123;son.add_name&#125;</span>`</span>)<br><br><span class="hljs-comment">//结果： son Name: abc</span><br><span class="hljs-comment">//		son1 Name: abc</span><br></code></pre></td></tr></table></figure>
 
 <p>我们明明只修改了<code>son</code>对象的<code>__proto__</code>属性，但由于有其它对象的原型属性指向了相同的原型属性(即<code>son1.__proto__</code>与其相同)，导致另外一个具有相同原型的对象也受到了影响。</p>
 <p>再看一段<code>js</code>：</p>
@@ -321,6 +327,15 @@
 <p>简单分析下运行过程：</p>
 <p>首先是<code>o1[a]=02[a]=1</code>，然后进行<code>o1.__proto__</code>和<code>o2.__proto__</code>(注意这是共有的，所以进行循环<code>merge</code>过程)，即<code>o1.__proto__.b=o2.__proto__.b=2</code>，即<code>Object.prototype.b=2</code>。</p>
 <p>也就是最顶层的<code>Object.prototype</code>所指向的对象添加了属性,所以我们随便创建一个对象也就有了b这个属性(间接拥有，会向上查一个<code>.proto__</code>)。</p>
+<p>参考文章：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>jlkl.github.io<span class="hljs-regexp">/2020/</span><span class="hljs-number">11</span><span class="hljs-regexp">/06/</span>Web_16/<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/qq_51586883/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">119867720</span><br>https:<span class="hljs-regexp">//</span>xz.aliyun.com<span class="hljs-regexp">/t/</span><span class="hljs-number">7182</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 
                 
               </div>
