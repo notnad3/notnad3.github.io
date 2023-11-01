@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://example.com/img/pswh4.png">
 <meta property="og:image" content="http://example.com/img/pswh5.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-30T09:25:03.732Z">
+<meta property="article:modified_time" content="2023-10-30T10:20:50.232Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -253,7 +253,7 @@
         
         
         
-          144 分钟
+          142 分钟
         
       </span>
     
@@ -301,8 +301,6 @@
 
 
 <hr>
-<p>本人的一点拙见。</p>
-<p>一只网络安全菜鸟–(˙&lt;&gt;˙)&#x2F;–<br>写博客主要是想记录一下自己的学习过程，过两年毕业了也能回头看看自己都学了些啥东西。<br>由于本人水平有限内容难免有错误、疏漏、逻辑不清、让人看不懂等各种问题，恳请大家批评指正<br>如果我写的东西能对你有一点点帮助，那真是再好不过了😀。</p>
 <h2 id="shrine"><a href="#shrine" class="headerlink" title="shrine"></a><strong>shrine</strong></h2><p>进去直接给了一大坨代码，简单捋一下：<br><img src="/img/c1.png" srcset="/img/loading.gif" lazyload alt="c1"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> flask <br><span class="hljs-keyword">import</span> os <br>app = flask.Flask(__name__)<br>app.config[<span class="hljs-string">&#x27;FLAG&#x27;</span>] = os.environ.pop(<span class="hljs-string">&#x27;FLAG&#x27;</span>)<span class="hljs-comment">#将FLAG从环境变量中弹出去，弹出去的FLAG给了app.config字典中FLAG键对应的值，可以用config[&#x27;FLAG&#x27;]访问它，但后面会把config这东西当黑名单过滤掉。</span><br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">open</span>(__file__).read()<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/shrine/&#x27;</span></span>)</span><br>  <span class="hljs-keyword">def</span> <span class="hljs-title function_">shrine</span>(<span class="hljs-params">shrine</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">safe_jinja</span>(<span class="hljs-params">s</span>):<br>       s = s.replace(<span class="hljs-string">&#x27;(&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).replace(<span class="hljs-string">&#x27;)&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)<span class="hljs-comment">#左括号替换为空，右括号替换为空</span><br>       blacklist = [<span class="hljs-string">&#x27;config&#x27;</span>, <span class="hljs-string">&#x27;self&#x27;</span>]<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#x27;</span>.join([<span class="hljs-string">&#x27;&#123;&#123;% set &#123;&#125;=None%&#125;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>(c) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> blacklist]) + s<span class="hljs-comment">#把黑名单里的字符全替换为空，两个%用来转义，否则&#123;&#125;就被当成占位符了。注意这个只替换双括号里的config和self，单个括号没啥影响。</span><br><br>  <span class="hljs-keyword">return</span> flask.render_template_string(safe_jinja(shrine))<br>  <span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>  app.run(debug=<span class="hljs-literal">True</span>)<br><br></code></pre></td></tr></table></figure>
 <p>猜测SSTI模板注入，在&#x2F;shrine&#x2F;下尝试49:<br><img src="/img/c2.png" srcset="/img/loading.gif" lazyload alt="c2"><br>七个七，而且代码里都提了Jinja。<br>对于输入首先过滤了()，然后过滤了config和self这两个关键字。<br>利用<code>/shrine/&#123;&#123;"".__class__.__base__.__base__&#125;&#125;</code>找到了它最大的爹<code>object</code>，再用subclasses找它下面的所有子类：<br><code>&#123;&#123;"".__class__.__base__.__base__.__subclasses__()&#125;&#125;</code><br><img src="/img/c3.png" srcset="/img/loading.gif" lazyload alt="c3"><br>出了个这种东西就不会做了。感觉自己的知识还是太贫瘠了，一看到SSTI的题就想着判断类型然后找它的爹执行命令，都快成思维定式了。。。而且做题也不细心，既然它把config和self放到了黑名单里，那为什么偏偏放它俩呢？config可能是因为把FLAG直接弹给了它所以过滤，那self为什么过滤？希望以后在学习过程中能克服这些问题。<br>去网上找了下wp看看其它师傅是怎么解的，感谢这位师傅：</p>
