@@ -16,12 +16,12 @@
   <meta name="author" content="notbad3">
   <meta name="keywords" content="The quieter you become,the more you are able to hear">
   
-    <meta name="description" content="一些做题记录">
+    <meta name="description" content="初学者的一些做题记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BUUCTF做题记录_1">
 <meta property="og:url" content="http://example.com/2023/09/17/helloworld/index.html">
 <meta property="og:site_name" content="rdj&#39;s Blog">
-<meta property="og:description" content="一些做题记录">
+<meta property="og:description" content="初学者的一些做题记录">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/c1.png">
 <meta property="og:image" content="http://example.com/img/c2.png">
@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://example.com/img/pswh4.png">
 <meta property="og:image" content="http://example.com/img/pswh5.png">
 <meta property="article:published_time" content="2023-09-17T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-10-30T10:20:50.232Z">
+<meta property="article:modified_time" content="2023-11-07T02:36:56.522Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -295,7 +295,7 @@
             
               <div class="markdown-body">
                 
-                <p>一些做题记录</p>
+                <p>初学者的一些做题记录</p>
 <span id="more"></span>
 
 
@@ -375,10 +375,10 @@
 <p>第二个flag在我看来最好满足：只要GETPOST都不传flag就行了，但是如何exit($flag)？</p>
 <p><code>$yds=$flag</code>  $(x的值)&#x3D;$(y的值)-&gt;GET传<code>yds=flag</code></p>
 <p>payload：<code>/index.php?yds=flag</code></p>
-<h2 id="BUUCTF-2018-Online-Tool"><a href="#BUUCTF-2018-Online-Tool" class="headerlink" title="[BUUCTF 2018]Online Tool"></a>[BUUCTF 2018]Online Tool</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;<br>    <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>] = <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>];<br>&#125;<br><br><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;host&#x27;</span>])) &#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable">$host</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;host&#x27;</span>];<br>    <span class="hljs-variable">$host</span> = <span class="hljs-title function_ invoke__">escapeshellarg</span>(<span class="hljs-variable">$host</span>);<span class="hljs-comment">//1.确保用户只传递一个参数给命令。2用户不能指定更多的参数。3.用户不能执行不同的命令。</span><br>    <span class="hljs-variable">$host</span> = <span class="hljs-title function_ invoke__">escapeshellcmd</span>(<span class="hljs-variable">$host</span>);<span class="hljs-comment">//1.确保用户只执行一个命令。2.用户可以指定不限数量的参数。3.用户不能执行不同的命令。 这两个函数一起使用会存在漏洞。</span><br>    <span class="hljs-variable">$sandbox</span> = <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-string">&quot;glzjin&quot;</span>. <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>]);<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;you are in sandbox &#x27;</span>.<span class="hljs-variable">$sandbox</span>;<br>    @<span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$sandbox</span>);<br>    <span class="hljs-title function_ invoke__">chdir</span>(<span class="hljs-variable">$sandbox</span>);<br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;</span>.<span class="hljs-variable">$host</span>);<br>&#125;    <span class="hljs-comment">//-T5 : 可以加快或者减慢扫描速度，有六个级别，级别越高速度越快，也越容易被WAF或者IDS发现。-sT：使用TCP Syn扫描最常用的端口，会完整的执行完TCP的三次握手，隐蔽性不强。-Pn：有时候防火墙会禁止ping请求.-PN命令告诉Nmap不用ping远程主机。–host-timeout ：限制每个 IP 地址的扫描时间(单位为秒).-F：要求扫描时(包挺ping扫描)使用小的IP包分段。</span><br></code></pre></td></tr></table></figure>
+<h2 id="BUUCTF-2018-Online-Tool-还没做完标记一下"><a href="#BUUCTF-2018-Online-Tool-还没做完标记一下" class="headerlink" title="[BUUCTF 2018]Online Tool 还没做完标记一下"></a>[BUUCTF 2018]Online Tool 还没做完标记一下</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>])) &#123;<br>    <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>] = <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;HTTP_X_FORWARDED_FOR&#x27;</span>];<br>&#125;<br><br><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;host&#x27;</span>])) &#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable">$host</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;host&#x27;</span>];<br>    <span class="hljs-variable">$host</span> = <span class="hljs-title function_ invoke__">escapeshellarg</span>(<span class="hljs-variable">$host</span>);<span class="hljs-comment">//1.确保用户只传递一个参数给命令。2用户不能指定更多的参数。3.用户不能执行不同的命令。</span><br>    <span class="hljs-variable">$host</span> = <span class="hljs-title function_ invoke__">escapeshellcmd</span>(<span class="hljs-variable">$host</span>);<span class="hljs-comment">//1.确保用户只执行一个命令。2.用户可以指定不限数量的参数。3.用户不能执行不同的命令。 这两个函数一起使用会存在漏洞。</span><br>    <span class="hljs-variable">$sandbox</span> = <span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-string">&quot;glzjin&quot;</span>. <span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>]);<br>    <span class="hljs-keyword">echo</span> <span class="hljs-string">&#x27;you are in sandbox &#x27;</span>.<span class="hljs-variable">$sandbox</span>;<br>    @<span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$sandbox</span>);<br>    <span class="hljs-title function_ invoke__">chdir</span>(<span class="hljs-variable">$sandbox</span>);<br>    <span class="hljs-keyword">echo</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&quot;nmap -T5 -sT -Pn --host-timeout 2 -F &quot;</span>.<span class="hljs-variable">$host</span>);<br>&#125;    <span class="hljs-comment">//-T5 : 可以加快或者减慢扫描速度，有六个级别，级别越高速度越快，也越容易被WAF或者IDS发现。-sT：使用TCP Syn扫描最常用的端口，会完整的执行完TCP的三次握手，隐蔽性不强。-Pn：有时候防火墙会禁止ping请求.-PN命令告诉Nmap不用ping远程主机。–host-timeout ：限制每个 IP 地址的扫描时间(单位为秒).-F：要求扫描时(包挺ping扫描)使用小的IP包分段。</span><br></code></pre></td></tr></table></figure>
 
 <p>看了其它师傅们的wp，问题主要出在连续使用<code>escapeshellarg</code> 和 <code>escapeshellcmd</code>上：同时使用会导致绕过过滤执行命令：</p>
-<p>以下内容参考了X1r0z师傅的博客(我没事就逛计院这位大佬的博客，这师傅太强了)：</p>
+<p>以下内容参考了X1r0z师傅的博客：</p>
 <p><code>https://exp10it.cn/2022/08/buuctf-web-writeup-3/#buuctf-2018online-tool</code></p>
 <blockquote>
 <p>escapeshellarg() 会在单引号之前加上 <code>\</code>, 并在被转义的单引号两边和整个字符串两边加上单引号</p>
