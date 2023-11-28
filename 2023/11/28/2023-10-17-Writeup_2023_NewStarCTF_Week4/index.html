@@ -40,13 +40,16 @@
 <meta property="og:image" content="http://example.com/img/phar1.png">
 <meta property="og:image" content="http://example.com/img/phar4.png">
 <meta property="og:image" content="http://example.com/img/phar5.png">
+<meta property="og:image" content="http://example.com/img/phar9.png">
+<meta property="og:image" content="http://example.com/img/phar10.png">
+<meta property="og:image" content="http://example.com/img/phar11.png">
 <meta property="og:image" content="http://example.com/img/phar3.png">
 <meta property="og:image" content="http://example.com/img/phar8.png">
 <meta property="og:image" content="http://example.com/img/phar6.png">
 <meta property="og:image" content="http://example.com/img/phar7.png">
 <meta property="og:image" content="http://example.com/img/otenboy1.png">
 <meta property="article:published_time" content="2023-11-28T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-11-27T13:42:27.908Z">
+<meta property="article:modified_time" content="2023-11-28T11:28:32.965Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +233,7 @@
         
         
         
-          100 分钟
+          101 分钟
         
       </span>
     
@@ -387,6 +390,10 @@
 <p>利用<code>echo</code>输出<code>&lt;?=@eval(\\\$_POST[&#39;a&#39;]);?&gt;</code>这个字符串，然后把它重定向到<code>/var/www/html/1.php</code>中。简单说就是把一句话木马写到对应文件里。</p>
 <p>可以看下<code>AI</code>解释：</p>
 <p><img src="/img/phar5.png" srcset="/img/loading.gif" lazyload alt="phar5"></p>
+<p>再补充一下关于连续三个转义符号的解释。。直接贴我和<code>x1r0z</code></p>
+<p><img src="/img/phar9.png" srcset="/img/loading.gif" lazyload alt="phar9"></p>
+<p><img src="/img/phar10.png" srcset="/img/loading.gif" lazyload alt="phar10"></p>
+<p><img src="/img/phar11.png" srcset="/img/loading.gif" lazyload alt="phar11"></p>
 <p>如果题目给的是<code>eval</code>就没这么麻烦了。。</p>
 <p>可以自己起个环境，访问<code>/whatphar.php</code>，在根目录刷新一下就能出现我们需要的<code>hacker.phar</code>文件了。</p>
 <p>对于<code>phar://</code>协议来说文件名不重要，只要内容格式是phar即可触发反序列化：</p>
@@ -402,13 +409,14 @@
 <p><code>file=phar://upload/f19fac1b1e7aa6a2df2d5cb5eada2d10.jpg</code></p>
 <p>然后访问<code>1.php</code>，<code>POST</code>给<code>a</code>传参执行命令就行了。</p>
 <p><img src="/img/phar7.png" srcset="/img/loading.gif" lazyload alt="phar7"></p>
-<h2 id="OtenkiBoy"><a href="#OtenkiBoy" class="headerlink" title="OtenkiBoy"></a>OtenkiBoy</h2><p>下载附件后先看<code>hint</code>:</p>
+<h2 id="OtenkiBoy"><a href="#OtenkiBoy" class="headerlink" title="OtenkiBoy"></a>OtenkiBoy</h2><p>这题不会。。跟着官方<code>wp</code>做的</p>
+<p>下载附件后先看<code>hint</code>:</p>
 <p><img src="/img/otenboy1.png" srcset="/img/loading.gif" lazyload alt="otenboy1"></p>
-<p>进入<code>routes</code>下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//info.js</span><br><span class="hljs-keyword">const</span> &#123; mergeJSON, createDate &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./_components/utils&quot;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CONFIG</span> = <span class="hljs-title function_">mergeJSON</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;../config.default&quot;</span>), <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;../config&quot;</span>), <span class="hljs-literal">true</span>);<br><span class="hljs-comment">//submit.js</span><br><span class="hljs-keyword">const</span> &#123; rndID, mergeJSON &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./_components/utils&quot;</span>);<br></code></pre></td></tr></table></figure>
+<p>进入<code>routes</code>下(注意<code>merge</code>函数)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//info.js</span><br><span class="hljs-keyword">const</span> &#123; mergeJSON, createDate &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./_components/utils&quot;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CONFIG</span> = <span class="hljs-title function_">mergeJSON</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;../config.default&quot;</span>), <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;../config&quot;</span>), <span class="hljs-literal">true</span>);<br><span class="hljs-comment">//submit.js</span><br><span class="hljs-keyword">const</span> &#123; rndID, mergeJSON &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./_components/utils&quot;</span>);<br><span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title function_">insert2db</span>(<span class="hljs-title function_">mergeJSON</span>(<span class="hljs-variable constant_">DEFAULT</span>, data));<br></code></pre></td></tr></table></figure>
 
 <p>利用<code>require</code>引入了一个名为<code>mergeJSON</code>的函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//utils.js</span><br><span class="hljs-keyword">const</span> mergeJSON = <span class="hljs-keyword">function</span> (<span class="hljs-params">target, patch, deep = <span class="hljs-literal">false</span></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> patch !== <span class="hljs-string">&quot;object&quot;</span>) <span class="hljs-keyword">return</span> patch;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(patch)) <span class="hljs-keyword">return</span> patch; <span class="hljs-comment">// do not recurse into arrays</span><br>    <span class="hljs-keyword">if</span> (!target) target = &#123;&#125;<br>    <span class="hljs-keyword">if</span> (deep) &#123; target = <span class="hljs-title function_">copyJSON</span>(target), patch = <span class="hljs-title function_">copyJSON</span>(patch); &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> patch) &#123;<br>        <span class="hljs-keyword">if</span> (key === <span class="hljs-string">&quot;__proto__&quot;</span>) <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-keyword">if</span> (target[key] !== patch[key])<br>            target[key] = <span class="hljs-title function_">mergeJSON</span>(target[key], patch[key]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> target;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//utils.js</span><br><span class="hljs-keyword">const</span> mergeJSON = <span class="hljs-keyword">function</span> (<span class="hljs-params">target, patch, deep = <span class="hljs-literal">false</span></span>) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> patch !== <span class="hljs-string">&quot;object&quot;</span>) <span class="hljs-keyword">return</span> patch;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(patch)) <span class="hljs-keyword">return</span> patch; <span class="hljs-comment">// do not recurse into arrays</span><br>    <span class="hljs-keyword">if</span> (!target) target = &#123;&#125;<br>    <span class="hljs-keyword">if</span> (deep) &#123; target = <span class="hljs-title function_">copyJSON</span>(target), patch = <span class="hljs-title function_">copyJSON</span>(patch); &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> patch) &#123;<br>        <span class="hljs-keyword">if</span> (key === <span class="hljs-string">&quot;__proto__&quot;</span>) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">//这里过滤了`__proto__，可以用constructor.prototype代替`</span><br>        <span class="hljs-keyword">if</span> (target[key] !== patch[key])<br>            target[key] = <span class="hljs-title function_">mergeJSON</span>(target[key], patch[key]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> target;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
                 
