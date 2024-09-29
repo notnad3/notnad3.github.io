@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="notbad3">
+  <meta name="keywords" content="The quieter you become,the more you are able to hear">
+  
+    <meta name="description" content="0x01 前言0x02 示例Flask: 123456789101112from flask import Flask, request, render_template_stringapp &#x3D; Flask(__name__)@app.route(&amp;#x27;&#x2F;&amp;#x27;)def index():    user_input &#x3D; request.args.get(&amp;#x27;name&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask&#x2F;Django中的XSS">
+<meta property="og:url" content="http://example.com/2024/09/01/XSS-in-FlaskDjango/index.html">
+<meta property="og:site_name" content="RenDongjun&#39;s Blog">
+<meta property="og:description" content="0x01 前言0x02 示例Flask: 123456789101112from flask import Flask, request, render_template_stringapp &#x3D; Flask(__name__)@app.route(&amp;#x27;&#x2F;&amp;#x27;)def index():    user_input &#x3D; request.args.get(&amp;#x27;name&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/xss_1_1.png">
+<meta property="og:image" content="http://example.com/img/xss_1_2.png">
+<meta property="og:image" content="http://example.com/img/xss_1_3.png">
+<meta property="og:image" content="http://example.com/img/xss_1_4.png">
+<meta property="og:image" content="http://example.com/img/xss_1_5.png">
+<meta property="og:image" content="http://example.com/img/xss_1_6.png">
+<meta property="article:published_time" content="2024-09-01T12:08:50.000Z">
+<meta property="article:modified_time" content="2024-09-29T09:17:22.036Z">
+<meta property="article:author" content="notbad3">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/xss_1_1.png">
+  
+  
+  
+  <title>Flask/Django中的XSS - RenDongjun&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>notbad3</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Flask/Django中的XSS"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-01 20:08" pubdate>
+          2024年9月1日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Flask/Django中的XSS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <span id="more"></span>
+
+
+
+<h3 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h3><h3 id="0x02-示例"><a href="#0x02-示例" class="headerlink" title="0x02 示例"></a>0x02 示例</h3><p><code>Flask</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request, render_template_string<br><br>app = Flask(__name__)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    user_input = request.args.get(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;Guest&#x27;</span>)<br>    html = <span class="hljs-string">f&quot;&lt;h1&gt;Hello, <span class="hljs-subst">&#123;user_input&#125;</span>!&lt;/h1&gt;&quot;</span><br>    <span class="hljs-keyword">return</span> render_template_string(html)<br>	<span class="hljs-comment">#反射型</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    app.run(debug=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<p>令<code>http://127.0.0.1:5000/?name=&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;</code>:</p>
+<p><img src="/img/xss_1_1.png" srcset="/img/loading.gif" lazyload alt="xss_1_1"></p>
+<p>这里直接利用f-string 进行字符串插值，user_input 的值在插值时直接进入了最终的 HTML 输出</p>
+<p>简单说就是用户的输入被当成合法的 HTML 和 JavaScript执行导致了未预期的行为</p>
+<p>解决方法就是利用<code>jinja2</code>模板渲染用户的输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#在 Flask 中，除非显式指明不转义，Jinja2会自动转义所有值。这样可以排除所有模板导致的 XSS 问题</span><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    user_input = request.args.get(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;Guest&#x27;</span>)<br>    html = <span class="hljs-string">&quot;&lt;h1&gt;Hello, &#123;&#123; user_input &#125;&#125;!&lt;/h1&gt;&quot;</span><br>    <span class="hljs-keyword">return</span> render_template_string(html, user_input=user_input)<br></code></pre></td></tr></table></figure>
+
+<p>这时令<code>http://127.0.0.1:5000/?name=&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;</code>：</p>
+<p><img src="/img/xss_1_2.png" srcset="/img/loading.gif" lazyload alt="xss_1_2"></p>
+<p>看源码：</p>
+<p><img src="/img/xss_1_3.png" srcset="/img/loading.gif" lazyload alt="xss_1_3"></p>
+<p>可以看到<code>&lt;</code>, <code>&gt;</code>, <code>&#39;</code>都被转义成了HTML实体(不是HTML语法的一部分)，浏览器不会将这些字符当作 HTML 或 JavaScript 来执行</p>
+<p>自己定义转义也可以，不过要注意的是不光标签要做转义，单引号和双引号同样要做转义，若只转移了标签符号，确实没办法直接插入标签，不过对于：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;&lt;?= avatar_url ?&gt;&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;&lt;?= nickname ?&gt;&quot;</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&lt;?= nickname ?&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>令<code>nickname = &quot; onload=&quot;alert(1)</code>去闭合<code>alt</code>标签，创造一个<code>onload</code>属性（<code>onload</code>属性属于<code>html</code>属性）：</p>
+<p><code>&lt;img src=&quot;avatar_url&quot; alt=&quot;&quot; onload=&quot;alert(1)&quot; /&gt;&lt;div&gt;&quot; onload=&quot;alert(1)&lt;/div&gt;</code></p>
+<p>那么如何显式指明不转义呢？可以通过<code>|safe</code>或<code>Markup</code>实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html">#存在xss.html，render_template(&#x27;xss.html&#x27;, name=name)<br><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Hello, &#123;&#123; name |safe &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>或：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">name = Markup(request.args.get(<span class="hljs-string">&#x27;name&#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+
+
+<p>有一类 <code>XSS</code> 问题 <code>Jinja</code> 的转义无法阻止。 <code>a</code> 标记的 <code>href</code> 属性可以包含一个 <code>javascript: URI</code> 。如果没有正确保护，那么当点击它时浏览器将执行其代码。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    user_input = request.args.get(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;https://www.baidu.com&#x27;</span>)<br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;href_test.html&#x27;</span>, user_input=user_input)<br><br><span class="hljs-comment">#href_test.html:</span><br>&lt;!DOCTYPE html&gt;<br>&lt;html lang=<span class="hljs-string">&quot;en&quot;</span>&gt;<br>&lt;head&gt;<br>    &lt;meta charset=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;<br>    &lt;title&gt;Title&lt;/title&gt;<br>    &lt;a href=<span class="hljs-string">&quot;&#123;&#123; user_input &#125;&#125;&quot;</span>&gt;click here&lt;/a&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br><br>&lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<p><code>name=javascript:alert(1)</code></p>
+<p><img src="/img/xss_1_4.png" srcset="/img/loading.gif" lazyload alt="xss_1_4"></p>
+<p>为什么会这样？</p>
+<p><code>javascript: alert(&#39;1&#39;)</code> 是一种称为 <strong>JavaScript URL</strong> 的伪协议。这种 URL 以 <code>javascript:</code> 作为前缀，后面跟随一段 <code>JavaScript</code> 代码。点击链接时，浏览器会执行这段代码，而不是导航到一个新的页面</p>
+<p>防御很简单，比如直接检测用户输入是不是<code>http</code>或者<code>https</code>开头就行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    white_list_href = [<span class="hljs-string">&#x27;http://&#x27;</span>, <span class="hljs-string">&#x27;https://&#x27;</span>]<br>    user_input = request.args.get(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;https://www.baidu.com&#x27;</span>)<br>    <span class="hljs-keyword">for</span> href <span class="hljs-keyword">in</span> white_list_href:<br>         <span class="hljs-keyword">if</span> user_input.startswith(href):<br>            <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;href_test.html&#x27;</span>, user_input=user_input)<br>         <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;404.html&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>或者设置<code>CSP</code>。这东西其实就是告诉浏览器哪些来源的资源可以被载入，哪些不行。这个在第四部分详细记录。</p>
+<h3 id="0x03-危害"><a href="#0x03-危害" class="headerlink" title="0x03 危害"></a>0x03 危害</h3><p> 个人认为XSS主要损害有两种：</p>
+<ol>
+<li>拿cookie&#x2F;csrf token</li>
+<li>通过XSS进行某些重要操作(打API)</li>
+</ol>
+<p>拿cookie比较简单，就是利用<code>JS</code>中访问当前页面的<code>API</code> <code>document.cookie</code>:</p>
+<p><img src="/img/xss_1_5.png" srcset="/img/loading.gif" lazyload alt="xss_1_5"></p>
+<p>对于这种攻击其实在设置cookie的时候令<code>HttpOnly=True</code>（Cookie 只能通过服务器端访问，不能通过 JavaScript 读取）即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">response.set_cookie(<span class="hljs-string">&#x27;session_id&#x27;</span>, <span class="hljs-string">&#x27;admin&#x27;</span>,secure=<span class="hljs-literal">True</span>,httponly=<span class="hljs-literal">True</span>,samesite=<span class="hljs-string">&#x27;None&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>也能拿csrf token，比如在一个Django项目中表单存在如下字段:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">input type=&quot;hidden&quot; name=&quot;csrfmiddlewaretoken&quot; value=&quot;AJTIijF8AHYNngTRCMDlAMswYAvmrFvIUxAL9RzsveUVsJJk7OgcAptN3aHdJtqY&quot;&gt;<br></code></pre></td></tr></table></figure>
+
+<p>如何拿到这个隐藏字段的值呢？可以利用：</p>
+<p><code>alert(document.querySelector(&#39;input[name=&quot;csrfmiddlewaretoken&quot;]&#39;).value);</code></p>
+<p><img src="/img/xss_1_6.png" srcset="/img/loading.gif" lazyload alt="xss_1_6"></p>
+<p>第二种就是打特定的API，比如执行如下<code>js</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;script&gt;<br>  <span class="hljs-variable language_">window</span>.<span class="hljs-property">onload</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>    xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;/change_cookie&#x27;</span>, <span class="hljs-literal">true</span>);<br>    xhr.<span class="hljs-property">withCredentials</span> = <span class="hljs-literal">true</span>; <br>    xhr.<span class="hljs-property">onload</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-keyword">if</span> (xhr.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Response from /change_cookie:&#x27;</span>, xhr.<span class="hljs-property">responseText</span>);<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&#x27;Failed to fetch /change_cookie:&#x27;</span>, xhr.<span class="hljs-property">statusText</span>);<br>      &#125;<br>    &#125;;<br>    xhr.<span class="hljs-title function_">send</span>();<br>  &#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="0x04-利用CSP防护XSS"><a href="#0x04-利用CSP防护XSS" class="headerlink" title="0x04 利用CSP防护XSS"></a>0x04 利用CSP防护XSS</h3><p>CSP 通过定义允许加载的资源（如脚本、样式、图片、框架等）的来源，限制浏览器可以执行哪些资源</p>
+<p>舉例來說，如果我很確定網站上的 JS 都來自於同一個 origin，那我的 CSP 就可以這樣寫：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs none">Content-Security-Policy: default-src &#x27;self&#x27;; script-src &#x27;self&#x27;<br>#<br>    default-src 是 CSP 的一种指令，用于指定默认资源加载的来源，包括脚本、样式、图片、字体、Ajax 请求等。<br>    &#x27;self&#x27; 表示只允许从与当前网页相同的来源（即相同的域名、协议和端口）加载资源。<br>#	<br>    script-src 是 CSP 的另一指令，专门用于控制 JavaScript 资源的加载。<br>    &#x27;self&#x27; 同样表示只能从当前网页的域名加载脚本文件。<br></code></pre></td></tr></table></figure>
+
+<p><code>self</code> 代表的是 same origin 的意思。這樣寫的話，如果你試著載入不是當前 origin 的 JS，或者是直接在頁面上用 inline 的方式執行 script，都會看到瀏覽器報錯。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="print-no-link">#学习笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Flask/Django中的XSS</div>
+      <div>http://example.com/2024/09/01/XSS-in-FlaskDjango/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>notbad3</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/30/%E4%BB%8EPolarOA%E4%B8%80%E9%A2%98%E7%9C%8Bshiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB/" title="PolarOA_shiro反序列化学习">
+                        <span class="hidden-mobile">PolarOA_shiro反序列化学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

